@@ -44,7 +44,6 @@
                   <textarea name="textarea" class="form-control" rows="3" required><%if (locals.postBody.length > 0) {%>
                     <%=postBody%><%}%></textarea>
                 </div>
-              </form>
             </div>
             <%
             var d = new Date();
@@ -54,6 +53,7 @@
               <div class="card-footer">
                 <button class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                 <button type="submit" class="btn btn-primary">Adicionar Post</button>
+              </form>
               </div>
   </div>
 </div>
