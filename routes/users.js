@@ -59,7 +59,7 @@ router.post('/login', (req, res, next) => {
 //Register Form POST
 router.post('/register', (req, res) => {
   let errors = [];
-  if (req.body.password != req.body.password2) {
+  if (req.body.password !== req.body.password2) {
     errors.push({
       text: 'Palavras-chave não correspondem.',
     });
@@ -114,5 +114,15 @@ router.post('/register', (req, res) => {
     });
   }
 });
+
+//GOOGLE
+router.get('/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
+
+// the callback after google has authenticated the user
+router.get('/google/callback',
+    passport.authenticate('google', {
+        successRedirect : '/index',
+        failureRedirect : '/users/login'
+    }));
 
 module.exports = router;

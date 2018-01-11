@@ -49,7 +49,7 @@ app.use(session({
   resave: true,
   saveUninitialized: true,
   cookie: {
-    maxAge: 60000,
+    maxAge: 24*60*60*1000, //Login para 1 dia
   },
 }));
 
@@ -81,6 +81,7 @@ app.use('/posts', posts);
 app.use('/posts/details', posts);
 app.use('/users', users);
 app.use('/users/login', users);
+app.use('/auth',users);
 
 // uncomment after placing your favicon in /public
 //TODO: favicon
