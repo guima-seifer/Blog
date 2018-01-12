@@ -5,6 +5,6 @@ if (process.env.NODE_ENV === 'production') {
   };
 } else {
   module.exports = {
-    mongoURI: 'mongodb://localhost:27017/blog-dev',
+    mongoURI: 'mongodb://localhost/blog-dev',
   };
 }

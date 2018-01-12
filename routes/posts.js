@@ -18,7 +18,6 @@ router.get('/', ensureAutheticated, (req, res) => {
       res.render('./posts/posts', {
         title: 'Postagens | Blog Admin',
         layout: 'layouts/layout',
-        state: 'autenticado',
         posts: posts,
         name : req.user.name
       });

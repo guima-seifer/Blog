@@ -5,7 +5,7 @@ module.exports = {
       return next();
     }
 
-    req.flash('error_msg', 'Oops, não tem permissões');
+    req.flash('error_msg', 'Por favor, inicie sessão primeiro');
     res.redirect('/users/login');
   },
 };

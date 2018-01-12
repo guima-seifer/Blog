@@ -31,70 +31,71 @@
         <a href="/posts/add" class="btn btn-primary btn-block"><i class="fa fa-plus"></i> Adicionar Postagem</a>
       </div>
     </div>
-</section>
+  </section>
 
-<%-include('../partials/_msg')%>
+  <%-include('../partials/_msg')%>
 
   <!-- TABLE AREA -->
   <section id="table-area-section">
     <div class="container">
       <div class="row">
-        <div class="card border-primary">
-          <div class="card-header bg-primary text-white">
-            <h4>Postagens Recentes</h4>
-          </div>
-          <table class="table table-striped table-responsive table-hover">
-            <thead class="thead-dark">
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Título</th>
-                <th scope="col">Data</th>
-                <th scope="col">Texto</th>
-                <th scope="col">Autor</th>
-                <th scope="col"></th>
-              </tr>
-            </thead>
-            <tbody class="">
-              <%if(posts.length > 0){%>
-                <% for(var i=posts.length-1; 0<=i; i--){ %>
-                  <tr>
-                    <td scope="row">
-                      <%-i-%>
-                    </td>
-                    <td>
-                      <%= posts[i].title %>
+        <div class="col-md-12 col-lg-12">
+          <div class="card border-primary">
+            <div class="card-header bg-primary text-white">
+              <h4>Postagens Recentes</h4>
+            </div>
+            <table class="table table-responsive table-hover">
+              <thead class="thead-dark">
+                <tr>
+                  <th class="">#</th>
+                  <th class="w-25">Título</th>
+                  <th class="w-25">Data</th>
+                  <th class="w-25">Autor</th>
+                  <th class="w-25"></th>
+                </tr>
+              </thead>
+              <tbody class="">
+                <%if(posts.length > 0){%>
+                  <% for(var i=posts.length-1; 0<=i; i--){ %>
+                    <tr>
+                      <td scope="row">
+                        <%-i-%>
+                      </td>
+                      <td>
+                        <%= posts[i].title %>
                         <p class="text-muted">
                           <%= posts[i].category %>
                         </p>
-                    </td>
-                    <td>
-                      <%= posts[i].date %>
-                    </td>
-                    <td>
-                      <%= posts[i].body %>
-                    </td>
-                    <td>
-                      <%= posts[i].author %>
-                    </td>
-                    <td><a href="/posts/details/<%= posts[i]._id %>" class="btn btn-secondary"><i class="fa fa-angle-double-right"></i> Details</a></td>
-                  </tr>
-                  <%} %>
+                      </td>
+                      <!-- <td><%= posts[i].category %></td> -->
+                      <td>
+                        <%= posts[i].date %>
+                      </td>
+                      <td>
+                        <%= posts[i].author %>
+                      </td>
+                      <td><a href="/posts/details/<%= posts[i]._id %>" class="btn btn-secondary"><i class="fa fa-angle-double-right"></i> Details</a></td>
+
+                    </tr>
+                    <%} %>
 
                     <%}else{%>
                       <p>Não foram adicionados nenhums posts :-O</p>
                       <%}%>
-            </tbody>
-          </table>
-        </div>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+
+        <nav class="ml-4">
+          <ul class="pagination">
+            <li class="page-item disabled"><a href="#" class="page-link ">Anterior</a></li>
+            <li class="page-item active"><a href="#" class="page-link ">1</a></li>
+            <li class="page-item"><a href="#" class="page-link">2</a></li>
+            <li class="page-item"><a href="#" class="page-link">3</a></li>
+            <li class="page-item"><a href="#" class="page-link">Próximo</a></li>
+          </ul>
+        </nav>
       </div>
-      <nav class="ml-4">
-        <ul class="pagination">
-          <li class="page-item disabled"><a href="#" class="page-link ">Anterior</a></li>
-          <li class="page-item active"><a href="#" class="page-link ">1</a></li>
-          <li class="page-item"><a href="#" class="page-link">2</a></li>
-          <li class="page-item"><a href="#" class="page-link">3</a></li>
-          <li class="page-item"><a href="#" class="page-link">Próximo</a></li>
-        </ul>
-      </nav>
-    </div>
   </section>

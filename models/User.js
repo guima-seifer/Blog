@@ -6,10 +6,12 @@ const Schema = mongoose.Schema;
 const UserSchema = new Schema({
   name: { type: String, required: true },
   email: { type: String, required: true },
-  password: { type: String},
+  password: { type: String },
   date: { type: Date, default: Date.now },
-  token :{ type: String},
-  idGoogle :{ type: String}
+  bio: { type: String, required: false },
+  avatar: { type: String, required: false },
+  token: { type: String },
+  idGoogle: { type: String },
 });
 
 //export model, compila o Schema para o modelo que atribui o nome de partitura - nome do modelo

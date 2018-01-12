@@ -16,7 +16,7 @@ const app = express();
 
 //Load routes
 const posts = require('./routes/posts');
-const others = require('./routes/main');
+const main = require('./routes/main');
 const users = require('./routes/users');
 const category = require('./routes/category');
 
@@ -50,7 +50,7 @@ app.use(session({
   resave: true,
   saveUninitialized: true,
   cookie: {
-    maxAge: 2*24*60*60*1000, //Login para 1 dia
+    maxAge: 86400000, //Login para 1 dia
   },
 }));
 
@@ -78,7 +78,7 @@ app.use(cors());
 app.use(expressLayouts);
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
-app.use('/', others);
+app.use('/', main);
 app.use('/posts', posts);
 app.use('/posts/details', posts);
 app.use('/users', users);
