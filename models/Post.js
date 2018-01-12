@@ -20,10 +20,15 @@ const PostSchema = new Schema({
     type: Date,
     default: Date.now(),
   },
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
+  author: {
+    type: String,
+    required: true,
   },
+
+  // user: {
+  //   type: Schema.Types.ObjectId,
+  //   ref: 'User',
+  // },
   status: {
     type: String,
   },
@@ -44,7 +49,7 @@ const PostSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: 'User',
     },
-  },]
+  }, ]
 });
 
 //export model, compila o Schema para o modelo que atribui o nome de partitura - nome do modelo

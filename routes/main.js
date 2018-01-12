@@ -17,6 +17,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/index', ensureAutheticated, (req, res) => {
+  console.log(req.user);
   Post.find({
       author: req.user.id,
     })
@@ -27,7 +28,6 @@ router.get('/index', ensureAutheticated, (req, res) => {
       res.render('dashboard', {
         title: 'Início | Blog Admin',
         layout: 'layouts/layout',
-        state: 'autenticado',
         posts: posts,
       });
     });
@@ -37,7 +37,6 @@ router.get('/categories', ensureAutheticated, (req, res) => {
   var locals = {
     title: 'Home | Blog Admin',
     layout: 'layouts/layout',
-    state: 'autenticado',
   };
   res.render('./categories/categories', locals);
 });
@@ -46,7 +45,6 @@ router.get('/profile', ensureAutheticated, (req, res) => {
   var locals = {
     title: 'Área Pessoal | Blog Admin',
     layout: 'layouts/layout',
-    state: 'autenticado',
   };
   res.render('profile', locals);
 });
@@ -55,7 +53,6 @@ router.get('/settings', ensureAutheticated, (req, res) => {
   var locals = {
     title: 'Configurações | Blog Admin',
     layout: 'layouts/layout',
-    state: 'autenticado',
   };
   res.render('settings', locals);
 });
@@ -72,7 +69,6 @@ router.get('/', ensureAutheticated, (req, res) => {
       res.render('index', {
         title: 'Início | Blog Admin',
         layout: 'layouts/layout',
-        state: 'autenticado',
         posts: posts,
       });
     });
@@ -89,7 +85,6 @@ router.get('/index', ensureAutheticated, (req, res) => {
       res.render('index', {
         title: 'Início | Blog Admin',
         layout: 'layouts/layout',
-        state: 'autenticado',
         posts: posts,
       });
     });
@@ -99,7 +94,6 @@ router.get('/categories', ensureAutheticated, (req, res) => {
   var locals = {
     title: 'Home | Blog Admin',
     layout: 'layouts/layout',
-    state: 'autenticado',
   };
   res.render('./categories/categories', locals);
 });
@@ -108,7 +102,6 @@ router.get('/profile', ensureAutheticated, (req, res) => {
   var locals = {
     title: 'Área Pessoal | Blog Admin',
     layout: 'layouts/layout',
-    state: 'autenticado',
   };
   res.render('profile', locals);
 });
@@ -117,7 +110,6 @@ router.get('/settings', ensureAutheticated, (req, res) => {
   var locals = {
     title: 'Configurações | Blog Admin',
     layout: 'layouts/layout',
-    state: 'autenticado',
   };
   res.render('settings', locals);
 });

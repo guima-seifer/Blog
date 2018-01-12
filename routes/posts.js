@@ -17,7 +17,6 @@ router.get('/', ensureAutheticated, (req, res) => {
       res.render('./posts/posts', {
         title: 'Postagens | Blog Admin',
         layout: 'layouts/layout',
-        state: 'autenticado',
         posts: posts,
       });
     });
@@ -28,7 +27,6 @@ router.get('/add', ensureAutheticated, (req, res) => {
   res.render('./posts/addpost', {
     title: 'Adicionar Postagem | Blog Admin',
     layout: 'layouts/layout',
-    state: 'autenticado',
     errors: [],
     postTitle: [],
     postCategory: [],
