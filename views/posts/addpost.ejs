@@ -13,7 +13,7 @@
               <h1>Adicionar Postagem</h1>
             </div>
             <div class="card-block">
-              <form method="POST" action="/posts/add" class="mx-3 my-3">
+              <form method="POST" enctype="multipart/form-data" action="/posts/add" class="mx-3 my-3">
                 <div class="form-group">
                   <label for="title" class="firm-control-label">Title</label>
                   <%if (locals.postTitle.length > 0) {%>
@@ -24,14 +24,13 @@
                         <input type="text" class="form-control" name="title" required>
                         <%}%>
                 </div>
-                <!-- //TODO: EJS AQUI locals.postCategory, como colocar um 'value="postCategory"' no select?  -->
                 <div class="form-group">
                   <label for="category" class="form-control-label">Category</label>
                   <select name="category" class="form-control" value=<%=postCategory%>>
                     <option value=""></option>
-                    <option value="exemplo1">Exemplo 1</option>
-                    <option value="exemplo2">Exemplo 2</option>
-                    <option value="exemplo3">Exemplo 3</option>
+                    <%for(let i = 0; i < categories.length; i++){%>
+                      <option value="<%= categories[i].name%>"><%= categories[i].name%></option>
+                    <%}%>
                   </select>
                 </div>
                 <div class="form-group bg-faded p-3">

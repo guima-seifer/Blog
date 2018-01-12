@@ -44,41 +44,29 @@
                 <th>#</th>
                 <th>Título</th>
                 <th>Data</th>
-                <th>Autor</th>
               </tr>
             </thead>
             <tbody>
+            <% moment.locale('pt_PT')%>
+              <% for(let i=0; i < categories.length; i++){%>
               <tr>
-                <td scope="row">1</td>
-                <td>Business</td>
-                <td>19 de Setembro de 2017</td>
-                <td>Fernando Guimarães</td>
+                <td scope="row"><%=i+1%></td>
+                <td><%= categories[i].name %></td>
+                <td><%= moment(categories[i].date).format('DD MMMM YYYY') %></td>
               </tr>
-              <tr>
-                <td scope="row">2</td>
-                <td>Web</td>
-                <td>19 de Setembro de 2017</td>
-                <td>Fernando Guimarães</td>
-              </tr>
-              <tr>
-                <td scope="row">3</td>
-                <td>Viagens</td>
-                <td>19 de Setembro de 2017</td>
-                <td>Fernando Guimarães</td>
-              </tr>
+              <%}%>
             </tbody>
           </table>
-          <nav class="ml-4">
-            <ul class="pagination">
-              <li class="page-item disabled"><a href="#" class="page-link ">Anterior</a></li>
-              <li class="page-item active"><a href="#" class="page-link ">1</a></li>
-              <li class="page-item"><a href="#" class="page-link">2</a></li>
-              <li class="page-item"><a href="#" class="page-link">3</a></li>
-              <li class="page-item"><a href="#" class="page-link">Próximo</a></li>
+          <!--<nav class="ml-4">-->
+            <!--<ul class="pagination">-->
+              <!--<li class="page-item disabled"><a href="#" class="page-link ">Anterior</a></li>-->
+              <!--<li class="page-item active"><a href="#" class="page-link ">1</a></li>-->
+              <!--<li class="page-item"><a href="#" class="page-link">2</a></li>-->
+              <!--<li class="page-item"><a href="#" class="page-link">3</a></li>-->
+              <!--<li class="page-item"><a href="#" class="page-link">Próximo</a></li>-->
 
-            </ul>
-          </nav>
-
+            <!--</ul>-->
+          <!--</nav>-->
         </div>
       </div>
     </div>

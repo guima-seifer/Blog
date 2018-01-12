@@ -18,6 +18,7 @@ const app = express();
 const posts = require('./routes/posts');
 const others = require('./routes/main');
 const users = require('./routes/users');
+const category = require('./routes/category');
 
 //Passport Config
 require('./config/passport')(passport);
@@ -49,7 +50,7 @@ app.use(session({
   resave: true,
   saveUninitialized: true,
   cookie: {
-    maxAge: 24*60*60*1000, //Login para 1 dia
+    maxAge: 2*24*60*60*1000, //Login para 1 dia
   },
 }));
 
@@ -76,12 +77,14 @@ app.use(cors());
 // view engine setup
 app.use(expressLayouts);
 app.set('view engine', 'ejs');
+app.set('views', __dirname + '/views');
 app.use('/', others);
 app.use('/posts', posts);
 app.use('/posts/details', posts);
 app.use('/users', users);
 app.use('/users/login', users);
 app.use('/auth',users);
+app.use('/categories',category);
 
 // uncomment after placing your favicon in /public
 //TODO: favicon

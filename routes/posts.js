@@ -1,7 +1,8 @@
 /*jshint esversion: 6 */
 const express = require('express');
-var router = express.Router();
-var Post = require('../models/Post');
+let router = express.Router();
+let Post = require('../models/Post');
+let Category = require('../models/Category');
 const { ensureAutheticated } = require('../helpers/auth');
 
 router.use(express.static('public'));
@@ -19,21 +20,32 @@ router.get('/', ensureAutheticated, (req, res) => {
         layout: 'layouts/layout',
         state: 'autenticado',
         posts: posts,
+        name : req.user.name
       });
     });
 });
 
 // Add Post Form
 router.get('/add', ensureAutheticated, (req, res) => {
-  res.render('./posts/addpost', {
-    title: 'Adicionar Postagem | Blog Admin',
-    layout: 'layouts/layout',
-    state: 'autenticado',
-    errors: [],
-    postTitle: [],
-    postCategory: [],
-    postBody: [],
+  Category.find({}, { name:1,_id:0 })
+      .sort({
+          name : 1
+      }).exec((err,categories) => {
+        if(!err){
+            res.render('./posts/addpost', {
+                title: 'Adicionar Postagem | Blog Admin',
+                layout: 'layouts/layout',
+                state: 'autenticado',
+                errors: [],
+                name : req.user.name,
+                postTitle: [],
+                postCategory: [],
+                postBody: [],
+                categories : categories
+            });
+        }
   });
+
 });
 
 router.get('/details/:idPost', ensureAutheticated, (req, res) => {
@@ -49,6 +61,7 @@ router.get('/details/:idPost', ensureAutheticated, (req, res) => {
         res.render('./posts/details', {
           title: 'Detalhes de ' + post.title + '| Blog Admin',
           layout: 'layouts/layout',
+          name : req.user.name,
           state: 'autenticado',
           post: post,
         });
@@ -82,6 +95,7 @@ router.post('/add', ensureAutheticated, (req, res) => {
       layout: 'layouts/layout',
       state: 'autenticado',
       errors: errors,
+      name : req.user.name,
       postTitle: req.body.title,
       postCategory: req.body.category,
       postBody: req.body.textarea,
