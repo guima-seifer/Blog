@@ -43,15 +43,6 @@ router.get('/index', ensureAutheticated, (req, res) => {
       });
     });
 });
-  
-  router.get('/categories', ensureAutheticated, (req, res) => {
-  var locals = {
-    title: 'Home | Blog Admin',
-    layout: 'layouts/layout',
-    name : req.user.name,
-  };
-  res.render('./categories/categories', locals);
-});
 
 router.get('/profile', ensureAutheticated, (req, res) => {
   var locals = {

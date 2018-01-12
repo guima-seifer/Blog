@@ -8,7 +8,8 @@
     "npm": "5.6.0"
   },
   "scripts": {
-    "start": "nodemon"
+    "start": "node app.js",
+    "dev" : "nodemon app.js"
   },
   "author": "Fernando Guimarães",
   "license": "ISC",
