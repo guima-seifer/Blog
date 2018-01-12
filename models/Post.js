@@ -49,4 +49,4 @@ const PostSchema = new Schema({
 });
 
 //export model, compila o Schema para o modelo que atribui o nome de partitura - nome do modelo
-module.exports = mongoose.model('Post', PostSchema);
+module.exports = mongoose.model('Post', PostSchema, 'posts');

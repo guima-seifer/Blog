@@ -8,12 +8,16 @@
     "npm": "5.6.0"
   },
   "scripts": {
+<<<<<<< HEAD
     "start": "nodemon"
+=======
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+>>>>>>> 570a5be63cc43bb4e1b357bb4730c78793f66687
   },
   "author": "Fernando Guimarães",
   "license": "ISC",
   "dependencies": {
-
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.2",
     "bootstrap": "^4.0.0-beta.3",
@@ -32,6 +36,7 @@
     "mongoose": "^5.0.0-rc0",
     "nodemon": "^1.14.3",
     "passport": "^0.4.0",
+    "passport-google-oauth": "^1.0.0",
     "passport-local": "^1.0.0",
     "popper.js": "^1.12.9"
   },
