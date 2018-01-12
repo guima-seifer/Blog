@@ -26,7 +26,6 @@ const PostSchema = new Schema({
   },
   status: {
     type: String,
-    required: true,
   },
   allowComments: {
     type: Boolean,
