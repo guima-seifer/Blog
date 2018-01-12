@@ -1,6 +1,116 @@
 <section>
   <div class="container">
-    <h1 class="mt-5">Bem-vindo</h1>
-    <p>Por favor inicie sessão.</p>
+	<div class="row">
+	  <div class="col-md-6">
+		<h1>
+		  <i class="fa fa-gear"></i> Painel
+		</h1>
+	  </div>
+	</div>
+  </div>
+</header>
+
+<!-- ACTIONS -->
+<section id="action" class="py-4 mb-4 bg-faded">
+  <div class="container">
+	<div class="row">
+	  <div class="col-md-6">
+		<!-- <a href="posts/add" class="btn btn-primary btn-block" data-toggle="modal" data-target="#addPostModal"><i class="fa fa-plus"></i> Adicionar Postagem</a> -->
+		<a href="/posts/add" class="btn btn-primary btn-block"><i class="fa fa-plus"></i> Adicionar Postagem</a>
+
+	  </div>
+	  <div class="col-md-6">
+		<a href="/category/add" class="btn btn-success btn-block" data-toggle="modal" data-target="#addCategoryModal"><i class="fa fa-plus"></i> Adicionar Categoria</a>
+	  </div>
+	</div>
   </div>
 </section>
+
+<%-include('./partials/_msg')%>
+
+<!-- TABLE AREA -->
+<section id="table-area-section">
+  <div class="container">
+	<div class="row">
+	  <div class="col-md-12 col-lg-9">
+		<div class="card border-primary">
+		  <div class="card-header bg-primary text-white">
+			<h4>Postagens Recentes</h4>
+		  </div>
+		  <table class="table table-responsive table-hover">
+			<thead class="thead-dark">
+			  <tr>
+				<th>#</th>
+				<th>Título</th>
+				<th>Data</th>
+				<th>Autor</th>
+				<th></th>
+			  </tr>
+			</thead>
+			<tbody class="">
+			<%if(posts.length > 0){%>
+			<% for(var i=posts.length-1; 0<=i; i--){ %>
+			<tr>
+			  <td scope="row"><%-i-%></td>
+			  <td><%= posts[i].title %> <p class="text-muted"><%= posts[i].category %></p></td>
+			  <!-- <td><%= posts[i].category %></td> -->
+			  <td><%= posts[i].date %></td>
+			  <td><%= posts[i].author %></td>
+			  <td><a href="/posts/details/<%= posts[i]._id %>" class="btn btn-secondary"><i class="fa fa-angle-double-right"></i> Details</a></td>
+
+			</tr>
+			<%} %>
+
+			<%}else{%>
+			<p>Não foram adicionados nenhuns posts :-O</p>
+			<%}%>
+			</tbody>
+		  </table>
+		</div>
+	  </div>
+
+	  <div class="col-lg-3 col-md-6 mb-5">
+		<div class="card text-center  border-primary mb-3">
+		  <div class="card-header text-white bg-primary">
+			<h4 class="card-title mt-2"><i class="fa fa-pencil"></i> Postagens</h4>
+		  </div>
+		  <div class="card-block card-text">
+			<h1 class="display-4"><%=posts.length%></h1>
+			<div class="card-footer">
+			  <a href="posts" class="btn btn-lg btn-primary "> Ver</a>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	</div>
+  </div>
+</section>
+
+<!-- MODALS (ADD CATEGORY)  -->
+<div class="modal fade" id="addCategoryModal">
+  <div class="modal-dialog modal-lg">
+	<div class="modal-content">
+	  <div class="modal-header bg-success text-white">
+		<h5 class="modal-title" id="addPostModalLabel">Adicionar Categoria</h5>
+		<button class="close" data-dismiss="modal"><span>&times;</span></button>
+	  </div>
+	  <div class="modal-body">
+		<form method="POST" action="/categories/add">
+		  <div class="form-group">
+			<label for="title" class="form-control-label">Nome da nova categoria</label>
+			<input type="text" class="form-control" name="title" id="title" placeholder="Nome">
+		  </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    <input class="btn btn-success" type="submit" value="Adicionar categoria"/>
+                </div>
+		</form>
+	  </div>
+	</div>
+  </div>
+
+  <script src="https://cdn.ckeditor.com/4.8.0/standard/ckeditor.js"></script>
+  <script>
+  CKEDITOR.replace('textarea');
+</script>
+

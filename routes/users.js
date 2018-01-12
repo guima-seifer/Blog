@@ -4,14 +4,16 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const router = express.Router();
+const { ensureAutheticated } = require('../helpers/auth');
 var User = require('../models/User');
 
 router.use(express.static('public'));
 
-router.get('/', (req, res) => {
+router.get('/', ensureAutheticated , (req, res) => {
   var locals = {
     title: 'Utilizadores | Blog Admin',
     layout: 'layouts/layout',
+    name : req.user.name,
     state: 'autenticado',
   };
   res.render('./users/users', locals);
