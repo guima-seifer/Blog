@@ -7,21 +7,13 @@ const {
 } = require('../helpers/auth');
 
 //Routes
-router.get('/', ensureAutheticated, (req, res) => {
-  Post.find({
-      author: req.user.id,
-    })
-    .sort({
-      date: 'desc',
-    })
-    .then(posts => {
-      res.render('index', {
-        title: 'Início | Blog Admin',
-        layout: 'layouts/layout',
-        state: 'autenticado',
-        posts: posts,
-      });
-    });
+router.get('/', (req, res) => {
+
+  res.render('index', {
+    title: 'Início | Blog Admin',
+    layout: 'layouts/layout',
+    state: 'autenticado',
+  });
 });
 
 router.get('/index', ensureAutheticated, (req, res) => {
@@ -32,7 +24,7 @@ router.get('/index', ensureAutheticated, (req, res) => {
       date: 1,
     })
     .then(posts => {
-      res.render('index', {
+      res.render('dashboard', {
         title: 'Início | Blog Admin',
         layout: 'layouts/layout',
         state: 'autenticado',

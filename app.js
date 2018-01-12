@@ -16,7 +16,7 @@ const app = express();
 
 //Load routes
 const posts = require('./routes/posts');
-const others = require('./routes/main');
+const main = require('./routes/main');
 const users = require('./routes/users');
 
 //Passport Config
@@ -49,7 +49,7 @@ app.use(session({
   resave: true,
   saveUninitialized: true,
   cookie: {
-    maxAge: 60000,
+    maxAge: 86400000,
   },
 }));
 
@@ -76,7 +76,7 @@ app.use(cors());
 // view engine setup
 app.use(expressLayouts);
 app.set('view engine', 'ejs');
-app.use('/', others);
+app.use('/', main);
 app.use('/posts', posts);
 app.use('/posts/details', posts);
 app.use('/users', users);

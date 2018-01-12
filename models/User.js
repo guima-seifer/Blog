@@ -8,6 +8,9 @@ const PostSchema = new Schema({
   email: { type: String, required: true },
   password: { type: String, required: true },
   date: { type: Date, default: Date.now },
+  bio: { type: String, required: false },
+  avatar: { type: String, required: false },
+
 });
 
 //export model, compila o Schema para o modelo que atribui o nome de partitura - nome do modelo
