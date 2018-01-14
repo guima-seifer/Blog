@@ -1,5 +1,6 @@
 /*jshint esversion: 6 */
 const express = require('express');
+const moment = require('moment');
 var router = express.Router();
 var Post = require('../models/Post');
 const {
@@ -15,9 +16,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/index', ensureAutheticated, (req, res) => {
-  Post.find({
-      author: req.user.id,
-    })
+  Post.find({})
     .sort({
       date: 1,
     })
@@ -27,6 +26,7 @@ router.get('/index', ensureAutheticated, (req, res) => {
         layout: 'layouts/layout',
         name: req.user.name,
         posts: posts,
+        moment: moment,
       });
     });
 });

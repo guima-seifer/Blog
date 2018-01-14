@@ -15,7 +15,7 @@ router.get('/', ensureAutheticated, (req, res) => {
   Category.find({}, {
       name: 1,
       date: 1,
-      _id: 0,
+      _id: 1,
     })
     .sort({
       date: -1,
@@ -28,6 +28,7 @@ router.get('/', ensureAutheticated, (req, res) => {
           name: req.user.name,
           moment: moment,
         };
+        console.log(locals);
         res.render('./categories/categories', locals);
       }
     });
@@ -47,6 +48,17 @@ router.post('/add', ensureAutheticated, (req, res) => {
       console.log(err);
     }
   });
+});
+
+//delete post process
+router.delete('/delete/:id', ensureAutheticated, (req, res) => {
+  Category.remove({
+      _id: req.params.id,
+    })
+    .then(() => {
+      req.flash('success_msg', 'Categoria eliminada com suceso');
+      res.redirect('/categories');
+    });
 });
 
 module.exports = router;

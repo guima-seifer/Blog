@@ -24,6 +24,10 @@ const PostSchema = new Schema({
     type: String,
     required: true,
   },
+  authorName: {
+    type: String,
+    required: true,
+  },
 
   // user: {
   //   type: Schema.Types.ObjectId,
@@ -33,8 +37,7 @@ const PostSchema = new Schema({
     type: String,
   },
   allowComments: {
-    type: Boolean,
-    default: true,
+    type: String,
   },
   comments: {
     commentBody: {

@@ -1,5 +1,4 @@
-
-<header id="main-header" class="pt-3 bg-primary text-white">
+<header id="main-header" class="pt-3 text-white" style="background-color: #236475;">
   <div class="container">
     <div class="row">
       <div class="col-md-6">
@@ -16,64 +15,86 @@
   <div class="container">
     <div class="row">
       <div class="col-md-3 mr-auto">
-        <a href="index.html" class="btn btn-secondary btn-block"><i class="fa fa-arrow-left"> Voltar</i></a>
+        <a href="/index" class="btn btn-info btn-block"><i class="fa fa-arrow-left"></i> Voltar</a>
       </div>
-      <form action="/posts/details/<%=post._id%>?_method=DELETE"  method="post" class="mr-3">
+      <form action="/posts/details/<%=post._id%>?_method=DELETE" method="post" class="mr-3">
         <input type="hidden" name="_method" value="DELETE">
-        <input type="submit" name="DELETE" class="btn btn-danger btn-block" value="Eliminar"></input>
-    </form>
+        <input type="submit" name="DELETE" class="btn btn-secondary btn-block" value="Eliminar"></input>
+      </form>
     </div>
   </div>
 </section>
 
 <%-include('../partials/_msg')%>
 
-<!-- POST EDIT -->
-<section id="edit-post-section" class="mb-5">
-  <div class="container">
-    <div class="row">
-      <div class="col">
-        <div class="card border-primary">
-          <div class="card-header bg-primary text-white">
-            <h4>Editar Postagem</h4>
-          </div>
-          <div class="card-block">
-            <form action="/posts/details/<%=post._id%>?_method=PUT" method="post" class="mx-3 my-3">
-              <input type="hidden" name="_method" value="PUT">
-              <div class="form-group">
-                <label for="title" class="firm-control-label" value="<%= post.title %>"></label>
-                <input name="title" type="text" class="form-control" value="<%= post.title %>">
-              </div>
-              <div class="form-group">
-                <label for="category" class="form-control-label">Category</label>
-                <select name="category" class="form-control">
-                  <option value="<%= post.category %>" selected><%= post.category %></option>
-                  <option value="">Exemplo 1</option>
-                  <option value="">Exemplo 2</option>
-                  <option value="">Exemplo 3</option>
-                </select>
-              </div>
-              <div class="form-group bg-faded p-3">
-                <label for="file">Image Upload</label>
-                <input type="file" name="" value="" class="form-control-file" id="file">
-                <small id="fileHelp" class="form-text text-muted">Tamanho máx 3MB</small>
-              </div>
-              <div class="form-group">
-                <label for="body"></label>
+  <!-- POST EDIT -->
+  <section id="edit-post-section" class="mb-5">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <div class="card border-primary">
+            <div class="card-header bg-primary text-white">
+              <h4>Editar Postagem</h4>
+            </div>
+            <div class="card-block">
+              <form action="/posts/details/<%=post._id%>?_method=PUT" method="post" class="mx-3 my-3">
+                <input type="hidden" name="_method" value="PUT">
+                <div class="form-group">
+                  <label for="title" class="firm-control-label" value="<%= post.title %>"></label>
+                  <input name="title" type="text" class="form-control" value="<%= post.title %>">
+                </div>
+                <div class="form-group">
+                  <label for="category" class="form-control-label">Category</label>
+                  <select name="category" class="form-control" value=<%=post.category%>>
+                    <option value="<%=post.category%>"><%=post.category%></option>
+                      <%for(let i = 0; i < categories.length; i++){%>
+                      <option value="<%= categories[i].name%>"><%= categories[i].name%></option>
+                      <%}%>
+                    </select>
+                </div>
+                <div class="form-group bg-faded p-3">
+                  <label for="file">Image Upload</label>
+                  <input type="file" name="" value="" class="form-control-file" id="file">
+                  <small id="fileHelp" class="form-text text-muted">Tamanho máx 3MB</small>
+                </div>
 
-                <textarea name="textarea" class="form-control"><%= post.body %></textarea>
-              </div>
-              <input type="submit" name="PUT" class="btn btn-success btn-block" value="Gravar"></input>
-            </form>
-          </div>
+                <div class="form-check">
+                  <input class="form-check-input"   <%if(post.allowComments === 'on') {%> checked <%}%> type="checkbox" name="checkComments" id="checkComments">
+                  <label class="form-check-label" for="defaultCheck1">
+                    Permitir comentários
+                  </label>
+                </div>
+                <div class="form-group">
+                  <label for="body"></label>
 
+                  <textarea name="textarea" class="form-control"><%= post.body %></textarea>
+                </div>
+                <input type="submit" name="PUT" class="btn btn-success btn-block" value="Gravar"></input>
+              </form>
+            </div>
+
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<script src="https://cdn.ckeditor.com/4.8.0/standard/ckeditor.js"></script>
-<script>
-CKEDITOR.replace('textarea');
-</script>
+  <% if(post.allowComments === 'on') {%>
+    <section>
+      <div class="container">
+        <div class="card">
+          <div class="card-header bg-primary text-white">
+            <span class="card-title">Comentários</span>
+          </div>
+          <div class="card-block">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <%}%>
+
+      <script src="https://cdn.ckeditor.com/4.8.0/standard/ckeditor.js"></script>
+      <script>
+        CKEDITOR.replace('textarea');
+      </script>

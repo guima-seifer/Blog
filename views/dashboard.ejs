@@ -14,13 +14,13 @@
 <section id="action" class="py-4 mb-4 bg-faded">
   <div class="container">
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-3">
         <!-- <a href="posts/add" class="btn btn-primary btn-block" data-toggle="modal" data-target="#addPostModal"><i class="fa fa-plus"></i> Adicionar Postagem</a> -->
-        <a href="/posts/add" class="btn btn-secondary btn-block"><i class="fa fa-plus"></i> Adicionar Postagem</a>
+        <a href="/posts/add" class="btn btn-info btn-block"><i class="fa fa-plus"></i> Adicionar Postagem</a>
 
       </div>
-      <div class="col-md-6">
-        <a href="/category/add" class="btn btn-secondary btn-block" data-toggle="modal" data-target="#addCategoryModal"><i class="fa fa-plus"></i> Adicionar Categoria</a>
+      <div class="col-md-3">
+        <a href="/category/add" class="btn btn-info btn-block" data-toggle="modal" data-target="#addCategoryModal"><i class="fa fa-plus"></i> Adicionar Categoria</a>
       </div>
     </div>
   </div>
@@ -37,59 +37,64 @@
             <div class="card-header bg-primary text-white">
               <h4>Postagens Recentes</h4>
             </div>
-            <table class="table table-responsive table-hover">
-              <thead class="thead-dark">
-                <tr>
-                  <th class="">#</th>
-                  <th class="w-25">Título</th>
-                  <th class="w-25">Data</th>
-                  <th class="w-25">Autor</th>
-                  <th class="w-25"></th>
-                </tr>
-                </tr>
-              </thead>
-              <tbody class="">
-                <%if(posts.length > 0){%>
+            <%if(posts.length > 0){%>
+              <table class="table table-responsive table-hover">
+                <thead class="thead-dark">
+                  <tr>
+                    <th class="">#</th>
+                    <th class="w-50">Título</th>
+                    <th class="w-25">Autor</th>
+                    <th class="w-25 text-center">Ação</th>
+                  </tr>
+                  </tr>
+                </thead>
+                <tbody class="">
+                  <% moment.locale('pt_PT')%>
                   <% for(var i=posts.length-1; 0<=i; i--){ %>
                     <tr>
                       <td scope="row">
-                        <%-i-%>
+                        <%-i+1-%>
                       </td>
                       <td>
+                        <p class="text-muted">
+                        <%= moment(posts[i].date).format('DD-MM-YYYY HH:MM:SS') %>
+                      </p>
+
                         <%= posts[i].title %>
                           <p class="text-muted">
                             <%= posts[i].category %>
                           </p>
                       </td>
                       <!-- <td><%= posts[i].category %></td> -->
-                      <td>
-                        <%= posts[i].date %>
+
+                      <td class="pt-5">
+                        <%= posts[i].authorName %>
                       </td>
-                      <td>
-                        <%= posts[i].author %>
-                      </td>
-                      <td><a href="/posts/details/<%= posts[i]._id %>" class="btn btn-secondary"><i class="fa fa-angle-double-right"></i> Details</a></td>
+                      <td class="text-center pt-5"><a href="/posts/details/<%= posts[i]._id %>" class="btn btn-secondary"><i class="fa fa-angle-double-right"></i> Detalhes</a></td>
 
                     </tr>
                     <%} %>
 
-                      <%}else{%>
-                        <p>Não foram adicionados nenhums posts :-O</p>
-                        <%}%>
-              </tbody>
-            </table>
+
+                </tbody>
+              </table>
+              <%}else{%>
+                <div class="text-center mt-3">
+                  <p>Não foram adicionados nenhums posts :-O</p>
+                </div>
+                <%}%>
           </div>
         </div>
 
-        <div class="col-lg-3 col-md-6 mb-5">
+        <div class="col-lg-3 col-md-6 mb-5" id="info-card">
           <div class="card text-center  border-primary mb-3">
             <div class="card-header text-white bg-primary">
               <h4 class="card-title mt-2"><i class="fa fa-pencil"></i> Postagens</h4>
             </div>
-            <div class="card-block card-text">
+            <div class="card-block card-text mt-3">
               <h1 class="display-4"><%=posts.length%></h1>
               <div class="card-footer">
-                <a href="posts" class="btn btn-lg btn-primary "> Ver</a>
+                <a href="posts" class="btn btn-lg btn-info "> Ver</a>
               </div>
             </div>
           </div>

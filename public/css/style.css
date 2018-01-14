@@ -8,3 +8,9 @@ body {
 @media (max-width: 576px) {
   nav .container {
     width: 100%; } }
+
+
+    @media (max-width: 992px) {
+      #info-card{
+      margin-top: 5rem;
+} }

@@ -1,5 +1,6 @@
 /*jshint esversion: 6 */
 const express = require('express');
+const moment = require('moment');
 let router = express.Router();
 let Post = require('../models/Post');
 let Category = require('../models/Category');
@@ -22,6 +23,7 @@ router.get('/', ensureAutheticated, (req, res) => {
         layout: 'layouts/layout',
         posts: posts,
         name: req.user.name,
+        moment: moment,
       });
     });
 });
@@ -52,6 +54,7 @@ router.get('/add', ensureAutheticated, (req, res) => {
 
 });
 
+/* TODO: Create conditions for a certain user to be able to edit another user post */
 router.get('/details/:idPost', ensureAutheticated, (req, res) => {
   Post.findOne({
       _id: req.params.idPost,
@@ -61,14 +64,22 @@ router.get('/details/:idPost', ensureAutheticated, (req, res) => {
         req.flash('error_msg', 'Oops, não estás autorizado');
         res.redirect('/posts');
       } else {
-
-        res.render('./posts/details', {
-          title: 'Detalhes de ' + post.title + '| Blog Admin',
-          layout: 'layouts/layout',
-          name: req.user.name,
-          state: 'autenticado',
-          post: post,
-        });
+        Category.find({}, {
+            name: 1,
+            _id: 0,
+          })
+          .sort({
+            name: 1,
+          }).exec((err, categories) => {
+            res.render('./posts/details', {
+              title: 'Detalhes de ' + post.title + '| Blog Admin',
+              layout: 'layouts/layout',
+              name: req.user.name,
+              state: 'autenticado',
+              post: post,
+              categories: categories,
+            });
+          });
       }
     });
 });
@@ -102,8 +113,9 @@ router.post('/add', ensureAutheticated, (req, res) => {
       postCategory: req.body.category,
       postBody: req.body.textarea,
       author: req.user.id,
+      authorName: req.user.name,
+      allowComments: req.body.checkComments,
     };
-    console.log(req.body);
     res.render('./posts/addpost', locals);
   } else {
     const User = {};
@@ -113,6 +125,7 @@ router.post('/add', ensureAutheticated, (req, res) => {
       category: req.body.category,
       body: req.body.textarea,
       author: req.user.id,
+      authorName: req.user.name,
     };
     new Post(newUser)
       .save()
@@ -140,12 +153,12 @@ router.put('/details/:idPost', ensureAutheticated, (req, res) => {
       _id: req.params.idPost,
     })
     .then(post => {
-      // console.log(req.body);
       //new values
       post.title = req.body.title;
       post.category = req.body.category;
       post.body = req.body.textarea;
-      post.author = 'Teste editado';
+      post.author = req.user.id;
+      post.allowComments = req.body.checkComments;
       post.save().then(post => {
         req.flash('success_msg', 'Postagem editada com sucesso');
         res.redirect('/posts');
