@@ -1,10 +1,21 @@
 <header id="main-header" class="pt-3 bg-success text-white">
   <div class="container">
-    <div class="row">
-      <div class="col-md-6">
+    <div class="row mb-4">
+      <div class="col-lg-6">
         <h1>
           <i class="fa fa-folder-open-o"></i> Categorias
         </h1>
+      </div>
+      <div class="col-lg-6 push-lg-3">
+        <div class="input-group">
+          <input type="text" name="" value="" placeholder="Categorias.." class="form-control">
+          <span class="input-group-btn">
+            <button class="btn btn-info">
+              Procurar
+            </button>
+          </span>
+        </div>
+
       </div>
     </div>
   </div>
@@ -14,20 +25,15 @@
 <section id="action" class="py-4 mb-4 bg-faded">
   <div class="container">
     <div class="row">
-      <div class="col-md-4 push-8">
-        <div class="input-group">
-          <input type="text" name="" value="" placeholder="Categorias.." class="form-control">
-          <span class="input-group-btn">
-            <button class="btn btn-success">
-              Procurar
-            </button>
-          </span>
-        </div>
 
+      <div class="col-md-6">
+        <!-- <a href="posts/add" class="btn btn-primary btn-block" data-toggle="modal" data-target="#addPostModal"><i class="fa fa-plus"></i> Adicionar Postagem</a> -->
+        <a href="/categories/add" class="btn btn-success btn-block"  data-toggle="modal" data-target="#addCategoryModal"><i class="fa fa-plus"></i> Adicionar Categoria</a>
       </div>
     </div>
-  </div>
 </section>
+
+<%-include('../partials/_msg')%>
 
 <!-- TABLE AREA -->
 <section id="table-area-section">
@@ -47,28 +53,64 @@
               </tr>
             </thead>
             <tbody>
-            <% moment.locale('pt_PT')%>
-              <% for(let i=0; i < categories.length; i++){%>
-              <tr>
-                <td scope="row"><%=i+1%></td>
-                <td><%= categories[i].name %></td>
-                <td><%= moment(categories[i].date).format('DD MMMM YYYY') %></td>
-              </tr>
-              <%}%>
+              <% moment.locale('pt_PT')%>
+                <% for(let i=0; i < categories.length; i++){%>
+                  <tr>
+                    <td scope="row">
+                      <%=i+1%>
+                    </td>
+                    <td>
+                      <%= categories[i].name %>
+                    </td>
+                    <td>
+                      <%= moment(categories[i].date).format('DD MMMM YYYY') %>
+                    </td>
+                  </tr>
+                  <%}%>
             </tbody>
           </table>
           <!--<nav class="ml-4">-->
-            <!--<ul class="pagination">-->
-              <!--<li class="page-item disabled"><a href="#" class="page-link ">Anterior</a></li>-->
-              <!--<li class="page-item active"><a href="#" class="page-link ">1</a></li>-->
-              <!--<li class="page-item"><a href="#" class="page-link">2</a></li>-->
-              <!--<li class="page-item"><a href="#" class="page-link">3</a></li>-->
-              <!--<li class="page-item"><a href="#" class="page-link">Próximo</a></li>-->
+          <!--<ul class="pagination">-->
+          <!--<li class="page-item disabled"><a href="#" class="page-link ">Anterior</a></li>-->
+          <!--<li class="page-item active"><a href="#" class="page-link ">1</a></li>-->
+          <!--<li class="page-item"><a href="#" class="page-link">2</a></li>-->
+          <!--<li class="page-item"><a href="#" class="page-link">3</a></li>-->
+          <!--<li class="page-item"><a href="#" class="page-link">Próximo</a></li>-->
 
-            <!--</ul>-->
+          <!--</ul>-->
           <!--</nav>-->
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<!-- MODALS (ADD CATEGORY)  -->
+<div class="modal fade" id="addCategoryModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-success text-white">
+        <h5 class="modal-title" id="addPostModalLabel">Adicionar Categoria</h5>
+        <button class="close" data-dismiss="modal"><span>&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" action="/categories/add">
+          <div class="form-group">
+            <label for="title" class="form-control-label">Nome da nova categoria</label>
+            <input type="text" class="form-control" name="title" id="title" placeholder="Nome">
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            <input class="btn btn-success" type="submit" value="Adicionar categoria" />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+
+  <script src="https://cdn.ckeditor.com/4.8.0/standard/ckeditor.js"></script>
+  <script>
+    CKEDITOR.replace('textarea');
+  </script>

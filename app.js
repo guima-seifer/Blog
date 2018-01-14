@@ -83,8 +83,8 @@ app.use('/posts', posts);
 app.use('/posts/details', posts);
 app.use('/users', users);
 app.use('/users/login', users);
-app.use('/auth',users);
-app.use('/categories',category);
+app.use('/auth', users);
+app.use('/categories', category);
 
 // uncomment after placing your favicon in /public
 //TODO: favicon

@@ -1,37 +1,38 @@
 <div class="container">
-  <div class="card border-primary my-5">
 
-    <%if (locals.errors.length > 0) {%>
-      <% for(var i=0; i<locals.errors.length; i++){ %>
-        <div class="alert alert-danger mt-3">
-          <%= errors[i].text %>
-        </div>
-        <%} %>
-          <%}%>
+  <%if (locals.errors.length > 0) {%>
+    <% for(var i=0; i<locals.errors.length; i++){ %>
+      <div class="alert alert-danger mt-3">
+        <%= errors[i].text %>
+      </div>
+      <%} %>
+        <%}%>
+          <div class="card border-primary my-5">
+
+
 
             <div class="card-header bg-primary text-white">
               <h1>Adicionar Postagem</h1>
             </div>
             <div class="card-block">
-              <form method="POST" enctype="multipart/form-data" action="/posts/add" class="mx-3 my-3">
+              <form method="POST" action="/posts/add" class="mx-3 my-3">
                 <div class="form-group">
                   <label for="title" class="firm-control-label">Title</label>
                   <%if (locals.postTitle.length > 0) {%>
                     <%=postTitle%>
-                      <input type="text" class="form-control" name="title" value="<%=postTitle%>" required>
-
+                      <input type="text" class="form-control" name="title" id="title" value="<%=postTitle%>" required>
                       <%} else {%>
-                        <input type="text" class="form-control" name="title" required>
+                        <input type="text" class="form-control" name="title" id="title" required>
                         <%}%>
                 </div>
                 <div class="form-group">
                   <label for="category" class="form-control-label">Category</label>
                   <select name="category" class="form-control" value=<%=postCategory%>>
                     <option value=""></option>
-                    <%for(let i = 0; i < categories.length; i++){%>
+                      <%for(let i = 0; i < categories.length; i++){%>
                       <option value="<%= categories[i].name%>"><%= categories[i].name%></option>
-                    <%}%>
-                  </select>
+                      <%}%>
+                    </select>
                 </div>
                 <div class="form-group bg-faded p-3">
                   <label for="file">Image Upload</label>
@@ -41,23 +42,23 @@
                 <div class="form-group">
                   <label for="body">Body</label>
                   <textarea name="textarea" class="form-control" rows="3" required><%if (locals.postBody.length > 0) {%>
-                    <%=postBody%><%}%></textarea>
+                      <%=postBody%><%}%></textarea>
                 </div>
             </div>
             <%
-            var d = new Date();
-            var data = d.getUTCDate()
-            %>
+                  var d = new Date();
+                  var data = d.getUTCDate()
+                  %>
 
               <div class="card-footer">
                 <button class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                <button type="submit" class="btn btn-primary">Adicionar Post</button>
-              </form>
+                <button class="btn btn-primary" value="">Adicionar Postagem</button>
               </div>
-  </div>
-</div>
 
-<script src="https://cdn.ckeditor.com/4.8.0/standard/ckeditor.js"></script>
-<script>
-  CKEDITOR.replace('textarea');
-</script>
+                </form>
+          </div>
+
+          <script src="https://cdn.ckeditor.com/4.8.0/standard/ckeditor.js"></script>
+          <script>
+            CKEDITOR.replace('textarea');
+          </script>

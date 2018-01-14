@@ -4,17 +4,18 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const router = express.Router();
-const { ensureAutheticated } = require('../helpers/auth');
+const {
+  ensureAutheticated,
+} = require('../helpers/auth');
 var User = require('../models/User');
 
 router.use(express.static('public'));
 
-router.get('/', ensureAutheticated , (req, res) => {
+router.get('/', ensureAutheticated, (req, res) => {
   var locals = {
     title: 'Utilizadores | Blog Admin',
     layout: 'layouts/layout',
-    name : req.user.name,
-    state: 'autenticado',
+    name: req.user.name,
   };
   res.render('./users/users', locals);
 });
@@ -23,7 +24,6 @@ router.get('/login', (req, res) => {
   var locals = {
     title: 'Iniciar Sessão | Blog Admin',
     layout: 'layouts/layout',
-    state: 'null',
   };
   res.render('./users/login', locals);
 });
@@ -74,6 +74,7 @@ router.post('/register', (req, res) => {
   }
 
   if (errors.length > 0) {
+    console.log(req.body);
     res.render('./users/register', {
       title: 'Registar conta | Blog Admin',
       layout: 'layouts/layout',
@@ -118,13 +119,15 @@ router.post('/register', (req, res) => {
 });
 
 //GOOGLE
-router.get('/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
+router.get('/google', passport.authenticate('google', {
+  scope: ['profile', 'email'],
+}));
 
 // the callback after google has authenticated the user
 router.get('/google/callback',
-    passport.authenticate('google', {
-        successRedirect : '/index',
-        failureRedirect : '/users/login'
-    }));
+  passport.authenticate('google', {
+    successRedirect: '/index',
+    failureRedirect: '/users/login',
+  }));
 
 module.exports = router;

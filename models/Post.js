@@ -36,10 +36,9 @@ const PostSchema = new Schema({
     type: Boolean,
     default: true,
   },
-  comments: [{
+  comments: {
     commentBody: {
       type: String,
-      required: true,
     },
     commentDate: {
       type: Date,
@@ -49,7 +48,7 @@ const PostSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: 'User',
     },
-  }, ]
+  },
 });
 
 //export model, compila o Schema para o modelo que atribui o nome de partitura - nome do modelo
