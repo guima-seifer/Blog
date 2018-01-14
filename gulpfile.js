@@ -24,7 +24,7 @@ gulp.task('js', function () {
 gulp.task('serve', ['sass'], function () {
   browserSync.init({
     server: './',
-    port: 3333,
+    port: 3334,
   });
   gulp.watch(['node_modules/bootstrap/scss/bootstrap.scss', 'src/scss/*.scss'], ['sass']);
   gulp.watch('views/*.ejs').on('change', browserSync.reload);

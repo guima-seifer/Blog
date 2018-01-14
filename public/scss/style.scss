@@ -1,13 +1,11 @@
-$bg-color:#333;
-$font-color:#fff;
-$primary-color: #3292a6;
-$primary-overlay: rgba(50,146,166,0.6);
-$accent-color: #f0ad4e;
+$bg-color:#D9ECF2;
+
 $landing-icon-size: 30px;
 
 @import url('https://fonts.googleapis.com/css?family=Open+Sans|Roboto:300|Pacifico|Lato');
 
 body{
+  background-color: $bg-color;
   h1,h2,h3{
   font-family: 'Roboto', sans-serif;
 }
