@@ -2,22 +2,21 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <%-include('../partials/_head')%>
 </head>
+
 <body id="painel">
 
-    <%-include('../partials/_navbar')%>
+  <%-include('../partials/_navbar')%>
 
     <%- body -%>
 
+      <section class="my-5">
+        <%-include('../partials/_footer')%>
+      </section>
+</body>
+<%-include('../partials/_scripts')%>
 
-<footer class="mt-5">
-  <%-include('../partials/_footer')%>
-</footer>
-
-
-  </body>
-  <%-include('../partials/_scripts')%>
-
-  </html>
+</html>
