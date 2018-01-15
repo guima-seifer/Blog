@@ -9,10 +9,14 @@ const {
 
 //Routes
 router.get('/', (req, res) => {
-  res.render('index', {
-    title: 'Início | Blog Admin',
-    layout: 'layouts/layout',
-  });
+  if(req.user === undefined){
+      res.render('index', {
+          title: 'Início | Blog Admin',
+          layout: 'layouts/layout',
+      });
+  } else {
+    res.redirect('/index');
+  }
 });
 
 router.get('/index', ensureAutheticated, (req, res) => {

@@ -6,17 +6,6 @@
           <i class="fa fa-folder-open-o"></i> Categorias
         </h1>
       </div>
-      <div class="col-lg-6">
-        <div class="input-group">
-          <input type="text" name="" value="" placeholder="Categorias.." class="form-control">
-          <span class="input-group-btn">
-            <button class="btn btn-info">
-              Procurar
-            </button>
-          </span>
-        </div>
-
-      </div>
     </div>
   </div>
 </header>
@@ -44,45 +33,47 @@
             <div class="card-header bg-primary text-white">
               <h4>Categorias Recentes</h4>
             </div>
-            <%if(categories.length > 0){%>
-            <table class="table table-striped">
-              <thead class="thead-inverse">
+            <div class="container" style="margin: 10px 50px 50px 10px;">
+              <table class="table table-striped" id="tableCategories">
+                <thead class="thead-inverse">
                 <tr>
                   <th>#</th>
                   <th>Título</th>
                   <th>Data</th>
                   <th class="text-center">Ação</th>
                 </tr>
-              </thead>
-              <tbody>
+                </thead>
+                <tbody>
                 <% moment.locale('pt_PT')%>
-                  <% for(let i=0; i < categories.length; i++){%>
-                    <tr>
-                      <td scope="row">
-                        <%=i+1%>
-                      </td>
-                      <td>
-                        <%= categories[i].name %>
-                      </td>
-                      <td>
-                        <%= moment(categories[i].date).format('DD MMMM YYYY') %>
-                      </td>
-                      <td class="text-center">
-                        <form action="/categories/delete/<%= categories[i]._id%>?_method=DELETE" method="post">
-                          <input type="hidden" name="_method" value="DELETE">
-<!--TODO: <i class="fa fa-times text-danger"></i>  Instead of input button-->
-                          <input type="submit" name="DELETE" class="btn border-secondary text-secondary bg-white" value="Eliminar">
-                        </form>
-                      </td>
-                    </tr>
-                    <%}%>
-              </tbody>
-            </table>
-            <%}else{%>
-              <div class="text-center mt-3">
-                <p>Não foram adicionados nenhums posts :-O</p>
-              </div>
-              <%}%>
+                <% for(let i=0; i < categories.length; i++){%>
+                <tr>
+                  <td scope="row">
+                      <%=i+1%>
+                  </td>
+                  <td>
+                      <%= categories[i].name %>
+                  </td>
+                  <td>
+                      <%= moment(categories[i].date).format('DD MMMM YYYY') %>
+                  </td>
+                  <td class="text-center">
+                    <form action="/categories/delete/<%= categories[i]._id%>?_method=DELETE" method="post">
+                      <input type="hidden" name="_method" value="DELETE">
+                      <!--TODO: <i class="fa fa-times text-danger"></i>  Instead of input button-->
+                      <input type="submit" name="DELETE" class="btn border-secondary text-secondary bg-white" value="Eliminar">
+                    </form>
+                  </td>
+                </tr>
+                <%}%>
+                </tbody>
+              </table>
+            </div>
+            <!--<%if(categories.length > 0){%>-->
+            <!--<%}else{%>-->
+              <!--<div class="text-center mt-3">-->
+                <!--<p>Não foram adicionados nenhums posts :-O</p>-->
+              <!--</div>-->
+              <!--<%}%>-->
             <!--<nav class="ml-4">-->
             <!--<ul class="pagination">-->
             <!--<li class="page-item disabled"><a href="#" class="page-link ">Anterior</a></li>-->
