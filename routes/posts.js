@@ -55,7 +55,7 @@ router.get('/add', ensureAutheticated, (req, res) => {
 });
 
 /* TODO: Create conditions for a certain user to be able to edit another user post */
-router.get('/details/:idPost', ensureAutheticated, (req, res) => {
+router.get('/edit/:idPost', ensureAutheticated, (req, res) => {
   Post.findOne({
       _id: req.params.idPost,
     })
@@ -80,6 +80,27 @@ router.get('/details/:idPost', ensureAutheticated, (req, res) => {
               categories: categories,
             });
           });
+      }
+    });
+});
+
+/* TODO: Create conditions for a certain user to be able to edit another user post */
+router.get('/:idPost', ensureAutheticated, (req, res) => {
+  Post.findOne({
+      _id: req.params.idPost,
+    })
+    .then(post => {
+      if (post.author != req.user.id) {
+        req.flash('error_msg', 'Oops, não estás autorizado');
+        res.redirect('/posts');
+      } else {
+        res.render('./posts/details', {
+          title: post.title + '| Blog Admin',
+          layout: 'layouts/layout',
+          name: req.user.name,
+          state: 'autenticado',
+          post: post,
+        });
       }
     });
 });

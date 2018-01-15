@@ -1,33 +1,31 @@
 <%-include('../partials/_msg')%>
-<!-- LOGIN FORM -->
-<section id="login-section" style="margin-top: 2rem;">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6 offset-md-3">
-        <div class="card">
-          <div class="card-header bg-dark text-white">
-            <h4 class="card-title">LOGIN</h4>
-          </div>
-          <div class="card-block mx-3 my-3 bg-faded">
-            <form action="/users/login" method="post">
-              <div class="form-group">
-                <label for="email" class="form-control-label">Endereço de Email</label>
-                <input type="email" name="email" value="" class="form-control">
-              </div>
-              <div class="form-group">
-                <label for="password" class="form-control-label">Palavra-chave</label>
-                <input type="password" name="password" value="" class="form-control">
-              </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <button class="btn btn-primary col-md-3 offset-md-3">Entrar</button>
-                  <a href="/auth/google" class="btn btn-danger"><span class="fa fa-google-plus"></span> Google</a>
+  <!-- LOGIN FORM -->
+  <section id="login-section" style="margin-top: 2rem;">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <div class="card">
+            <div class="card-header bg-dark text-white">
+              <h4 class="card-title">LOGIN</h4>
+            </div>
+            <div class="card-block mx-3 my-3 bg-faded">
+              <form action="/users/login" method="post">
+                <div class="form-group">
+                  <label for="email" class="form-control-label">Endereço de Email</label>
+                  <input type="email" name="email" value="" class="form-control">
                 </div>
-              </div>
-            </form>
+                <div class="form-group">
+                  <label for="password" class="form-control-label">Palavra-chave</label>
+                  <input type="password" name="password" value="" class="form-control">
+                </div>
+                <div class="row text-center mx-2">
+                  <button class="btn btn-primary col-lg-12 mt-3">Entrar</button>
+                  <a href="/auth/google" class="btn btn-secondary col-lg-12 mt-3"><span class="fa fa-google-plus"></span> Google</a>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>

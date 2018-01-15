@@ -28,63 +28,63 @@
 
 <%-include('./partials/_msg')%>
 
-  <!-- TABLE AREA -->
-  <section id="table-area-section">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12 col-lg-9">
-          <div class="card border-primary">
-            <div class="card-header bg-primary text-white">
-              <h4>Postagens Recentes</h4>
-            </div>
-            <%if(posts.length > 0){%>
-              <table class="table table-responsive table-hover">
-                <thead class="thead-dark">
-                  <tr>
-                    <th class="">#</th>
-                    <th class="w-50">Título</th>
-                    <th class="w-25">Autor</th>
-                    <th class="w-25 text-center">Ação</th>
-                  </tr>
-                  </tr>
-                </thead>
-                <tbody class="">
-                  <% moment.locale('pt_PT')%>
+<!-- TABLE AREA -->
+<section id="table-area-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-9 col-lg-9">
+        <div class="card border-primary">
+          <div class="card-header bg-primary text-white">
+            <h4>Suas Últimas Postagens</h4>
+          </div>
+          <%if(posts.length > 0){%>
+<!-- //TODO:PASSAR ISTO PARA DFLEX TÁ SO FEIO COM UMA TABELA LOL -->
+            <table class="table table-responsive table-hover ">
+              <thead class="thead-dark">
+                <tr>
+                  <th class="w-50">Título</th>
+                  <th class="w-25"></th>
+                  <th class="w-25"></th>
+                </tr>
+              </thead>
+              <tbody class="">
+                <% moment.locale('pt_PT')%>
                   <% for(var i=posts.length-1; 0<=i; i--){ %>
-                    <tr>
-                      <td scope="row">
-                        <%-i+1-%>
-                      </td>
                       <td>
-                        <p class="text-muted">
-                        <%= moment(posts[i].date).format('DD-MM-YYYY HH:MM:SS') %>
-                      </p>
-
+                        <p>
+                          <%-i+1-%>    <span class="text-muted pull-right"><%= moment(posts[i].date).format('DD-MM-YYYY HH:MM:SS') %></span>
+                        </p>
                         <%= posts[i].title %>
-                          <p class="text-muted">
-                            <%= posts[i].category %>
+                          <p>
+                            <a class="text-muted" href="#" style="text-decoration: none;"><%= posts[i].category %></a>
                           </p>
+                          <div class="text-muted">
+                            <a href="#"><%= posts[i].authorName %></a>
+                        </div>
                       </td>
                       <!-- <td><%= posts[i].category %></td> -->
 
                       <td class="pt-5">
-                        <%= posts[i].authorName %>
+                        <%- posts[i].body %>
                       </td>
-                      <td class="text-center pt-5"><a href="/posts/details/<%= posts[i]._id %>" class="btn btn-secondary"><i class="fa fa-angle-double-right"></i> Detalhes</a></td>
+                      <td class="text-center">
+<!-- TODO: Se for o autor pode editar a publicação -->
+                        <a href="/posts/edit/<%= posts[i]._id %>" class="btn border-secondary text-secondary mt-5"><i class="fa fa-angle-double-right"></i>Editar</a>
+                          <a href="/posts/<%= posts[i]._id %>" class="btn border-secondary text-secondary mt-5"><i class="fa fa-angle-double-right"></i> Comentar</a>
+                      </td>
 
                     </tr>
                     <%} %>
+              </tbody>
+            </table>
 
-
-                </tbody>
-              </table>
-              <%}else{%>
-                <div class="text-center mt-3">
-                  <p>Não foram adicionados nenhums posts :-O</p>
-                </div>
-                <%}%>
-          </div>
+            <%}else{%>
+              <div class="text-center mt-3">
+                <p>Não foram adicionados nenhums posts :-O</p>
+              </div>
+              <%}%>
         </div>
+      </div>
 
         <div class="col-lg-3 col-md-6 mb-5" id="info-card">
           <div class="card text-center  border-primary mb-3">

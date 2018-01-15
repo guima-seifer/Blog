@@ -44,40 +44,51 @@
               <h4>Suas Últimas Postagens</h4>
             </div>
             <%if(posts.length > 0){%>
-              <table class="table table-responsive table-hover">
+              <table class="table table-responsive table-hover ">
                 <thead class="thead-dark">
                   <tr>
                     <th class="">#</th>
                     <th class="w-50">Título</th>
-                    <th class="w-25">Autor</th>
-                    <th class="w-25 text-center">Ações</th>
+                    <th class="w-25"></th>
+                    <th class="w-25"></th>
                   </tr>
                 </thead>
                 <tbody class="">
                   <% moment.locale('pt_PT')%>
-                  <% for(var i=posts.length-1; 0<=i; i--){ %>
-                    <tr>
-                      <td scope="row">
-                        <%-i+1-%>
-                      </td>
-                      <td>
-                        <p class="text-muted">
-                        <%= moment(posts[i].date).format('DD-MM-YYYY HH:MM:SS') %>
-                      </p>
-                        <%= posts[i].title %>
+                    <% for(var i=posts.length-1; 0<=i; i--){ %>
+                      <tr>
+                        <td scope="row">
+                          <%-i+1-%>
+                        </td>
+                        <td>
                           <p class="text-muted">
-                            <%= posts[i].category %>
+                            <%= moment(posts[i].date).format('DD-MM-YYYY HH:MM:SS') %>
                           </p>
-                      </td>
-                      <!-- <td><%= posts[i].category %></td> -->
+                          <%= posts[i].title %>
+                            <p>
+                              <a class="text-muted" href="#" style="text-decoration: none;">
+                                <%= posts[i].category %>
+                              </a>
+                            </p>
+                            <div class="text-muted">
+                              <a href="#">
+                                <%= posts[i].authorName %>
+                              </a>
+                            </div>
+                        </td>
+                        <!-- <td><%= posts[i].category %></td> -->
 
-                      <td class="pt-5">
-                        <%= posts[i].authorName %>
-                      </td>
-                      <td class="text-center pt-5"><a href="/posts/details/<%= posts[i]._id %>" class="btn btn-secondary"><i class="fa fa-angle-double-right"></i> Details</a></td>
+                        <td class="pt-5">
+                          <%- posts[i].body %>
+                        </td>
+                        <td class="text-center">
+                          <!-- TODO: Se for o autor pode editar a publicação -->
+                          <a href="/posts/details/<%= posts[i]._id %>" class="btn btn-secondary mt-5"><i class="fa fa-angle-double-right"></i>Editar</a>
+                          <a href="/posts/details/<%= posts[i]._id %>" class="btn btn-secondary mt-5"><i class="fa fa-angle-double-right"></i> Details</a>
+                        </td>
 
-                    </tr>
-                    <%} %>
+                      </tr>
+                      <%} %>
                 </tbody>
               </table>
 
@@ -89,8 +100,8 @@
           </div>
         </div>
 
-
-        <nav class="ml-4">
+        <!-- TODO: Paginação ou slide infinito? -->
+        <!-- <nav class="ml-4">
           <ul class="pagination">
             <li class="page-item disabled"><a href="#" class="page-link ">Anterior</a></li>
             <li class="page-item active"><a href="#" class="page-link ">1</a></li>
@@ -98,6 +109,6 @@
             <li class="page-item"><a href="#" class="page-link">3</a></li>
             <li class="page-item"><a href="#" class="page-link">Próximo</a></li>
           </ul>
-        </nav>
+        </nav> -->
       </div>
   </section>
