@@ -35,7 +35,6 @@ router.post('/upload',function (req,res) {
 router.post('/download/',(req,res,next) => {
     File.findOne({filename : req.body.avatar})
         .exec((err,fich) => {
-            console.dir(fich);
             if(!err){
                 grid.mongo = mongoose.mongo;
                 let gfs = grid(conn.db);
