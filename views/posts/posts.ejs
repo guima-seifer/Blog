@@ -1,12 +1,12 @@
 <header id="main-header" class="pt-3 text-white" style="background-color: #236475">
   <div class="container">
     <div class="row mb-4">
-      <div class="col-lg-6">
+      <div class="col-md-6 col-lg-6">
         <h1>
           <i class="fa fa-pencil"></i> Postagens
         </h1>
       </div>
-      <div class="col-lg-6">
+      <div class="col-md-6 col-lg-6 mb-3">
         <div class="input-group">
           <input type="text" name="" value="" placeholder="Postagens.." class="form-control">
           <span class="input-group-btn">
@@ -37,78 +37,76 @@
   <!-- Dashboard AREA -->
   <section id="table-area-section" class="" style="margin-bottom: 7rem;">
     <div class="container">
-      <div class="row">
-        <div class="col-md-12 col-lg-12">
-          <%if(posts.length > 0){%>
-            <!-- //TODO:PASSAR ISTO PARA DFLEX TÁ SO FEIO COM UMA TABELA LOL -->
+      <div class="col-md-10 col-lg-10 offset-lg-1">
+        <%if(posts.length > 0){%>
+          <!-- //TODO:PASSAR ISTO PARA DFLEX TÁ SO FEIO COM UMA TABELA LOL -->
 
-            <% moment.locale('pt_PT')%>
-              <% for(var i=posts.length-1; 0<=i; i--){ %>
-                <div class="card mb-3" style=" border-color: #93B8C2;">
-                  <div style="background-color: #93B8C2;" id="carets" onmouseup="toggleVisibility(<%= i %>)" class="card-header text-white my-0 py-0">
-                    <div class="d-flex flex-row justify-content-between">
-                      <div class="p-2">
-                        <p>
-                          <div class="card-title text-white">
-                            <h4><b><%= posts[i].title %></b></h4></div>
-                          <a class="text-light" href="#" style="text-decoration: none; text-transform: uppercase;">
-                            <%= posts[i].category %>
-                          </a>
-                        </p>
-                      </div>
-                      <div class=" m-4 float-right">
-                        <a style="text-decoration: none;" class="text-white" href="#">
-                          <%= posts[i].authorName %>
+          <% moment.locale('pt_PT')%>
+            <% for(var i=posts.length-1; 0<=i; i--){ %>
+              <div class="card mb-3" style=" border-color: #93B8C2;">
+                <div style="background-color: #93B8C2;" id="carets" onmouseup="toggleVisibility(<%= i %>)" class="card-header text-white my-0 py-0">
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="p-2">
+                      <p>
+                        <div class="card-title text-white">
+                          <h4><b><%= posts[i].title %></b></h4></div>
+                        <a class="text-light" href="#" style="text-decoration: none; text-transform: uppercase;">
+                          <%= posts[i].category %>
                         </a>
-                        <div class="text-center mt-3">
-                          <a class=" text-white" href="#">
-                            <%= i+1 %>
-                          </a>
-                        </div>
-                      </div>
+                      </p>
                     </div>
-                    <div class="text-center">
-                      <a><i class="fa fa-angle-double-down"></i></a>
+                    <div class=" m-4 float-right">
+                      <a style="text-decoration: none;" class="text-white" href="#">
+                        <%= posts[i].authorName %>
+                      </a>
+                      <div class="text-center mt-3">
+                        <a class=" text-white" href="#">
+                          <%= i+1 %>
+                        </a>
+                      </div>
                     </div>
                   </div>
-                  <div id="postBody<%=i%>" style="display: none;">
-                    <div class="card-block">
-                      <div class="d-flex flex-row justify-content-start mx-5 my-3">
-                        <div class="">
-                          <%- posts[i].body %>
-                        </div>
-
+                  <div class="text-center">
+                    <a><i class="fa fa-angle-double-down"></i></a>
+                  </div>
+                </div>
+                <div id="postBody<%=i%>" style="display: none;">
+                  <div class="card-block">
+                    <div class="d-flex flex-row justify-content-start mx-5 my-3">
+                      <div class="">
+                        <%- posts[i].body %>
                       </div>
+
                     </div>
-                    <div class="card-footer">
-                      <div class="d-flex flex-row justify-content-between mx-5 ">
-                        <!-- TODO: Se for o autor pode editar a publicação -->
-                        <div class="">
-                          <p>
-                            <span class="text-muted ml-auto"><%= moment(posts[i].date).format('DD-MM-YYYY HH:MM:SS') %></span>
-                          </p>
-                        </div>
-                        <div class="d-block">
-                          <form action="/posts/edit/<%= posts[i]._id%>">
-                            <button type="submit" class="btn bg-secondary text-white"><i class="fa fa-angle-double-right"></i> Editar</a></button>
-                          </form>
-                        </div>
-                        <div class="d-block">
-                          <form action="/posts/<%= posts[i]._id %>">
-                            <button type="submit" class="btn bg-secondary text-white mt-1"><i class="fa fa-angle-double-right"></i> Comentar</a></button>
-                          </form>
-                        </div>
+                  </div>
+                  <div class="card-footer">
+                    <div class="d-flex flex-row justify-content-between mx-5 ">
+                      <!-- TODO: Se for o autor pode editar a publicação -->
+                      <div class="">
+                        <p>
+                          <span class="text-muted ml-auto"><%= moment(posts[i].date).format('DD-MM-YYYY HH:MM:SS') %></span>
+                        </p>
+                      </div>
+                      <div class="d-block">
+                        <form action="/posts/edit/<%= posts[i]._id%>">
+                          <button type="submit" class="btn bg-secondary text-white"><i class="fa fa-angle-double-right"></i> Editar</a></button>
+                        </form>
+                      </div>
+                      <div class="d-block">
+                        <form action="/posts/<%= posts[i]._id %>">
+                          <button type="submit" class="btn bg-secondary text-white mt-1"><i class="fa fa-angle-double-right"></i> Comentar</a></button>
+                        </form>
                       </div>
                     </div>
                   </div>
                 </div>
-                <%} %>
-                  <%}else{%>
-                    <div class="text-center mt-3">
-                      <p>Não foram adicionados nenhums posts :-O</p>
-                    </div>
-                    <%}%>
-        </div>
+              </div>
+              <%} %>
+                <%}else{%>
+                  <div class="text-center mt-3">
+                    <p>Não foram adicionados nenhums posts :-O</p>
+                  </div>
+                  <%}%>
       </div>
 
       <!-- TODO: Paginação ou slide infinito? -->
