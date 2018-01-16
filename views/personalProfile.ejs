@@ -15,13 +15,13 @@
   <div class="container">
     <div class="row">
       <div class="col-md-3 mr-auto">
-        <a href="/users" class="btn btn-secondary btn-block"><i class="fa fa-arrow-left"> Voltar</i></a>
+        <a href="/users" class="btn btn-secondary btn-block"><i class="fa fa-arrow-left"></i> Voltar</a>
       </div>
       <div class="col-md-4">
-        <a data-toggle="modal" style="color: #fff;" data-target="#passwordModal" class="btn btn-success btn-block"><i class="fa fa-lock"> Alterar Palavra-Passe</i></a>
+        <a data-toggle="modal" style="color: #fff;" data-target="#passwordModal" class="btn btn-success btn-block"><i class="fa fa-lock"></i> Alterar Palavra-Passe</a>
       </div>
       <div class="col-md-3">
-        <a href="index.html" class="btn btn-danger btn-block"><i class="fa fa-remove"> Eliminar Conta</i></a>
+        <a href="index.html" class="btn btn-danger btn-block"><i class="fa fa-remove"></i> Eliminar Conta</a>
       </div>
     </div>
   </div>
@@ -60,10 +60,14 @@
       </div>
       <div class="col-md-3">
         <h3>Imagem de Perfil</h3>
-        <img src="img/ava.jpg" alt="" class="d-block img-fluid mb-3">
-        <button class="btn btn-primary btn-block">Editar Imagem</button>
-        <button class="btn btn-danger btn-block">Apagar Imagem</button>
-      </div>
+        <%if(user.avatar === undefined){%>
+        <img src="img/default.png" alt="" class="d-block img-fluid mb-3">
+        <%} else {%>
+        <img src="img/<%= user.avatar%>" alt="" class="d-block img-fluid mb-3">
+        <%}%>
+        <a data-toggle="modal" style="color: #fff;" data-target="#avatarModal" class="btn btn-primary btn-block"><i class="fa fa-pencil-square-o"></i> Alterar Imagem</a>
+        <button data-toggle="modal" data-target="#avatarModal" class="btn btn-danger btn-block"><i class="fa fa-trash-o"></i> Apagar Imagem</button>
+        </div>
     </div>
   </div>
 </section>
@@ -96,6 +100,31 @@
     </div>
   </div>
 </div>
+
+<!--AVATAR MODAL-->
+<div class="modal fade" id="avatarModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-warning text-white">
+        <h5 class="modal-title" id="passwordModalLabel">Alterar avatar</h5>
+        <button type="close" name="button" data-dismiss="modal"><span>&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" action="/file/upload" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="password2" class="form-control-label">Selecionar ficheiro</label>
+            <input type="file" name="avatar" class="form-control">
+          </div>
+          <div class="modal-footer">
+            <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Fechar">
+            <input type="submit" class="btn btn-warning" value="Editar">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <script src="https://cdn.ckeditor.com/4.8.0/standard/ckeditor.js"></script>
 <script>

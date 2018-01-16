@@ -10,6 +10,7 @@ const {
 let User = require('../models/User');
 const moment = require('moment');
 
+
 router.use(express.static('public'));
 
 router.get('/', ensureAutheticated, (req, res) => {

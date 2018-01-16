@@ -7,6 +7,7 @@ const {
   ensureAutheticated,
 } = require('../helpers/auth');
 let User = require('../models/User');
+let nets = require('nets');
 
 //Routes
 router.get('/', (req, res) => {
@@ -40,13 +41,26 @@ router.get('/profile', ensureAutheticated, (req, res) => {
   User.findOne({_id : req.user._id})
       .exec((err,user) => {
         if(!err){
-            var locals = {
-                title: 'Área Pessoal | Blog Admin',
-                layout: 'layouts/layout',
-                name: req.user.name,
-                user : user
-            };
-            res.render('personalProfile', locals);
+            nets({
+                body: '{"avatar": "'+user.avatar+'"}',
+                url: "http://localhost:3334/file/download/",
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }, function done (err, resp, body) {
+                if(!err){
+                    var locals = {
+                        title: 'Área Pessoal | Blog Admin',
+                        layout: 'layouts/layout',
+                        name: req.user.name,
+                        user : user
+                    };
+                    res.render('personalProfile', locals);
+                } else {
+                    console.log(err);
+                }
+            });
         } else {
           console.log(err);
         }
