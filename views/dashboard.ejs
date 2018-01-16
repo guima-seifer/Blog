@@ -70,8 +70,20 @@
                         <div class="">
                           <%- posts[i].body %>
                         </div>
-
                       </div>
+                        <%if (posts[i].files.length > 0){%>
+                      <hr/>
+                      <div class="d-flex flex-row justify-content-start mx-5 my-3">
+                        <label for="attached">Ficheiros anexados:</label>
+                        <div class="" id="attached">
+                          <ul>
+                              <%for(let j = 0; j < posts[i].files.length; j++){%>
+                            <li><%= posts[i].files[j]%></li>
+                              <%}%>
+                          </ul>
+                        </div>
+                      </div>
+                        <%}%>
                     </div>
                     <div class="card-footer">
                       <div class="d-flex flex-row justify-content-between mx-5 ">

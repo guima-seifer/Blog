@@ -30,9 +30,7 @@ const db = require('./config/database');
 //Base Dados
 mongoose.Promise = global.Promise; //Map global promise - get rid of warning
 //connect to mongoose
-mongoose.connect(db.mongoURI, {
-    useMongoClient: true,
-  })
+mongoose.connect(db.mongoURI)
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.log(err));
 

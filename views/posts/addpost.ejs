@@ -12,9 +12,9 @@
               <h1>Adicionar Postagem</h1>
             </div>
             <div class="card-block">
-              <form method="POST" action="/posts/add" class="mx-3 my-3">
+              <form method="POST" action="/posts/add" class="mx-3 my-3" enctype="multipart/form-data">
                 <div class="form-group">
-                  <label for="title" class="firm-control-label">Title</label>
+                  <label for="title" class="form-control-label">Título</label>
                   <%if (locals.postTitle.length > 0) {%>
                     <%=postTitle%>
                       <input type="text" class="form-control" name="title" id="title" value="<%=postTitle%>" required>
@@ -23,7 +23,7 @@
                         <%}%>
                 </div>
                 <div class="form-group">
-                  <label for="category" class="form-control-label">Category</label>
+                  <label for="category" class="form-control-label">Categoria</label>
                   <select name="category" class="form-control" value=<%=postCategory%>>
                     <option value=""></option>
                       <%for(let i = 0; i < categories.length; i++){%>
@@ -33,8 +33,8 @@
                 </div>
 
                 <div class="form-group bg-faded p-3">
-                  <label for="file">Image Upload</label>
-                  <input type="file" name="file" value="" class="form-control-file" id="file">
+                  <label for="file">Anexar ficheiros ao post</label>
+                  <input type="file" name="filetoupload" value="" class="form-control-file" id="file" multiple>
                   <small id="fileHelp" class="form-text text-muted">Tamanho máx 3MB</small>
                 </div>
 
@@ -51,7 +51,7 @@
                       <%=postBody%><%}%></textarea>
                 </div>
             </div>
-            <%
+                   <%
                   var d = new Date();
                   var data = d.getUTCDate()
                   %>
