@@ -6,6 +6,7 @@ var Post = require('../models/Post');
 const {
   ensureAutheticated,
 } = require('../helpers/auth');
+let User = require('../models/User');
 
 //Routes
 router.get('/', (req, res) => {
@@ -36,12 +37,20 @@ router.get('/index', ensureAutheticated, (req, res) => {
 });
 
 router.get('/profile', ensureAutheticated, (req, res) => {
-  var locals = {
-    title: 'Área Pessoal | Blog Admin',
-    layout: 'layouts/layout',
-    name: req.user.name,
-  };
-  res.render('profile', locals);
+  User.findOne({_id : req.user._id})
+      .exec((err,user) => {
+        if(!err){
+            var locals = {
+                title: 'Área Pessoal | Blog Admin',
+                layout: 'layouts/layout',
+                name: req.user.name,
+                user : user
+            };
+            res.render('personalProfile', locals);
+        } else {
+          console.log(err);
+        }
+      });
 });
 
 router.get('/settings', ensureAutheticated, (req, res) => {
