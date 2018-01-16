@@ -139,6 +139,35 @@ router.get('/google/callback', passport.authenticate('google', {
     failureRedirect: '/users/login',
 }));
 
+//Informação de um utilizador, sem ser na Área Pessoal
+router.get('/:name',(req,res) => {
+    User.findOne({url_name : req.params.name})
+        .exec((err,userDoc) => {
+            if(!err){
+                var locals = {
+                    title: 'Perfil | Blog Admin',
+                    layout: 'layouts/layout',
+                    name : req.user.name,
+                    user : userDoc
+                };
+                res.render('./users/profile',locals)
+            } else {
+                console.log(err);
+            }
+        });
+});
+
+//Atualizar um user
+router.post('/update/:id',(req,res) => {
+    User.findOneAndUpdate({_id : req.params.id}, req.body, (err,doc) => {
+        if(!err){
+            res.redirect('/');
+        } else {
+            console.log(err);
+        }
+    })
+});
+
 let slug = function(str) {
     str = str.replace(/^\s+|\s+$/g, '');
     str = str.toLowerCase();
@@ -152,6 +181,15 @@ let slug = function(str) {
     str = str.replace(/[^a-z0-9 -]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-');
 
     return str;
+};
+
+String.prototype.deentitize = function() {
+    let ret = this.replace(/&gt;/g, '>');
+    ret = ret.replace(/&lt;/g, '<');
+    ret = ret.replace(/&quot;/g, '"');
+    ret = ret.replace(/&apos;/g, "'");
+    ret = ret.replace(/&amp;/g, '&');
+    return ret;
 };
 
 module.exports = router;

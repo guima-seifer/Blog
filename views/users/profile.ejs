@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-md-6">
         <h1>
-          <i class="fa fa-user"></i>Área Pessoal
+          <i class="fa fa-user"></i> Perfil utilizador
         </h1>
       </div>
     </div>
@@ -15,13 +15,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-3 mr-auto">
-        <a href="index.html" class="btn btn-secondary btn-block"><i class="fa fa-arrow-left"> Voltar</i></a>
-      </div>
-      <div class="col-md-4">
-        <a href="index.html" class="btn btn-success btn-block"><i class="fa fa-lock" data-toggle="modal" data-target="#passwordModal"> Alterar Palavra-Passe</i></a>
-      </div>
-      <div class="col-md-3">
-        <a href="index.html" class="btn btn-danger btn-block"><i class="fa fa-remove"> Eliminar Conta</i></a>
+        <a href="/users" class="btn btn-secondary btn-block"><i class="fa fa-arrow-left"> Voltar</i></a>
       </div>
     </div>
   </div>
@@ -34,32 +28,29 @@
       <div class="col-md-9">
         <div class="card">
           <div class="card-header">
-            <h4>Editar Perfil</h4>
+            <h4><%= user.name%></h4>
           </div>
           <div class="card-block">
-            <form>
+            <form class="mx-3 my-3">
+              <!--<div class="form-group">-->
+                <!--<label for="name">Name</label>-->
+                <!--<input type="text" class="form-control" name="name" id="name" value="<%= user.name%>">-->
+              <!--</div>-->
               <div class="form-group">
-                <label for="name" class="firm-control-label">Name</label>
-                <input type="text" class="form-control" id="name" value="Fernando Guimarães">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" name="email" id="email" readonly value="<%= user.email %>">
               </div>
               <div class="form-group">
-                <label for="email" class="firm-control-label">Email</label>
-                <input type="email" class="form-control" id="name" value="nando@netcabo.pt">
-              </div>
-              <div class="form-group">
-                <label for="body">Bio</label>
-                <textarea name="editor1" class="form-control">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius labore, molestias asperiores in rem, dolorem neque deleniti. Animi ad voluptate tempora illo reprehenderit, odio accusantium, impedit commodi omnis? Veniam maiores expedita eaque illo vel repellat aliquam impedit ad consectetur ut?</textarea>
+                <label for="bio">Bio</label>
+                <textarea id="bio" style="resize: none;" readonly class="form-control"><%- user.bio%></textarea>
               </div>
             </form>
           </div>
-
         </div>
       </div>
       <div class="col-md-3">
         <h3>Imagem de Perfil</h3>
         <img src="img/ava.jpg" alt="" class="d-block img-fluid mb-3">
-        <button class="btn btn-primary btn-block">Editar Imagem</button>
-        <button class="btn btn-danger btn-block">Apagar Imagem</button>
       </div>
     </div>
   </div>
@@ -94,3 +85,8 @@
     </div>
   </div>
 </div>
+
+<script src="https://cdn.ckeditor.com/4.8.0/standard/ckeditor.js"></script>
+<script>
+    CKEDITOR.replace('bio');
+</script>
