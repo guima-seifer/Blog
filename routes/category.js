@@ -28,7 +28,6 @@ router.get('/', ensureAutheticated, (req, res) => {
           name: req.user.name,
           moment: moment,
         };
-        console.log(locals);
         res.render('./categories/categories', locals);
       }
     });

@@ -7,17 +7,28 @@ const router = express.Router();
 const {
   ensureAutheticated,
 } = require('../helpers/auth');
-var User = require('../models/User');
+let User = require('../models/User');
+const moment = require('moment');
 
 router.use(express.static('public'));
 
 router.get('/', ensureAutheticated, (req, res) => {
-  var locals = {
-    title: 'Utilizadores | Blog Admin',
-    layout: 'layouts/layout',
-    name: req.user.name,
-  };
-  res.render('./users/users', locals);
+  User.find({},{name:1, email:1, date:1, url_name: 1})
+      .sort({date: -1})
+      .exec((err,users) => {
+        if(!err){
+            var locals = {
+                title: 'Utilizadores | Blog Admin',
+                layout: 'layouts/layout',
+                name: req.user.name,
+                users : users,
+                moment : moment
+            };
+            res.render('./users/users', locals);
+        } else {
+          console.log(err);
+        }
+      });
 });
 
 router.get('/login', (req, res) => {
@@ -74,7 +85,6 @@ router.post('/register', (req, res) => {
   }
 
   if (errors.length > 0) {
-    console.log(req.body);
     res.render('./users/register', {
       title: 'Registar conta | Blog Admin',
       layout: 'layouts/layout',
@@ -97,6 +107,7 @@ router.post('/register', (req, res) => {
           name: req.body.name,
           email: req.body.email,
           password: req.body.password,
+          url_name : slug(req.body.name)
         });
         bcrypt.genSalt(10, (err, salt) => {
           bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -109,7 +120,6 @@ router.post('/register', (req, res) => {
               })
               .catch(err => {
                 console.log(err);
-                return;
               });
           });
         });
@@ -124,10 +134,24 @@ router.get('/google', passport.authenticate('google', {
 }));
 
 // the callback after google has authenticated the user
-router.get('/google/callback',
-  passport.authenticate('google', {
+router.get('/google/callback', passport.authenticate('google', {
     successRedirect: '/index',
     failureRedirect: '/users/login',
-  }));
+}));
+
+let slug = function(str) {
+    str = str.replace(/^\s+|\s+$/g, '');
+    str = str.toLowerCase();
+
+    let from = "ÁÄÂÀÃÅČÇĆĎÉĚËÈÊẼĔȆÍÌÎÏŇÑÓÖÒÔÕØŘŔŠŤÚŮÜÙÛÝŸŽáäâàãåčçćďéěëèêẽĕȇíìîïňñóöòôõøðřŕšťúůüùûýÿžþÞĐđßÆa·/_,:;";
+    let to   = "AAAAAACCCDEEEEEEEEIIIINNOOOOOORRSTUUUUUYYZaaaaaacccdeeeeeeeeiiiinnooooooorrstuuuuuyyzbBDdBAa------";
+    for (let i = 0, l = from.length ; i<l ; i++) {
+        str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
+    }
+
+    str = str.replace(/[^a-z0-9 -]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-');
+
+    return str;
+};
 
 module.exports = router;

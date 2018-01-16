@@ -6,17 +6,6 @@
           <i class="fa fa-users"></i> Utilizadores
         </h1>
       </div>
-      <div class="col-md-6 push-8">
-        <div class="input-group">
-          <input type="text" name="" value="" placeholder="Utilizadores.." class="form-control">
-          <span class="input-group-btn">
-            <button class="btn btn-info">
-              Procurar
-            </button>
-          </span>
-        </div>
-
-      </div>
     </div>
   </div>
 </header>
@@ -39,49 +28,32 @@
       <div class="col">
         <div class="card border-primary">
           <div class="card-header bg-primary text-white">
-            <h4>Utilizadores Recentes</h4>
+            <h4>Utilizadores registados</h4>
           </div>
-          <table class="table table-striped">
-            <thead class="thead-inverse">
+          <div class="container" style="margin: 10px 50px 50px 10px;">
+            <table class="table table-striped" id="tableUsers">
+              <thead class="thead-inverse">
               <tr>
                 <th>#</th>
                 <th>Name</th>
                 <th>Email</th>
-                <th>Data</th>
+                <th>Data de registo</th>
               </tr>
-            </thead>
-            <tbody>
+              </thead>
+              <tbody>
+              <% moment.locale('pt_PT')%>
+              <%for (let i=0; i < users.length; i++){%>
               <tr>
-                <td scope="row">1</td>
-                <td>Fernando Guimarães</td>
-                <td>nando@netcabo.pt</td>
-                <td>19 de Setembro de 2017</td>
+                <td scope="row"><%=i+1%></td>
+                <td><a href="/users/<%= users[i].url_name %>"><%= users[i].name%></a></td>
+                <td><%= users[i].email%></td>
+                <td><%= moment(users[i].date).format('DD MMMM YYYY') %></td>
               </tr>
-              <tr>
-                <td scope="row">2</td>
-                <td>Luís Filipe</td>
-                <td>luis@protonmail.com</td>
-                <td>20 de Setembro de 2017</td>
-              </tr>
-              <tr>
-                <td scope="row">3</td>
-                <td>Rafael Veloso</td>
-                <td>rafa@gmail.com</td>
-                <td>19 de Setembro de 2017</td>
+              <%}%>
+              </tbody>
+            </table>
+          </div>
 
-              </tr>
-            </tbody>
-          </table>
-          <nav class="ml-4">
-            <ul class="pagination">
-              <li class="page-item disabled"><a href="#" class="page-link ">Anterior</a></li>
-              <li class="page-item active"><a href="#" class="page-link ">1</a></li>
-              <li class="page-item"><a href="#" class="page-link">2</a></li>
-              <li class="page-item"><a href="#" class="page-link">3</a></li>
-              <li class="page-item"><a href="#" class="page-link">Próximo</a></li>
-
-            </ul>
-          </nav>
 
         </div>
       </div>
