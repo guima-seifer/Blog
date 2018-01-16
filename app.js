@@ -19,6 +19,7 @@ const posts = require('./routes/posts');
 const main = require('./routes/main');
 const users = require('./routes/users');
 const category = require('./routes/category');
+const file = require('./routes/file');
 
 //Passport Config
 require('./config/passport')(passport);
@@ -85,6 +86,7 @@ app.use('/users', users);
 app.use('/users/login', users);
 app.use('/auth', users);
 app.use('/categories', category);
+app.use('/file',file);
 
 // uncomment after placing your favicon in /public
 //TODO: favicon
