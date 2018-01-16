@@ -52,6 +52,7 @@ const PostSchema = new Schema({
       ref: 'User',
     },
   },
+  files : [{type : String }]
 });
 
 //export model, compila o Schema para o modelo que atribui o nome de partitura - nome do modelo

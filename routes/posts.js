@@ -8,9 +8,21 @@ const {
   ensureAutheticated,
 } = require('../helpers/auth');
 
+//novas cenas?
+let formidable = require('formidable');
+let mongoose = require('mongoose');
+let grid = require("gridfs-stream");
+let fs = require('fs');
+let conn = mongoose.connection;
+
 router.use(express.static('public'));
 
-router.get('/', ensureAutheticated, (req, res) => {
+router.get('/', ensureAutheticated, (req, res) => { //falta sacar os ficheiros de cada 1
+    Post.find({"files":{ $gt:' '}},{_id:0,"files":1})
+        .exec((err,docs) => {
+
+        });
+
   Post.find({
       author: req.user.id,
     })
@@ -106,55 +118,119 @@ router.get('/:idPost', ensureAutheticated, (req, res) => {
 });
 
 router.post('/add', ensureAutheticated, (req, res) => {
-  let errors = [];
-  if (!req.body.title) {
-    errors.push({
-      text: 'Insira o título à postagem',
-    });
-  }
+  let form = new formidable.IncomingForm();
+  form.multiples = true;
 
-  if (!req.body.category) {
-    errors.push({
-      text: 'Associe uma categoria à sua postagem',
-    });
-  }
+  form.parse(req,(err, fields, files) => {
+      let errors = [];
+      if (!fields.title) {
+          errors.push({
+              text: 'Insira o título à postagem',
+          });
+      }
 
-  if (!req.body.textarea) {
-    errors.push({
-      text: 'Insira algum conteúdo à postagem',
-    });
-  }
+      if (!fields.category) {
+          errors.push({
+              text: 'Associe uma categoria à sua postagem',
+          });
+      }
 
-  if (errors.length > 0) {
-    var locals = {
-      title: 'Adicionar Postagem | Blog Admin',
-      layout: 'layouts/layout',
-      errors: errors,
-      postTitle: req.body.title,
-      postCategory: req.body.category,
-      postBody: req.body.textarea,
-      author: req.user.id,
-      authorName: req.user.name,
-      allowComments: req.body.checkComments,
-    };
-    res.render('./posts/addpost', locals);
-  } else {
-    const User = {};
-    new Post();
-    const newUser = {
-      title: req.body.title,
-      category: req.body.category,
-      body: req.body.textarea,
-      author: req.user.id,
-      authorName: req.user.name,
-    };
-    new Post(newUser)
-      .save()
-      .then(post => {
-        req.flash('success_msg', 'Postagem adicionada com sucesso');
-        res.redirect('/posts');
-      });
-  }
+      if (!fields.textarea) {
+          errors.push({
+              text: 'Insira algum conteúdo à postagem',
+          });
+      }
+
+      if (errors.length > 0) {
+          var locals = {
+              title: 'Adicionar Postagem | Blog Admin',
+              layout: 'layouts/layout',
+              errors: errors,
+              postTitle: fields.title,
+              postCategory: fields.category,
+              postBody: fields.textarea,
+              author: req.user.id,
+              authorName: req.user.name,
+              allowComments: fields.checkComments,
+          };
+          res.render('./posts/addpost', locals);
+      } else {
+          if(files.filetoupload.length === undefined && files.filetoupload.name === ''){ //nenhum ficheiro anexado
+              const User = {};
+              new Post();
+              const newPost = {
+                  title: fields.title,
+                  category: fields.category,
+                  body: fields.textarea,
+                  author: req.user.id,
+                  authorName: req.user.name,
+              };
+              new Post(newPost)
+                  .save()
+                  .then(post => {
+                      req.flash('success_msg', 'Postagem adicionada com sucesso');
+                      res.redirect('/posts');
+                  });
+          } else if(files.filetoupload.length === undefined && files.filetoupload.name !== ''){ //um ficheiro para ser anexado
+                  grid.mongo = mongoose.mongo;
+                  let gfs = grid(conn.db);
+                  let writestream = gfs.createWriteStream({
+                      filename: files.filetoupload.name
+                  });
+
+                  fs.createReadStream(files.filetoupload.path).pipe(writestream).on('close', function () {
+                      const User = {};
+                      new Post();
+                      let file = [];
+                      file.push(files.filetoupload.name);
+                      const newPost = {
+                          title: fields.title,
+                          category: fields.category,
+                          body: fields.textarea,
+                          author: req.user.id,
+                          authorName: req.user.name,
+                          files : file
+                      };
+                      new Post(newPost)
+                          .save()
+                          .then(post => {
+                              req.flash('success_msg', 'Postagem adicionada com sucesso');
+                              res.redirect('/posts');
+                          });
+                  });
+          } else { //múltiplos ficheiros para serem anexados
+              grid.mongo = mongoose.mongo;
+              let gfs = grid(conn.db);
+              let ficheiros = [];
+
+              for (let j = 0; j < files.filetoupload.length; j++) {
+                  let writestream = gfs.createWriteStream({
+                      filename: files.filetoupload[j].name
+                  });
+                  ficheiros.push(files.filetoupload[j].name);
+                  fs.createReadStream(files.filetoupload[j].path).pipe(writestream);
+              }
+
+              const User = {};
+              new Post();
+              const newPost = {
+                  title: fields.title,
+                  category: fields.category,
+                  body: fields.textarea,
+                  author: req.user.id,
+                  authorName: req.user.name,
+                  files : ficheiros
+              };
+              new Post(newPost)
+                  .save()
+                  .then(post => {
+                      req.flash('success_msg', 'Postagem adicionada com sucesso');
+                      res.redirect('/posts');
+                  });
+          }
+      }
+  });
+
 });
 
 //delete post process
