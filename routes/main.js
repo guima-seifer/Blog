@@ -41,26 +41,36 @@ router.get('/profile', ensureAutheticated, (req, res) => {
   User.findOne({_id : req.user._id})
       .exec((err,user) => {
         if(!err){
-            nets({
-                body: '{"avatar": "'+user.avatar+'"}',
-                url: "http://localhost:3334/file/download/",
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            }, function done (err, resp, body) {
-                if(!err){
-                    var locals = {
-                        title: 'Área Pessoal | Blog Admin',
-                        layout: 'layouts/layout',
-                        name: req.user.name,
-                        user : user
-                    };
-                    res.render('personalProfile', locals);
-                } else {
-                    console.log(err);
-                }
-            });
+            if(user.avatar !== undefined){
+                nets({
+                    body: '{"avatar": "'+user.avatar+'"}',
+                    url: "http://localhost:3334/file/download/",
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                }, function done (err, resp, body) {
+                    if(!err){
+                        var locals = {
+                            title: 'Área Pessoal | Blog Admin',
+                            layout: 'layouts/layout',
+                            name: req.user.name,
+                            user : user
+                        };
+                        res.render('personalProfile', locals);
+                    } else {
+                        console.log(err);
+                    }
+                });
+            } else {
+                var locals = {
+                    title: 'Área Pessoal | Blog Admin',
+                    layout: 'layouts/layout',
+                    name: req.user.name,
+                    user : user
+                };
+                res.render('personalProfile', locals);
+            }
         } else {
           console.log(err);
         }

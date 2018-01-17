@@ -35,7 +35,7 @@ router.post('/upload',function (req,res) {
 router.post('/download/',(req,res,next) => {
     File.findOne({filename : req.body.avatar})
         .exec((err,fich) => {
-            if(!err){
+            if(!err && fich !== null){
                 grid.mongo = mongoose.mongo;
                 let gfs = grid(conn.db);
                 let fs_write_stream = fs.createWriteStream(__dirname+'/../public/img/'+fich.filename);
