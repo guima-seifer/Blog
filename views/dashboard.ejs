@@ -1,25 +1,22 @@
 <header id="main-header" class="pt-3 text-white" style="background-color: #236475">
   <div class="container">
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-2">
         <h1>
           <i class="fa fa-gear"></i> Painel
         </h1>
       </div>
-      <div class="col-md-3">
-        <!-- <a href="posts/add" class="btn btn-primary btn-block" data-toggle="modal" data-target="#addPostModal"><i class="fa fa-plus"></i> Adicionar Postagem</a> -->
-        <a href="/posts/add" class="btn btn-secondary btn-block"><i class="fa fa-plus"></i> Postagem</a>
-
-      </div>
-      <div class="col-md-3">
-        <a href="/category/add" class="btn btn-secondary btn-block" data-toggle="modal" data-target="#addCategoryModal"><i class="fa fa-plus"></i> Categoria</a>
+      <div class="col-md-2 mt-1">
+        <button type="button" class="btn btn-primary">
+          Notificações <span class="badge badge-light"><%= posts.length %></span>
+        </button>
       </div>
     </div>
   </div>
 </header>
 
 <!-- ACTIONS -->
-<section id="action" class="py-4 mb-4 bg-faded">
+<section id="action" class="py-4 mb-4">
   <div class="container">
     <div class="row">
 
@@ -32,85 +29,95 @@
   <!-- Dashboard AREA -->
   <section id="table-area-section" class="" style="margin-bottom: 7rem;">
     <div class="container">
+      <div class="col-md-2 col-lg-2 offset-lg-7 flt-btn" style="position: fixed;">
+        <form action="/posts/add" method="GET" class="mb-5">
+          <button type="submit" class="btn btn-secondary btn-lg" data-toggle="tooltip" data-placement="top" title="Adicionar Postagem" style="border-radius: 50%;"><i class="fa fa-plus"></i></button>
+        </form>
+        <!-- <a href="posts/add" class="btn btn-primary btn-block" data-toggle="modal" data-target="#addPostModal"><i class="fa fa-plus"></i> Adicionar Postagem</a> -->
+        <a href="/category/add" style="border-radius: 50%;" class="btn btn-secondary btn-lg" data-toggle="modal" data-target="#addCategoryModal"><i class="fa fa-plus"></i></a>
+      </div>
       <div class="row">
-        <div class="col-md-6 col-lg-6">
+
+        <div class="col-md-10 col-lg-10">
+
           <%if(posts.length > 0){%>
             <!-- //TODO:PASSAR ISTO PARA DFLEX TÁ SO FEIO COM UMA TABELA LOL -->
 
             <% moment.locale('pt_PT')%>
               <% for(var i=posts.length-1; 0<=i; i--){ %>
-                <div class="card mb-3" style=" border-color: #93B8C2;">
-                  <div id="carets" onmouseup="toggleVisibility(<%= i %>)" class="card-header bg-primary text-white my-0 py-0">
-                    <div class="d-flex flex-row justify-content-between">
-                      <div class="p-2">
-                        <p>
-                          <div class="card-title text-white">
-                            <h4><b><%= posts[i].title %></b></h4></div>
+                <div class="col-md-12 col-lg-12">
+                  <div class="card mb-3" style=" border-color: #93B8C2;">
+                    <div id="carets" onmouseup="toggleVisibility(<%= i %>)" class="card-header bg-primary text-white my-0 py-0">
+                      <div class="d-flex flex-row justify-content-between">
+                        <div class="p-2">
+                          <p>
+                            <div class="card-title text-white">
+                              <h4><b><%= posts[i].title %></b></h4></div>
 
-                          <div class="">
-                            <p>
-                              <span class="text-light ml-auto"><%= moment(posts[i].date).format('DD MMMM YYYY') %></span>
-                            </p>
-                          </div>
-                        </p>
-                      </div>
-                      <div class=" m-4">
-                        <a style="text-decoration: none;" class="text-white float-right" href="#">
-                          <%= posts[i].category %>
+                            <div class="">
+                              <p>
+                                <span class="text-light ml-auto"><%= moment(posts[i].date).format('DD MMMM YYYY') %></span>
+                              </p>
+                            </div>
+                          </p>
+                        </div>
+                        <div class=" m-4">
+                          <a style="text-decoration: none;" class="text-white float-right" href="#">
+                            <%= posts[i].category %>
 
-                        </a>
-                        <div class="mt-3">
-                          <a class="text-light  float-right" href="#" style="text-decoration: none;">
-                            <%= posts[i].authorName %>
                           </a>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="text-center">
-                      <a><i class="fa fa-angle-double-down"></i></a>
-                    </div>
-                  </div>
-                  <div id="postBody<%=i%>" style="display: none;">
-                    <div class="card-block">
-                      <div class="d-flex flex-row justify-content-start mx-5 my-3">
-                        <div class="">
-                          <%- posts[i].body %>
-                        </div>
-                      </div>
-                      <%if (posts[i].files.length > 0){%>
-                        <hr/>
-                        <div class="d-flex flex-row justify-content-start mx-5 my-3">
-                          <label for="attached">Ficheiros anexados:</label>
-                          <div class="" id="attached">
-                            <ul>
-                              <%for(let j = 0; j < posts[i].files.length; j++){%>
-                                <li>
-                                  <%= posts[i].files[j]%>
-                                </li>
-                                <%}%>
-                            </ul>
+                          <div class="mt-3">
+                            <a class="text-light  float-right" href="#" style="text-decoration: none;">
+                              <%= posts[i].authorName %>
+                            </a>
                           </div>
                         </div>
-                        <%}%>
+                      </div>
+                      <div class="text-center">
+                        <a><i class="fa fa-angle-double-down"></i></a>
+                      </div>
                     </div>
-                    <div class="card-footer">
-                      <div class="d-flex flex-row justify-content-between mx-5 ">
-                        <!-- TODO: Se for o autor pode editar a publicação -->
-                        <div class="d-block">
-                          <form action="/posts/edit/<%= posts[i]._id%>">
-                            <button type="submit" class="btn bg-secondary text-white"><i class="fa fa-angle-double-right"></i> Editar</a></button>
-                          </form>
+                    <div id="postBody<%=i%>" style="display: none;">
+                      <div class="card-block">
+                        <div class="d-flex flex-row justify-content-start mx-5 my-3">
+                          <div class="">
+                            <%- posts[i].body %>
+                          </div>
                         </div>
-                        <div class="d-block">
-                          <form action="/posts/<%= posts[i]._id %>">
-                            <button type="submit" class="btn bg-secondary text-white mt-1"><i class="fa fa-angle-double-right"></i> Comentar</a></button>
-                          </form>
+                        <%if (posts[i].files.length > 0){%>
+                          <hr/>
+                          <div class="d-flex flex-row justify-content-start mx-5 my-3">
+                            <label for="attached">Ficheiros anexados:</label>
+                            <div class="" id="attached">
+                              <ul>
+                                <%for(let j = 0; j < posts[i].files.length; j++){%>
+                                  <li>
+                                    <%= posts[i].files[j]%>
+                                  </li>
+                                  <%}%>
+                              </ul>
+                            </div>
+                          </div>
+                          <%}%>
+                      </div>
+                      <div class="card-footer">
+                        <div class="d-flex flex-row justify-content-between mx-5 ">
+                          <!-- TODO: Se for o autor pode editar a publicação -->
+                          <div class="d-block">
+                            <form action="/posts/edit/<%= posts[i]._id%>">
+                              <button type="submit" class="btn bg-secondary text-white"><i class="fa fa-angle-double-right"></i> Editar</a></button>
+                            </form>
+                          </div>
+                          <div class="d-block">
+                            <form action="/posts/<%= posts[i]._id %>">
+                              <button type="submit" class="btn bg-secondary text-white mt-1"><i class="fa fa-angle-double-right"></i> Comentar</a></button>
+                            </form>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-
                 <%} %>
                   <%}else{%>
                     <div class="text-center mt-3">
@@ -126,8 +133,8 @@
 
   <div class="scroll-top-wrapper">
     <span class="scroll-top-inner">
-      <i class="fa fa-2x fa-arrow-circle-up"></i>
-    </span>
+                <i class="fa fa-2x fa-arrow-circle-up"></i>
+              </span>
   </div>
 
   <!-- MODALS (ADD POST; ADD CATEGORY)  ADICIONAR NO FUTURO-->
@@ -147,10 +154,10 @@
             <div class="form-group">
               <label for="category" class="form-control-label">Category</label>
               <select name="category" class="form-control" required>
-              <option value="exemplo1">Exemplo 1</option>
-              <option value="exemplo2">Exemplo 2</option>
-              <option value="exemplo3">Exemplo 3</option>
-            </select>
+                          <option value="exemplo1">Exemplo 1</option>
+                          <option value="exemplo2">Exemplo 2</option>
+                          <option value="exemplo3">Exemplo 3</option>
+                        </select>
             </div>
             <div class="form-group bg-faded p-3">
               <label for="file">Image Upload</label>
@@ -163,9 +170,9 @@
             </div>
         </div>
         <%
-        var d = new Date();
-        var data = d.toISOString()
-        %>
+                    var d = new Date();
+                    var data = d.toISOString()
+                    %>
           <div class="modal-footer">
             <button class="btn btn-secondary" data-dismiss="modal">Fechar</button>
             <button type="submit" class="btn btn-primary">Adicionar Post</button>
@@ -180,7 +187,7 @@
   <div class="modal fade" id="addCategoryModal">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
-        <div class="modal-header bg-success text-white">
+        <div class="modal-header bg-primary text-white">
           <h5 class="modal-title" id="addPostModalLabel">Adicionar Categoria</h5>
           <button class="close" data-dismiss="modal"><span>&times;</span></button>
         </div>
@@ -191,8 +198,8 @@
               <input type="text" class="form-control" name="title" id="title" placeholder="Nome">
             </div>
             <div class="modal-footer">
-              <button class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-              <input class="btn btn-success" type="submit" value="Adicionar categoria" />
+              <button class="btn btn-danger" data-dismiss="modal">Fechar</button>
+              <input class="btn btn-primary" type="submit" value="Adicionar categoria" />
             </div>
           </form>
         </div>
@@ -223,3 +230,4 @@
     CKEDITOR.replace('textarea');
   </script>
   <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

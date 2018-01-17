@@ -6,8 +6,10 @@
           <i class="fa fa-pencil"></i> Postagens
         </h1>
       </div>
-      <div class="col-md-6 col-lg-6 mb-3">
+
+      <div class="col-md-4 col-lg-4 mb-3">
         <div class="input-group">
+
           <input type="text" name="" value="" placeholder="Postagens.." class="form-control">
           <span class="input-group-btn">
             <button class="btn btn-info">
@@ -27,29 +29,33 @@
 
       <div class="col-md-6 offset-md-1">
         <!-- <a href="posts/add" class="btn btn-primary btn-block" data-toggle="modal" data-target="#addPostModal"><i class="fa fa-plus"></i> Adicionar Postagem</a> -->
-        <a href="/posts/add" class="btn btn-secondary btn-block"><i class="fa fa-plus"></i> Adicionar Postagem</a>
       </div>
     </div>
-</section>
+  </section>
 
-<%-include('../partials/_msg')%>
+  <%-include('../partials/_msg')%>
 
   <!-- Dashboard AREA -->
   <section id="table-area-section" class="" style="margin-bottom: 7rem;">
     <div class="container">
-      <div class="col-md-10 col-lg-10 offset-lg-1">
+      <div class="col-md-2 col-lg-2 offset-10">
+        <form action="/posts/add" method="GET">
+          <button type="submit" class="btn btn-secondary btn-lg" style="border-radius: 50%;"><i class="fa fa-plus"></i></button>
+        </form>
+      </div>
+      <div class="col-md-10 col-lg-10">
         <%if(posts.length > 0){%>
           <!-- //TODO:PASSAR ISTO PARA DFLEX TÁ SO FEIO COM UMA TABELA LOL -->
 
           <% moment.locale('pt_PT')%>
-            <% for(var i=posts.length-1; 0<=i; i--){ %>
-              <div class="card mb-3" style=" border-color: #93B8C2;">
-                <div style="background-color: #93B8C2;" id="carets" onmouseup="toggleVisibility(<%= i %>)" class="card-header text-white my-0 py-0">
-                  <div class="d-flex flex-row justify-content-between">
-                    <div class="p-2">
-                      <p>
-                        <div class="card-title text-white">
-                          <h4><b><%= posts[i].title %></b></h4></div>
+          <% for(var i=posts.length-1; 0<=i; i--){ %>
+            <div class="card mb-3" style=" border-color: #93B8C2;">
+              <div style="background-color: #93B8C2;" id="carets" onmouseup="toggleVisibility(<%= i %>)" class="card-header text-white my-0 py-0">
+                <div class="d-flex flex-row justify-content-between">
+                  <div class="p-2">
+                    <p>
+                      <div class="card-title text-white">
+                        <h4><b><%= posts[i].title %></b></h4></div>
                         <a class="text-light" href="#" style="text-decoration: none; text-transform: uppercase;">
                           <%= posts[i].category %>
                         </a>
@@ -78,75 +84,75 @@
                       </div>
                     </div>
                     <%if (posts[i].files.length > 0){%>
-                    <hr/>
-                    <div class="d-flex flex-row justify-content-start mx-5 my-3">
-                    <label for="attached">Ficheiros anexados:</label>
-                    <div class="" id="attached">
-                      <ul>
-                          <%for(let j = 0; j < posts[i].files.length; j++){%>
-                        <li><%= posts[i].files[j]%></li>
-                          <%}%>
-                      </ul>
-                    </div>
-                    </div>
-                      <%}%>
-                  </div>
-                  <div class="card-footer">
-                    <div class="d-flex flex-row justify-content-between mx-5 ">
-                      <!-- TODO: Se for o autor pode editar a publicação -->
-                      <div class="">
-                        <p>
-                          <span class="text-muted ml-auto"><%= moment(posts[i].date).format('DD-MM-YYYY HH:MM:SS') %></span>
-                        </p>
+                      <hr/>
+                      <div class="d-flex flex-row justify-content-start mx-5 my-3">
+                        <label for="attached">Ficheiros anexados:</label>
+                        <div class="" id="attached">
+                          <ul>
+                            <%for(let j = 0; j < posts[i].files.length; j++){%>
+                              <li><%= posts[i].files[j]%></li>
+                              <%}%>
+                            </ul>
+                          </div>
+                        </div>
+                        <%}%>
                       </div>
-                      <div class="d-block">
-                        <form action="/posts/edit/<%= posts[i]._id%>">
-                          <button type="submit" class="btn bg-secondary text-white"><i class="fa fa-angle-double-right"></i> Editar</a></button>
-                        </form>
-                      </div>
-                      <div class="d-block">
-                        <form action="/posts/<%= posts[i]._id %>">
-                          <button type="submit" class="btn bg-secondary text-white mt-1"><i class="fa fa-angle-double-right"></i> Comentar</a></button>
-                        </form>
+                      <div class="card-footer">
+                        <div class="d-flex flex-row justify-content-between mx-5 ">
+                          <!-- TODO: Se for o autor pode editar a publicação -->
+                          <div class="">
+                            <p>
+                              <span class="text-muted ml-auto"><%= moment(posts[i].date).format('DD-MM-YYYY HH:MM:SS') %></span>
+                            </p>
+                          </div>
+                          <div class="d-block">
+                            <form action="/posts/edit/<%= posts[i]._id%>">
+                              <button type="submit" class="btn bg-secondary text-white"><i class="fa fa-angle-double-right"></i> Editar</a></button>
+                            </form>
+                          </div>
+                          <div class="d-block">
+                            <form action="/posts/<%= posts[i]._id %>">
+                              <button type="submit" class="btn bg-secondary text-white mt-1"><i class="fa fa-angle-double-right"></i> Comentar</a></button>
+                            </form>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
-              <%} %>
-                <%}else{%>
-                  <div class="text-center mt-3">
-                    <p>Não foram adicionados nenhums posts :-O</p>
+                  <%} %>
+                  <%}else{%>
+                    <div class="text-center mt-3">
+                      <p>Não foram adicionados nenhums posts :-O</p>
+                    </div>
+                    <%}%>
                   </div>
-                  <%}%>
-      </div>
 
-      <!-- TODO: Paginação ou slide infinito? -->
-      <!-- <nav class="ml-4">
-          <ul class="pagination">
-            <li class="page-item disabled"><a href="#" class="page-link ">Anterior</a></li>
-            <li class="page-item active"><a href="#" class="page-link ">1</a></li>
-            <li class="page-item"><a href="#" class="page-link">2</a></li>
-            <li class="page-item"><a href="#" class="page-link">3</a></li>
-            <li class="page-item"><a href="#" class="page-link">Próximo</a></li>
-          </ul>
-        </nav> -->
-    </div>
-  </section>
+                  <!-- TODO: Paginação ou slide infinito? -->
+                  <!-- <nav class="ml-4">
+                  <ul class="pagination">
+                  <li class="page-item disabled"><a href="#" class="page-link ">Anterior</a></li>
+                  <li class="page-item active"><a href="#" class="page-link ">1</a></li>
+                  <li class="page-item"><a href="#" class="page-link">2</a></li>
+                  <li class="page-item"><a href="#" class="page-link">3</a></li>
+                  <li class="page-item"><a href="#" class="page-link">Próximo</a></li>
+                </ul>
+              </nav> -->
+            </div>
+          </section>
 
-  <!-- The scroll to top feature -->
+          <!-- The scroll to top feature -->
 
-  <div class="scroll-top-wrapper">
-    <span class="scroll-top-inner">
-      <i class="fa fa-2x fa-arrow-circle-up"></i>
-    </span>
-  </div>
+          <div class="scroll-top-wrapper">
+            <span class="scroll-top-inner">
+              <i class="fa fa-2x fa-arrow-circle-up"></i>
+            </span>
+          </div>
 
-  <script type="text/javascript">
-    var button = document.getElementById('carets'); // Assumes element with id='button'
+          <script type="text/javascript">
+          var button = document.getElementById('carets'); // Assumes element with id='button'
 
-    function toggleVisibility(id) {
-      $('#postBody' + id).toggle('slow');
-    }
-  </script>
-  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+          function toggleVisibility(id) {
+            $('#postBody' + id).toggle('slow');
+          }
+          </script>
+          <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
