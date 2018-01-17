@@ -9,7 +9,7 @@ const UserSchema = new Schema({
   password: { type: String },
   date: { type: Date, default: Date.now },
   bio: { type: String, required: false },
-  avatar: { type: String, default : 'default.png' },
+  avatar: { type: String},
   token: { type: String },
   idGoogle: { type: String },
   url_name : {type: String}
