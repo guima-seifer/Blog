@@ -38,6 +38,7 @@ router.get('/index', ensureAutheticated, (req, res) => {
 });
 
 router.get('/profile', ensureAutheticated, (req, res) => {
+    console.dir(req.user);
   User.findOne({_id : req.user._id})
       .exec((err,user) => {
         if(!err){

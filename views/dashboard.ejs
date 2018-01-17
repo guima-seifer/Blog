@@ -33,12 +33,11 @@
   <section id="table-area-section" class="" style="margin-bottom: 7rem;">
     <div class="container">
       <div class="row">
-        <div class="col-md-6 col-lg-6">
           <%if(posts.length > 0){%>
+          <% for(var i=posts.length-1; 0<=i; i--){ %>
+        <div class="col-md-6 col-lg-6">
             <!-- //TODO:PASSAR ISTO PARA DFLEX TÁ SO FEIO COM UMA TABELA LOL -->
-
             <% moment.locale('pt_PT')%>
-              <% for(var i=posts.length-1; 0<=i; i--){ %>
                 <div class="card mb-3" style=" border-color: #93B8C2;">
                   <div id="carets" onmouseup="toggleVisibility(<%= i %>)" class="card-header bg-primary text-white my-0 py-0">
                     <div class="d-flex flex-row justify-content-between">
@@ -110,14 +109,13 @@
                     </div>
                   </div>
                 </div>
-
-                <%} %>
-                  <%}else{%>
-                    <div class="text-center mt-3">
-                      <p>Não foram adicionados nenhums posts :-O</p>
-                    </div>
-                    <%}%>
         </div>
+          <%} %>
+          <%}else{%>
+        <div class="text-center mt-3">
+          <p>Não foram adicionados nenhums posts :-O</p>
+        </div>
+          <%}%>
       </div>
     </div>
   </section>
