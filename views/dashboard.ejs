@@ -1,17 +1,17 @@
 <header id="main-header" class="pt-3 text-white" style="background-color: #236475">
   <div class="container">
     <div class="row">
-      <div class="col-md-2">
+      <div class="col-xs-5 col-sm-5 col-md-4 col-lg-2">
         <h1>
-          <i class="fa fa-gear"></i> Painel
+          <i class="fa fa-tachometer"></i> Painel
         </h1>
       </div>
-      <div class="col-md-2 mt-1">
+      <div class="col-xs-5 col-sm-5 col-md-2 mt-1">
         <button type="button" class="btn btn-primary">
-          Notificações <span class="badge badge-light"> <%= posts.length %></span>
+          Notificações <span class="badge badge-light"><%= posts.length %></span>
         </button>
       </div>
-      <div class="col-md-2 mt-1 offset-md-6">
+      <div class="col-xs-1 col-sm-2 col-md-2 mt-1 offset-md-4 offset-lg-6">
         <button class="btn btn-primary" onclick="changeGrid();" data-toggle="tooltip" data-placement="bottom" title="Alterar Disposição do Painel" style="border-radius: 50%;">
           <i class="fa fa-columns" aria-hidden="true"></i>
         </button>
@@ -34,7 +34,7 @@
   <!-- Dashboard AREA -->
   <section id="table-area-section" class="" style="margin-bottom: 7rem;">
     <div class="container">
-      <div class="col-md-1 col-lg-1 offset-lg-7 col-sm-12" style="position: fixed;">
+      <div class="col-md-1 col-lg-1 offset-lg-7 offset-md-9 offset-sm-9 offset-xs-9" style="position: fixed; z-index: 1000">
         <div><button data-toggle="modal" data-target="#addPostModal" class="btn btn-secondary btn-lg mb-5" style="border-radius: 50%;"><i class="fa fa-plus"  data-toggle="tooltip" data-placement="top" title="Adicionar Postagem"></i></button></div>
         <!-- <a href="posts/add" class="btn btn-primary btn-block" data-toggle="modal" data-target="#addPostModal"><i class="fa fa-plus"></i> Adicionar Postagem</a> -->
         <div><button style="border-radius: 50%;" class="btn btn-secondary btn-lg" data-toggle="modal" data-target="#addCategoryModal"><i data-toggle="tooltip" data-placement="top" title="Adicionar Categoria" class="fa fa-plus"></i></button></div>
@@ -241,6 +241,7 @@
         $('[name$=card-grid]').attr('class', 'col-md-6 col-lg-6');
       } else {
         $('[name$=card-grid]').attr('class', 'col-md-12 col-lg-12');
+
       }
     }
   </script>
