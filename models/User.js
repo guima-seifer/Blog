@@ -12,7 +12,7 @@ const UserSchema = new Schema({
   avatar: { type: String},
   token: { type: String },
   idGoogle: { type: String },
-  url_name : {type: String}
+  url_name: { type: String },
 });
 
 //export model, compila o Schema para o modelo que atribui o nome de partitura - nome do modelo
