@@ -1,5 +1,4 @@
 <div class="container">
-
   <%if (locals.errors.length > 0) {%>
     <% for(var i=0; i<locals.errors.length; i++){ %>
       <div class="alert alert-danger mt-3">
@@ -51,7 +50,7 @@
                       <%=postBody%><%}%></textarea>
                 </div>
             </div>
-                   <%
+            <%
                   var d = new Date();
                   var data = d.getUTCDate()
                   %>
@@ -60,8 +59,7 @@
                 <button class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                 <button class="btn btn-primary" value="">Adicionar Postagem</button>
               </div>
-
-                </form>
+              </form>
           </div>
 
           <script src="https://cdn.ckeditor.com/4.8.0/standard/ckeditor.js"></script>
