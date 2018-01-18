@@ -11,7 +11,7 @@ const {
 //novas cenas?
 let formidable = require('formidable');
 let mongoose = require('mongoose');
-let grid = require("gridfs-stream");
+let grid = require('gridfs-stream');
 let fs = require('fs');
 let conn = mongoose.connection;
 
@@ -20,11 +20,11 @@ router.use(express.static('public'));
 router.get('/', ensureAutheticated, (req, res) => { //falta sacar os ficheiros de cada 1
   Post.find({
       'files': {
-        $gt: ' '
-      }
+        $gt: ' ',
+      },
     }, {
       _id: 0,
-      "files": 1
+      "files": 1,
     })
     .exec((err, docs) => {
 
@@ -58,31 +58,31 @@ router.get('/', ensureAutheticated, (req, res) => { //falta sacar os ficheiros d
     });
 });
 
-// // Add Post Form
-// router.get('/add', ensureAutheticated, (req, res) => {
-//   Category.find({}, {
-//       name: 1,
-//       _id: 0,
-//     })
-//     .sort({
-//       name: 1,
-//     }).exec((err, categories) => {
-//       if (!err) {
-//         res.render('./posts/addpost', {
-//           title: 'Adicionar Postagem | Blog Admin',
-//           layout: 'layouts/layout',
-//           state: 'autenticado',
-//           errors: [],
-//           name: req.user.name,
-//           postTitle: [],
-//           postCategory: [],
-//           postBody: [],
-//           categories: categories,
-//         });
-//       }
-//     });
-//
-// });
+// Add Post Form
+router.get('/add', ensureAutheticated, (req, res) => {
+  Category.find({}, {
+      name: 1,
+      _id: 0,
+    })
+    .sort({
+      name: 1,
+    }).exec((err, categories) => {
+      if (!err) {
+        res.render('./posts/addpost', {
+          title: 'Adicionar Postagem | Blog Admin',
+          layout: 'layouts/layout',
+          state: 'autenticado',
+          errors: [],
+          name: req.user.name,
+          postTitle: [],
+          postCategory: [],
+          postBody: [],
+          categories: categories,
+        });
+      }
+    });
+
+});
 
 /* TODO: Create conditions for a certain user to be able to edit another user post */
 router.get('/edit/:idPost', ensureAutheticated, (req, res) => {
@@ -124,13 +124,24 @@ router.get('/:idPost', ensureAutheticated, (req, res) => {
         req.flash('error_msg', 'Oops, não estás autorizado');
         res.redirect('/posts');
       } else {
-        res.render('./posts/details', {
-          title: post.title + '| Blog Admin',
-          layout: 'layouts/layout',
-          name: req.user.name,
-          state: 'autenticado',
-          post: post,
-        });
+        Category.find({}, {
+            name: 1,
+            _id: 0,
+          })
+          .sort({
+            name: 1,
+          }).exec((err, categories) => {
+            if (!err) {
+              res.render('./posts/details', {
+                title: post.title + '| Blog Admin',
+                layout: 'layouts/layout',
+                name: req.user.name,
+                state: 'autenticado',
+                categories: categories,
+                post: post,
+              });
+            }
+          });
       }
     });
 });
@@ -173,7 +184,8 @@ router.post('/add', ensureAutheticated, (req, res) => {
       };
       res.render('./posts/addpost', locals);
     } else {
-      if (files.filetoupload.length === undefined && files.filetoupload.name === '') { //nenhum ficheiro anexado
+      //nenhum ficheiro anexado
+      if (files.filetoupload.length === undefined && files.filetoupload.name === '') {
         const User = {};
         new Post();
         const newPost = {
@@ -189,11 +201,13 @@ router.post('/add', ensureAutheticated, (req, res) => {
             req.flash('success_msg', 'Postagem adicionada com sucesso');
             res.redirect('/posts');
           });
-      } else if (files.filetoupload.length === undefined && files.filetoupload.name !== '') { //um ficheiro para ser anexado
+
+        //um ficheiro para ser anexado
+      } else if (files.filetoupload.length === undefined && files.filetoupload.name !== '') {
         grid.mongo = mongoose.mongo;
         let gfs = grid(conn.db);
         let writestream = gfs.createWriteStream({
-          filename: files.filetoupload.name
+          filename: files.filetoupload.name,
         });
 
         fs.createReadStream(files.filetoupload.path).pipe(writestream).on('close', function() {
@@ -207,7 +221,8 @@ router.post('/add', ensureAutheticated, (req, res) => {
             body: fields.textarea,
             author: req.user.id,
             authorName: req.user.name,
-            files: file
+            files: file,
+            s
           };
           new Post(newPost)
             .save()
@@ -223,7 +238,7 @@ router.post('/add', ensureAutheticated, (req, res) => {
 
         for (let j = 0; j < files.filetoupload.length; j++) {
           let writestream = gfs.createWriteStream({
-            filename: files.filetoupload[j].name
+            filename: files.filetoupload[j].name,
           });
           ficheiros.push(files.filetoupload[j].name);
           fs.createReadStream(files.filetoupload[j].path).pipe(writestream);
@@ -237,7 +252,7 @@ router.post('/add', ensureAutheticated, (req, res) => {
           body: fields.textarea,
           author: req.user.id,
           authorName: req.user.name,
-          files: ficheiros
+          files: ficheiros,
         };
         new Post(newPost)
           .save()
