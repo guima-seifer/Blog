@@ -65,8 +65,44 @@ body h1, body h2, body h3 {
 
 .grad {
   /*background: linear-gradient(120deg, rgba(255,0,0,0.4), #03A6A6);*/
-  /*background: linear-gradient(120deg, rgba(0,255,0, 0.4), #03A6A6);*/
-  background: linear-gradient(120deg, rgba(0, 0, 255, 0.4), #03A6A6);
+  /*background: linear-gradient(120deg, rgba(0,255,0, 0.3), #03A6A6);*/
+  /*background: linear-gradient(120deg, rgba(0, 0, 255, 0.3), #03A6A6);*/
+}
 
+.card {
+  -webkit-transition: all 1s ease;
+  /* Safari and Chrome */
+  -moz-transition: all 1s ease;
+  /* Firefox */
+  -o-transition: all 1s ease;
+  /* IE 9 */
+  -ms-transition: all 1s ease;
+  /* Opera */
+  transition: all 1s ease;
+}
 
+.card:hover {
+  -webkit-transform: scale(1.1);
+  /* Safari and Chrome */
+  -moz-transform: scale(1.1);
+  /* Firefox */
+  -ms-transform: scale(1.1);
+  /* IE 9 */
+  -o-transform: scale(1.1);
+  /* Opera */
+  transform: scale(1.05);
+}
+
+#button-grp {
+  position: fixed;
+  z-index: 1000;
+  right: 1rem;
+  bottom: 7rem;
+}
+
+@media only screen and (max-width: 767px) {
+  #button-grp {
+    left: 15rem;
+    bottom: 6rem;
+  }
 }
