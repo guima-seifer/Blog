@@ -2,18 +2,12 @@
   <!-- //TODO: Passar isto para navbar -->
   <div class="container">
     <div class="row">
-      <div class="col-xs-4 col-sm-5 col-md-4 col-lg-3">
+      <div class="col-xs-4 col-sm-6 col-md-4 col-lg-3">
         <h1>
           <i class="fa fa-tachometer"></i> Painel
         </h1>
       </div>
-      <div class="col-xs-2 col-sm-4 col-md-4 col-lg-3 mt-1">
-        <!-- TODO: Ao clicar nas notificações é feito um pedido para gerar as X novas notificações que tem (comentários/ edits etc) na dashboard -->
-        <button type="button" class="btn btn-primary">
-          Notificações <span class="badge badge-light"><%= posts.length %></span>
-        </button>
-      </div>
-      <div class="col-xs-1 col-sm-2 col-md-2 col-lg-2 my-1 offset-xs-6 offset-sm-0 offset-md-2 offset-lg-4">
+      <div class="col-xs-1 col-sm-6 col-md-2 col-lg-2 my-1 pull-right">
         <button class="btn btn-primary" onclick="changeGrid();" style="border-radius: 50%;">
           <i  data-toggle="tooltip" data-placement="bottom" title="Alterar Disposição do Painel" class="fa fa-columns" aria-hidden="true"></i>
         </button>
