@@ -1,4 +1,4 @@
-<header id="main-header" class="pt-3 bg-primary text-white">
+<header id="main-header" class="pt-3 text-white"  style="background-color: #236475;">
   <div class="container">
     <div class="row">
       <div class="col-md-6">
@@ -51,7 +51,7 @@
                 <textarea name="bio" class="form-control"><%= user.bio %></textarea>
               </div>
                 <div class="d-flex justify-content-end">
-                    <input type="submit" class="btn btn-success" value="Guardar"/>
+                    <button type="submit" class="btn btn-success btn-lg" value="Guardar"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
                 </div>
             </form>
           </div>
@@ -65,9 +65,11 @@
         <%} else {%>
         <img src="img/<%= user.avatar%>" alt="" class="d-block img-fluid mb-3">
         <%}%>
-        <a data-toggle="modal" style="color: #fff;" data-target="#avatarModal" class="btn btn-primary btn-block"><i class="fa fa-pencil-square-o"></i> Alterar Imagem</a>
-        <button data-toggle="modal" data-target="#avatarModal" class="btn btn-danger btn-block"><i class="fa fa-trash-o"></i> Apagar Imagem</button>
+        <div class="btn-group offset-3" role="group" aria-label="Basic example">
+        <button data-toggle="modal" data-target="#avatarModal" class="btn btn-primary btn-lg"><i class="fa fa-pencil-square-o"></i></button>
+        <button data-toggle="modal" data-target="#avatarModal" class="btn btn-danger btn-lg"><i class="fa fa-trash-o"></i></button>
         </div>
+      </div>
     </div>
   </div>
 </section>
