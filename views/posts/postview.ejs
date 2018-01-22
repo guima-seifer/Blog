@@ -63,19 +63,20 @@
               <% if(post.comments.length > 0){%>
                 <%for(let i = 0; i < post.comments.length; i++){%>
                   <%if(post.comments[i].commentUser !== undefined){%>
-                    <div class="card-block">
-                      <br>
-                      <small><%= moment(post.comments[i].commentDate).format('DD MMMM YYYY h:mm:ss a') %></small>
-
+                    <div class="card-block my-3">
+                      <p class="text-muted">
+                        <%if(user.avatar === undefined || user.avatar === ''){%>
+                        <a href="/users/<%post.comments[i].commentUser.url_name%>"><i class="fa fa-user"></i>@<%=user.name%></a>
+                        <%} else {%>
+                          <a href="/users/<%post.comments[i].commentUser.url_name%>"><img style="width: 35px; height: 35px" class="rounded-circle mr-2 mb-1" src="/img/<%= user.avatar%>"> @<%=user.name%></a>
+                        <%}%>
+                      </p>
                       <p>
                         <%= post.comments[i].commentBody%>
                       </p>
-                      <p class="text-muted">
-                        <a href="/users/<%post.comments[i].commentUser.url_name%>">
-                          <%= post.comments[i].commentUser.name%>
-                        </a>
-                      </p>
+                      <small><%= moment(post.comments[i].commentDate).format('DD MMMM YYYY h:mm:ss a') %></small>
                     </div>
+                      <hr>
                     <%}%>
                     <%}%>
                     <%}%>
