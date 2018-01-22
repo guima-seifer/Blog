@@ -17,7 +17,7 @@
     </div>
     <div id="board-section" class="row">
       <div id="card-row" class="col-sm-12 col-md-4 col-lg-4">
-        <div class="row">
+        <!-- <div class="row"> -->
           <%if(posts.length > 0){%>
             <% for(var i=posts.length-1; 0<=i; i--){ %>
               <div id="card-grid" name="card-grid" class="col-sm-12 col-md-12 col-lg-12">
@@ -110,7 +110,7 @@
                     <p>Não foram adicionados nenhums posts :-O</p>
                   </div>
                   <%}%>
-                </div>
+                <!-- </div> -->
               </div>
 
               <div id="jumbotron" class="xol-xs-0 col-sm-0 col-md-8 col-lg-8">
@@ -160,8 +160,8 @@
 
           function changeGrid() {
             if ($('[name$=card-grid]').hasClass('col-md-12')) {
-              $('[id$=card-row]').attr('class', 'col-md-12 col-lg-12');
-              $('[name$=card-grid]').attr('class', 'col-md-4 col-lg-4');
+              $('[id$=card-row]').attr('class', 'col-md-12 col-lg-12 card-columns');
+              $('[name$=card-grid]').attr('class', '');
               $('#jumbotron').hide();
             } else {
               $('[id$=card-row]').attr('class', 'col-md-4 col-lg-4');
