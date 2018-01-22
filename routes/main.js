@@ -60,17 +60,17 @@ router.get('/profile', ensureAutheticated, (req, res) => {
           nets({
             body: '{"avatar": "' + user.avatar + '"}',
             url: "http://localhost:3334/file/download/",
-            method: "POST",
+            method: 'POST',
             headers: {
-              "Content-Type": "application/json",
-            }
+              'Content-Type': 'application/json',
+            },
           }, function done(err, resp, body) {
             if (!err) {
               var locals = {
                 title: 'Área Pessoal | Blog Admin',
                 layout: 'layouts/layout',
                 name: req.user.name,
-                user: user
+                user: user,
               };
               res.render('personalProfile', locals);
             } else {
