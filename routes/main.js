@@ -27,6 +27,8 @@ router.get('/index', ensureAutheticated, (req, res) => {
     .sort({
       date: 1,
     })
+    .populate('user')
+    .populate('comments.commentUser')
     .then(posts => {
       Category.find({}, {
           name: 1,
@@ -50,13 +52,12 @@ router.get('/index', ensureAutheticated, (req, res) => {
 });
 
 router.get('/profile', ensureAutheticated, (req, res) => {
-  console.dir(req.user);
   User.findOne({
       _id: req.user._id,
     })
     .exec((err, user) => {
       if (!err) {
-        if (user.avatar !== undefined) {
+        if (user.avatar !== undefined && user.avatar !== '') {
           nets({
             body: '{"avatar": "' + user.avatar + '"}',
             url: "http://localhost:3334/file/download/",

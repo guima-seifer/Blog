@@ -33,25 +33,27 @@ router.post('/upload',function (req,res) {
 });
 
 router.post('/download/',(req,res,next) => {
-    File.findOne({filename : req.body.avatar})
-        .exec((err,fich) => {
-            if(!err && fich !== null){
-                grid.mongo = mongoose.mongo;
-                let gfs = grid(conn.db);
-                let fs_write_stream = fs.createWriteStream(__dirname+'/../public/img/'+fich.filename);
-                let readstream = gfs.createReadStream({
-                    filename : req.body.avatar
-                });
+    if(req.body.avatar !== undefined && req.body.avatar !== ''){
+        File.findOne({filename : req.body.avatar})
+            .exec((err,fich) => {
+                if(!err && fich !== null){
+                    grid.mongo = mongoose.mongo;
+                    let gfs = grid(conn.db);
+                    let fs_write_stream = fs.createWriteStream(__dirname+'/../public/img/'+fich.filename);
+                    let readstream = gfs.createReadStream({
+                        filename : req.body.avatar
+                    });
 
-                readstream.pipe(fs_write_stream);
-                fs_write_stream.on('close', function () {
-                    next()
-                });
+                    readstream.pipe(fs_write_stream);
+                    fs_write_stream.on('close', function () {
+                        next()
+                    });
 
-            } else {
-                console.log("Erro: "+err);
-            }
-        });
+                } else {
+                    console.log("Erro: "+err);
+                }
+            });
+    }
 });
 
 module.exports = router;

@@ -10,6 +10,7 @@ const {
 let User = require('../models/User');
 let Post = require('../models/Post');
 const moment = require('moment');
+let nets = require('nets');
 
 router.use(express.static('public'));
 
@@ -157,22 +158,45 @@ router.get('/google/callback', passport.authenticate('google', {
 
 //Informação de um utilizador, sem ser na Área Pessoal
 router.get('/:name', (req, res) => {
-  User.findOne({
-      url_name: req.params.name
+    User.findOne({
+        url_name : req.params.name,
     })
-    .exec((err, userDoc) => {
-      if (!err) {
-        var locals = {
-          title: 'Perfil | Blog Admin',
-          layout: 'layouts/layout',
-          name: req.user.name,
-          user: userDoc
-        };
-        res.render('./users/profile', locals)
-      } else {
-        console.log(err);
-      }
-    });
+        .exec((err, userDoc) => {
+            if (!err) {
+                if (userDoc.avatar !== undefined && userDoc.avatar !== '') {
+                    nets({
+                        body: '{"avatar": "' + userDoc.avatar + '"}',
+                        url: "http://localhost:3334/file/download/",
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    }, function done(err, resp, body) {
+                        if (!err) {
+                            var locals = {
+                                title: 'Perfil | Blog Admin',
+                                layout: 'layouts/layout',
+                                name: req.user.name,
+                                user: userDoc
+                            };
+                            res.render('./users/profile', locals);
+                        } else {
+                            console.log(err);
+                        }
+                    });
+                } else {
+                    var locals = {
+                        title: 'Área Pessoal | Blog Admin',
+                        layout: 'layouts/layout',
+                        name: req.user.name,
+                        user: userDoc
+                    };
+                    res.render('./users/profile', locals);
+                }
+            } else {
+                console.log(err);
+            }
+        });
 });
 
 //Atualizar um user
