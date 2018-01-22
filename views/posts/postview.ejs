@@ -1,0 +1,95 @@
+<header id="main-header" class="pt-3 text-white" style="background-color: #236475;">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h1>
+          Postagem: <%= post.title %>
+        </h1>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ACTIONS -->
+<section id="action" class="py-4 mb-4 bg-faded">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 mr-auto">
+        <a href="/index" class="btn btn-info btn-block"><i class="fa fa-arrow-left"></i> Voltar</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%-include('../partials/_msg')%>
+
+  <!-- POST VIEW -->
+  <section id="post-section" class="mb-5">
+
+    <div class="container">
+      <div id="jumbotron" class="xol-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="jumbotron m-2 p-3 bg-white">
+          <h1 id="jumboTitle" class="display-5"><%= post.title %></h1>
+          <p id="jumboInfo">
+            <div class="d-block">
+              <b class="text-secondary">
+              <%=post.category%>
+            </b>
+            </div>
+            <div class="d-inline">
+              <%=post.date%>
+            </div>
+            <div class="d-inline float-right">
+              <%= post.user.name%>
+            </div>
+          </p>
+          <hr class="my-4 mx-0 px-0">
+          <p id="jumboBody" class="">
+            <%-post.body%>
+          </p>
+          <hr class="my-4 bg-light">
+          <!-- Para os comentários -->
+          <% if(user) {%>
+            <form method="POST" action="/posts/comment/<%= post._id%>">
+              <div class="form-group">
+                <label for="commentBody">Adicionar Comentário</label>
+                <textarea class="form-control" name="commentBody" id="commentBody" rows="2"></textarea>
+              </div>
+              <input type="submit" class="btn btn-primary mt-3" value="Submeter">
+            </form>
+
+            <% if(post.allowComments === 'on') {%>
+              <% moment.locale('pt_PT')%>
+              <% if(post.comments.length > 0){%>
+                <%for(let i = 0; i < post.comments.length; i++){%>
+                  <%if(post.comments[i].commentUser !== undefined){%>
+                    <div class="card-block">
+                      <br>
+                      <small><%= moment(post.comments[i].commentDate).format('DD MMMM YYYY h:mm:ss a') %></small>
+
+                      <p>
+                        <%= post.comments[i].commentBody%>
+                      </p>
+                      <p class="text-muted">
+                        <a href="/users/<%post.comments[i].commentUser.url_name%>">
+                          <%= post.comments[i].commentUser.name%>
+                        </a>
+                      </p>
+                    </div>
+                    <%}%>
+                    <%}%>
+                    <%}%>
+                    <%} else {%>
+                      <p><a href="/users/login">Inicie sessão</a> para poder comentar.</p>
+                      <%}%>
+                      <%}%>
+        </div>
+      </div>
+
+
+
+
+      <script src="https://cdn.ckeditor.com/4.8.0/standard/ckeditor.js"></script>
+      <script>
+        CKEDITOR.replace('textarea');
+      </script>
