@@ -29,10 +29,10 @@ router.get('/', ensureAutheticated, (req, res) => { //falta sacar os ficheiros d
     .exec((err, docs) => {
 
     });
-
   Post.find({
       author: req.user.id,
     })
+    .populate('user')
     .sort({
       date: 1,
     })
@@ -91,10 +91,6 @@ router.get('/:idPost', ensureAutheticated, (req, res) => {
     .populate('user')
     .populate('comments.commentUser')
     .then(post => {
-      if (post.author != req.user.id) {
-        req.flash('error_msg', 'Oops, não estás autorizado');
-        res.redirect('/posts');
-      } else {
         Category.find({}, {
             name: 1,
             _id: 0,
@@ -103,19 +99,69 @@ router.get('/:idPost', ensureAutheticated, (req, res) => {
             name: 1,
           }).exec((err, categories) => {
             if (!err) {
-              res.render('./posts/details', {
-                title: post.title + '| Blog Admin',
-                layout: 'layouts/layout',
-                name: req.user.name,
-                user: req.user,
-                moment: moment,
-                categories: categories,
-                post: post,
-              });
+                if (post.author !== req.user.id) {
+                  if(post.allowComments === 'on'){
+                      res.render('./posts/anotherDetails', {
+                          title: post.title + '| Blog Admin',
+                          layout: 'layouts/layout',
+                          name: req.user.name,
+                          user: req.user,
+                          moment: moment,
+                          categories: categories,
+                          post: post,
+                      });
+                  } else {
+                      req.flash('error_msg', 'Oops, este post não permite comentários.');
+                      res.redirect('/posts');
+                  }
+                } else {
+                    res.render('./posts/details', {
+                        title: post.title + '| Blog Admin',
+                        layout: 'layouts/layout',
+                        name: req.user.name,
+                        user: req.user,
+                        moment: moment,
+                        categories: categories,
+                        post: post,
+                    });
+                }
             }
           });
-      }
     });
+});
+
+router.get('/edit/:idPost', ensureAutheticated, (req,res) => {
+    Post.findOne({
+        _id: req.params.idPost,
+    })
+        .populate('user')
+        .populate('comments.commentUser')
+        .then(post => {
+            Category.find({}, {
+                name: 1,
+                _id: 0,
+            })
+                .sort({
+                    name: 1,
+                }).exec((err, categories) => {
+                if (!err) {
+                    if (post.author !== req.user.id) {
+                        req.flash('error_msg', 'Oops, não estás autorizado');
+                        res.redirect('/posts');
+                    } else {
+                        res.render('./posts/details', {
+                            title: post.title + '| Blog Admin',
+                            layout: 'layouts/layout',
+                            name: req.user.name,
+                            user: req.user,
+                            moment: moment,
+                            categories: categories,
+                            post: post,
+                        });
+                    }
+                }
+            });
+        });
 });
 
 router.post('/add', ensureAutheticated, (req, res) => {
@@ -166,6 +212,7 @@ router.post('/add', ensureAutheticated, (req, res) => {
           body: fields.textarea,
           author: req.user.id,
           authorName: req.user.name,
+          user : req.user._id
         };
         new Post(newPost)
           .save()
@@ -285,10 +332,11 @@ router.post('/comment/:idPost', ensureAutheticated, (req, res, err) => {
       post.comments.unshift(newComment); //add to the begining of the array
       post.save()
         .then(post => {
-          res.redirect(`/posts/${post.id}`);
-        });
-      req.flash('error_msg', 'Oops, não estás autorizado');
-      res.redirect('/posts');
+          res.redirect('/posts/'+post.id);
+        }).catch(()=> {
+          req.flash('error_msg', 'Oops, não estás autorizado');
+          res.redirect('/posts');
+      });
     });
 });
 

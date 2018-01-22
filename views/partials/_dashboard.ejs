@@ -53,9 +53,9 @@
                           </p>
                         </div>
                       </div>
-                      <div>
-                        <a class="text-light  float-right" href="#" style="text-decoration: none;">
-                          <span id="postAuthor<%=i%>"><%= posts[i].authorName %></span>
+                      <div id="postAuthor<%=i%>">
+                        <a class="text-light float-right" href="/users/<%=posts[i].user.url_name%>" style="text-decoration: none;">
+                            <span ><%= posts[i].user.name %></span>
                         </a>
                       </div>
                     </div>
@@ -90,6 +90,9 @@
                     </div>
                     <div class="card-footer">
                       <div class="d-flex flex-row justify-content-end">
+                        <small class="d-block mr-3 text-muted">
+                            <%= posts[i].comments.length %> Comentários
+                        </small>
                         <!-- TODO: Se for o autor pode editar a publicação -->
                         <div class="d-block mr-3">
                           <a data-toggle="tooltip" data-placement="bottom" title="Editar" href="/posts/<%= posts[i]._id%>" class="text-muted mt-1" style="text-decoration: none;"><i class="fa fa-pencil"></i></a>
@@ -101,6 +104,23 @@
                           <a data-toggle="tooltip" data-placement="bottom" title="Comentar" href="/posts/<%= posts[i]._id %>" class="text-muted mt-1" style="text-decoration: none;"><i class="fa fa-comment-o"></i></a>
                         </div>
                       </div>
+                    </div>
+                    <div style="display: none;" id="postComments<%=i%>">
+                        <% if(posts[i].comments.length > 0){%>
+                        <%for(let k = 0; k < posts[i].comments.length; k++){%>
+                        <%if(posts[i].comments[k].commentUser !== undefined){%>
+                        <small><%= moment(posts[i].comments[k].commentDate).format('DD MMMM YYYY h:mm:ss a') %></small>
+
+                        <p>
+                            <%= posts[i].comments[k].commentBody%>
+                        </p>
+                        <p class="text-muted">
+                            <a style="text-decoration:none !important;" href="/users/<%=posts[i].comments[k].commentUser.url_name%>"><%= posts[i].comments[k].commentUser.name%></a>
+                        </p>
+                        <hr/>
+                        <%}%>
+                        <%}%>
+                        <%}%>
                     </div>
                   </div>
                 </div>
@@ -121,7 +141,8 @@
                   <p id="jumboBody" class="">Selecione um item para poder visualizar</p>
                   <hr class="my-4 bg-light">
                   <!-- Para os comentários -->
-                  <p id="jumboFooter" class="">Comentários</p>
+                  <p id="jumboFooter" class="">Comentários:</p>
+                  <p id="jumboComments"></p>
                 </div>
               </div>
             </div>
@@ -149,6 +170,9 @@
             var postCategory = $('#postCategory' + aux).html();
             var postDate = $('#postDate' + aux).html();
             var postAuthor = $('#postAuthor' + aux).html();
+            postAuthor = postAuthor.replace('text-light','');
+            console.dir(postAuthor);
+            let postComments = $('#postComments' + aux).html();
             document.getElementById('jumboBody').innerHTML = postBody;
             document.getElementById('jumboTitle').innerHTML = postTitle;
             document.getElementById('jumboInfo').innerHTML = '<div class="d-block">' +
@@ -156,6 +180,7 @@
             postCategory + '</b></div>' +
             '<div class="d-inline">' + postDate + '</div>' + '<div class="d-inline float-right"> ' +
             postAuthor + ' </div>';
+            $("#jumboComments").html(postComments);
           };
 
           function changeGrid() {

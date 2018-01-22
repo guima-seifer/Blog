@@ -99,6 +99,7 @@
                 </form>
                 <% if(post.comments.length > 0){%>
                   <%for(let i = 0; i < post.comments.length; i++){%>
+                    <%if(post.comments[i].commentUser !== undefined){%>
                     <div class="card-block">
                       <br>
                       <small><%= moment(post.comments[i].commentDate).format('DD MMMM YYYY h:mm:ss a') %></small>
@@ -107,9 +108,10 @@
                         <%= post.comments[i].commentBody%>
                       </p>
                       <p class="text-muted">
-                        <%= post.comments[i].commentUser.name%>
+                        <a href="/users/<%post.comments[i].commentUser.url_name%>"><%= post.comments[i].commentUser.name%></a>
                       </p>
                     </div>
+                    <%}%>
                     <%}%>
                     <%}%>
                     <%} else {%>

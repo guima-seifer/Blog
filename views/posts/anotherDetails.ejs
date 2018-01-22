@@ -1,0 +1,105 @@
+<header id="main-header" class="pt-3 text-white" style="background-color: #236475;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h1>
+                    Postagem: <%= post.title %>
+                </h1>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- ACTIONS -->
+<section id="action" class="py-4 mb-4 bg-faded">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 mr-auto">
+                <a href="/index" class="btn btn-info btn-block"><i class="fa fa-arrow-left"></i> Voltar</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<%-include('../partials/_msg')%>
+
+<!-- POST EDIT -->
+<section id="edit-post-section" class="mb-5">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="card border-primary">
+                    <div class="card-header bg-primary text-white">
+                        <h4>Post</h4>
+                    </div>
+                    <div class="card-block">
+                        <form class="mx-3 my-3">
+                            <div class="form-group">
+                                <label for="title" class="form-control-label"><%= post.title %></label>
+                                <input name="title" type="text" readonly class="form-control" value="<%= post.title %>">
+                            </div>
+                            <div class="form-group">
+                                <label for="category" class="form-control-label">Categoria</label>
+                                <input name="category" readonly id="category" class="form-control" value=<%=post.category%>>
+                            </div>
+                            <div class="form-group">
+                                <label for="body">Conteúdo do post:</label>
+                                <textarea name="textarea" readonly class="form-control"><%= post.body %></textarea>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<% if(post.allowComments === 'on') {%>
+<% moment.locale('pt_PT')%>
+<section>
+    <div class="container">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <span class="card-title">Comentários</span>
+            </div>
+            <div class="card-block bg-faded p-3">
+                <% if(user) {%>
+                <form method="POST" action="/posts/comment/<%= post._id%>">
+                    <div class="form-group">
+                        <label for="commentBody">Adicionar Comentário</label>
+                        <textarea class="form-control" name="commentBody" id="commentBody" rows="2"></textarea>
+                    </div>
+                    <input type="submit" class="btn btn-primary mt-3" value="Submeter">
+                </form>
+                <% if(post.comments.length > 0){%>
+                <%for(let i = 0; i < post.comments.length; i++){%>
+                <%if(post.comments[i].commentUser !== undefined){%>
+                <div class="card-block">
+                    <br>
+                    <small><%= moment(post.comments[i].commentDate).format('DD MMMM YYYY h:mm:ss a') %></small>
+
+                    <p>
+                        <%= post.comments[i].commentBody%>
+                    </p>
+                    <p class="text-muted">
+                        <a href="/users/<%post.comments[i].commentUser.url_name%>"><%= post.comments[i].commentUser.name%></a>
+                    </p>
+                </div>
+                <%}%>
+                <%}%>
+                <%}%>
+                <%} else {%>
+                <p><a href="/users/login">Inicie sessão</a> para poder comentar.</p>
+                <%}%>
+            </div>
+        </div>
+    </div>
+</section>
+
+<%}%>
+
+<script src="https://cdn.ckeditor.com/4.8.0/standard/ckeditor.js"></script>
+<script>
+    CKEDITOR.replace('textarea');
+</script>
