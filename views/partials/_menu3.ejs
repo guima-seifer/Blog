@@ -1,0 +1,32 @@
+<table class="table table-hover table-striped table-dark" id="tableCategories">
+  <thead class="">
+    <tr>
+      <th>#</th>
+      <th>Postagem</th>
+      <th>Autor</th>
+      <th class="text-center">Ação</th>
+    </tr>
+  </thead>
+  <tbody class="">
+    <% moment.locale('pt_PT')%>
+      <% for(let i=0; i < posts.length; i++){%>
+        <tr scope="row" class="">
+          <td scope="col">
+            <%= moment(posts[i].date).format('DD MMMM YYYY') %>
+          </td>
+          <td>
+            <%= posts[i].title %>
+          </td>
+          <td>
+            <%= posts[i].authorName %>
+          </td>
+          <td class="text-center">
+            <form action="/posts/delete/<%= posts[i]._id%>?_method=DELETE" method="post">
+              <input type="hidden" name="_method" value="DELETE">
+              <button type="submit" name="DELETE" class="btn btn-secondary"><i class="fa fa-times"></i></button>
+            </form>
+          </td>
+          <%}%>
+        </tr>
+  </tbody>
+</table>

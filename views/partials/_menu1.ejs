@@ -1,0 +1,118 @@
+<div id="board-section" class="row">
+  <div id="card-row" class="col-md-12 col-lg-12 card-columns">
+    <!-- <div class="row"> -->
+    <%if(posts.length > 0){%>
+      <% for(var i=posts.length-1; 0<=i; i--){ %>
+        <div id="card-grid" name="card-grid" class="">
+          <!-- //TODO:PASSAR ISTO PARA DFLEX TÁ SO FEIO COM UMA TABELA LOL -->
+          <% moment.locale('pt_PT')%>
+          <div id="dash-card" class="card mb-4" style=" border-color: #93B8C2; box-shadow: 5px 5px 3px grey;">
+            <div id="carets" onclick="jumbotronRender(<%= i %>);" onmouseup="toggleVisibility(<%= i %>)" class="card-header bg-primary text-white my-0 py-0">
+              <div class="d-flex flex-row justify-content-between">
+                <div class="pt-2">
+                  <p>
+                    <div class="card-title text-white">
+                      <h6 style="text-shadow: 1px 1px 3px black;">
+                        <b>
+                          <form action="/post/:_id/fave" method="get">
+                            <i id="favicon<%=i%>" onclick="favPost(<%= i %>)" class="fa fa-bookmark float-left mr-1" aria-hidden="true"></i>
+                          </form>
+                          <span id="postTitle<%=i%>"><%= posts[i].title %></span>
+                        </b>
+                      </h6>
+                      <a id="postCategory" style="text-decoration: none;" class="text-white" href="#">
+                        <span id="postCategory<%=i%>" ><%= posts[i].category %></span>
+                      </a>
+                    </div>
+                  </p>
+                </div>
+              </div>
+
+              <div class="d-flex flex-row justify-content-between">
+                <div>
+                  <div class="">
+                    <p>
+                      <span id="postDate<%=i%>" class="text-light ml-auto"><%= moment(posts[i].date).format('DD MMMM YYYY') %></span>
+                    </p>
+                  </div>
+                </div>
+                <div id="postAuthor<%=i%>">
+                  <a class="text-light float-right" href="/users/<%=posts[i].user.url_name%>" style="text-decoration: none;">
+                    <span ><%= posts[i].user.name %></span>
+                  </a>
+                </div>
+              </div>
+              <!-- <div class="text-center m-0 p-0">
+              <a><i class="fa fa-angle-double-down"></i></a>
+            </div> -->
+          </div>
+          <div id="postBody<%=i%>" style="display: none;">
+            <div class="card-body">
+              <div class="d-flex flex-row justify-content-start">
+                <div id="pstBody<%=i%>" class="">
+                  <%- posts[i].body %>
+                </div>
+              </div>
+              <%if (posts[i].files.length > 0){%>
+                <hr/>
+                <div class="d-flex flex-row justify-content-start mx-5 my-3">
+                  <label for="attached">Ficheiros anexados:</label>
+                  <div class="" id="attached">
+                    <ul>
+                      <%for(let j = 0; j < posts[i].files.length; j++){%>
+                        <li>
+                          <%= posts[i].files[j]%>
+                        </li>
+                        <%}%>
+                      </ul>
+                    </div>
+                  </div>
+                  <%}%>
+                </div>
+
+              </div>
+              <div class="card-footer">
+                <div class="d-flex flex-row justify-content-between">
+                  <small class="d-block mr-3 text-muted">
+                    <%= posts[i].comments.length %> Comentários
+                  </small>
+                  <!-- TODO: Se for o autor pode editar a publicação -->
+                  <div class="d-block mr-3">
+                    <a data-toggle="tooltip" data-placement="bottom" title="Editar" href="/posts/<%= posts[i]._id%>/edit" class="text-muted mt-1" style="text-decoration: none;"><i class="fa fa-pencil"></i></a>
+                  </div>
+                  <div class="d-block mr-3">
+                    <a data-toggle="tooltip" data-placement="bottom" title="Partilhar" href="/posts/<%= posts[i]._id%>/share" class="text-muted mt-1" style="text-decoration: none;"><i class="fa fa-share-alt"></i></a>
+                  </div>
+                  <div class="d-block mr-3">
+                    <a data-toggle="tooltip" data-placement="bottom" title="Comentar" href="/posts/<%= posts[i]._id %>" class="text-muted mt-1" style="text-decoration: none;"><i class="fa fa-comment-o"></i></a>
+                  </div>
+                </div>
+              </div>
+              <div style="display: none;" id="postComments<%=i%>">
+                <% if(posts[i].comments.length > 0){%>
+                  <%for(let k = 0; k < posts[i].comments.length; k++){%>
+                    <%if(posts[i].comments[k].commentUser !== undefined){%>
+                      <small><%= moment(posts[i].comments[k].commentDate).format('DD MMMM YYYY h:mm:ss a') %></small>
+
+                      <p>
+                        <%= posts[i].comments[k].commentBody%>
+                      </p>
+                      <p class="text-muted">
+                        <a style="text-decoration:none !important;" href="/users/<%=posts[i].comments[k].commentUser.url_name%>"><%= posts[i].comments[k].commentUser.name%></a>
+                      </p>
+                      <hr/>
+                      <%}%>
+                      <%}%>
+                      <%}%>
+                    </div>
+                  </div>
+                </div>
+                <%} %>
+                <%}else{%>
+                  <div class="text-center mt-3">
+                    <p>Não foram adicionados nenhums posts :-O</p>
+                  </div>
+                  <%}%>
+                  <!-- </div> -->
+                </div>
+              </div>
