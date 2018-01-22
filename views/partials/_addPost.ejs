@@ -1,0 +1,53 @@
+<!-- ADD POST MODAL  -->
+<div class="modal fade" id="addPostModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="addPostModalLabel">Adicionar Postagem</h5>
+        <button class="close" data-dismiss="modal"><span>&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" action="/posts/add" class="mx-3 my-3" enctype="multipart/form-data">
+          <div class="form-label-group">
+            <input type="text" class="form-control" name="title" id="title" placeholder="Título" required autofocus>
+            <label for="title">Título</label>
+          </div>
+          <div class="form-group">
+            <label for="category" class="form-label">Categoria</label>
+            <select id="category" name="category" class="form-control" placeholder="Categoria">
+                        <%for(let i = 0; i < categories.length; i++){%>
+                          <option value="<%= categories[i].name%>"><%= categories[i].name%></option>
+                          <%}%>
+                        </select>
+          </div>
+          <div class="form-group bg-faded p-3">
+            <label for="file" class="form-control-label">Anexar ficheiros</label>
+            <input type="file" name="filetoupload" value="" class="form-control-file" id="file" multiple>
+            <small id="fileHelp" class="form-text text-muted">Tamanho máx 3MB</small>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" checked name="checkComments" id="checkComments">
+            <label class="form-check-label" for="defaultCheck1">
+                          Permitir comentários
+                        </label>
+          </div>
+
+          <div class="form-label-group">
+            <textarea id="textarea" name="textarea" class="form-control" rows="3" required autofocus></textarea>
+          </div>
+      </div>
+      <%
+                    var d = new Date();
+                    var data = d.getUTCDate()
+                    %>
+
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+          <button class="btn btn-primary" value="">Adicionar Postagem</button>
+        </div>
+        </form>
+
+    </div>
+  </div>
+</div>

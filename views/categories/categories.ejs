@@ -31,9 +31,9 @@
     <div class="container">
       <div class="row">
         <div class="col">
-            <div class="container table-responsive  p-0 my-2">
-              <table class="table table-hover table-striped table-dark" id="tableCategories">
-                <thead class="">
+            <div class="container table-responsive p-0 my-2">
+              <table class="table table-hover table-striped table-info" id="tableCategories">
+                <thead class="bg-dark text-white">
                   <tr>
                     <th>#</th>
                     <th>Título</th>
@@ -71,29 +71,9 @@
     </div>
   </section>
 
-  <!-- MODALS (ADD CATEGORY)  -->
-  <div class="modal fade" id="addCategoryModal">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header bg-success text-white">
-          <h5 class="modal-title" id="addPostModalLabel">Adicionar Categoria</h5>
-          <button class="close" data-dismiss="modal"><span>&times;</span></button>
-        </div>
-        <div class="modal-body">
-          <form method="POST" action="/categories/add">
-            <div class="form-group">
-              <label for="title" class="form-control-label">Nome da nova categoria</label>
-              <input type="text" class="form-control" name="title" id="title" placeholder="Nome">
-            </div>
-            <div class="modal-footer">
-              <button class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-              <input class="btn btn-success" type="submit" value="Adicionar categoria" />
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
+  <%-include('../partials/_addPost')%>
 
+  <%-include('../partials/_addCategory')%>
 
     <script src="https://cdn.ckeditor.com/4.8.0/standard/ckeditor.js"></script>
     <script>
