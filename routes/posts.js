@@ -1,6 +1,7 @@
 /*jshint esversion: 6 */
 const express = require('express');
 const moment = require('moment');
+const path = require('path');
 let router = express.Router();
 let Post = require('../models/Post');
 let Category = require('../models/Category');
@@ -85,83 +86,63 @@ router.get('/add', ensureAutheticated, (req, res) => {
 
 /* TODO: Create conditions for a certain user to be able to edit another user post */
 router.get('/:idPost', ensureAutheticated, (req, res) => {
-  Post.findOne({
-      _id: req.params.idPost,
+    Post.findOne({
+        _id: req.params.idPost,
     })
-    .populate('user')
-    .populate('comments.commentUser')
-    .then(post => {
-      Category.find({}, {
-          name: 1,
-          _id: 0,
-        })
-        .sort({
-          name: 1,
-        }).exec((err, categories) => {
-          if (!err) {
-            if (post.author !== req.user.id) {
-              if (post.allowComments === 'on') {
-                res.render('./posts/anotherDetails', {
-                  title: post.title + '| Blog Admin',
-                  layout: 'layouts/layout',
-                  name: req.user.name,
-                  user: req.user,
-                  moment: moment,
-                  categories: categories,
-                  post: post,
-                });
-              } else {
-                req.flash('error_msg', 'Oops, este post não permite comentários.');
-                res.redirect('/posts');
-              }
-            } else {
-              res.render('./posts/postview', {
-                title: post.title + '| Blog Admin',
-                layout: 'layouts/layout',
-                name: req.user.name,
-                user: req.user,
-                moment: moment,
-                categories: categories,
-                post: post,
-              });
-            }
-          }
+        .populate('user')
+        .populate('comments.commentUser')
+        .then(post => {
+            Category.find({}, {
+                name: 1,
+                _id: 0,
+            })
+                .sort({
+                    name: 1,
+                }).exec((err, categories) => {
+                if (!err) {
+                    if (post.user._id.toString() !== req.user._id.toString()) {
+                        if (post.allowComments === 'on') {
+                            res.render('./posts/postview', {
+                                title: post.title + '| Blog Admin',
+                                layout: 'layouts/layout',
+                                name: req.user.name,
+                                user: req.user,
+                                moment: moment,
+                                categories: categories,
+                                post: post,
+                            });
+                        } else {
+                            req.flash('error_msg', 'Oops, este post não permite comentários.');
+                            res.redirect('/posts');
+                        }
+                    } else {
+                        if(req.query.edit === ''){
+                            res.render('./posts/details', {
+                                title: post.title + '| Blog Admin',
+                                layout: 'layouts/layout',
+                                name: req.user.name,
+                                user: req.user,
+                                moment: moment,
+                                categories: categories,
+                                post: post,
+                            });
+                        } else {
+                            res.render('./posts/postview', {
+                                title: post.title + '| Blog Admin',
+                                layout: 'layouts/layout',
+                                name: req.user.name,
+                                user: req.user,
+                                moment: moment,
+                                categories: categories,
+                                post: post,
+                            });
+                        }
+                    }
+                } else {
+                    console.log("Erro: "+err);
+                }
+            });
         });
-    });
-});
-
-router.get('/:idPost/edit', ensureAutheticated, (req, res) => {
-  Post.findOne({
-      _id: req.params.idPost,
-    })
-    .populate('user')
-    .populate('comments.commentUser')
-    .then(post => {
-      Category.find({}, {
-          name: 1,
-          _id: 0,
-        })
-        .sort({
-          name: 1,
-        }).exec((err, categories) => {
-          if (!err) {
-            if (post.author !== req.user.id) {
-              req.flash('error_msg', 'Oops, não estás autorizado');
-              res.redirect('/posts');
-            } else {
-              res.render('./posts/details', {
-                title: post.title + '| Blog Admin',
-                layout: 'layouts/layout',
-                name: req.user.name,
-                user: req.user,
-                moment: moment,
-                categories: categories,
-                post: post,
-              });
-            }
-          }
-        });
-    });
 });
 
 router.post('/add', ensureAutheticated, (req, res) => {
