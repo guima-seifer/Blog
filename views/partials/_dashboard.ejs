@@ -32,7 +32,7 @@
                             <h6 style="text-shadow: 1px 1px 3px black;">
                               <b>
                                 <form action="/post/:_id/fave" method="get">
-                                  <i id="favicon<%=i%>" onclick="favPost(<%= i %>)" class="fa fa-star float-left mr-1" aria-hidden="true"></i>
+                                  <i id="favicon<%=i%>" onclick="favPost(<%= i %>)" class="fa fa-bookmark float-left mr-1" aria-hidden="true"></i>
                                 </form>
                                 <span id="postTitle<%=i%>"><%= posts[i].title %></span>
                               </b>
@@ -64,8 +64,8 @@
                   </div> -->
                 </div>
                 <div id="postBody<%=i%>" style="display: none;">
-                  <div class="card-block">
-                    <div class="d-flex flex-row justify-content-start mx-5 my-3">
+                  <div class="card-body">
+                    <div class="d-flex flex-row justify-content-start">
                       <div id="pstBody<%=i%>" class="">
                         <%- posts[i].body %>
                       </div>
