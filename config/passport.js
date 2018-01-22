@@ -15,7 +15,7 @@ module.exports = function(passport) {
     (email, password, done) => {
       // console.log(email);
       // console.log(password);
-
+      
       //Match user
       User.findOne({
         email: email,
