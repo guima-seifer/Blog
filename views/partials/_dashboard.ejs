@@ -15,147 +15,77 @@
       </div>
       <!-- <a href="posts/add" class="btn btn-primary btn-block" data-toggle="modal" data-target="#addPostModal"><i class="fa fa-plus"></i> Adicionar Postagem</a> -->
     </div>
-    <div class="row">
-      <div id="card-row" class="col-sm-12 col-md-4 col-lg-4">
-        <!--<div class="row">-->
-          <%if(posts.length > 0){%>
-          <% for(var i=posts.length-1; 0<=i; i--){ %>
-        <div id="card-grid" name="card-grid" class="col-sm-12 col-md-12 col-lg-12">
-          <!-- //TODO:PASSAR ISTO PARA DFLEX TÁ SO FEIO COM UMA TABELA LOL -->
-            <% moment.locale('pt_PT')%>
-          <div id="dash-card" class="card mb-4" style=" border-color: #93B8C2; box-shadow: 5px 5px 3px grey;">
-            <div id="carets" onclick="jumbotronRender(<%= i %>);" onmouseup="toggleVisibility(<%= i %>)" class="card-header bg-primary text-white my-0 py-0">
-              <div class="d-flex flex-row justify-content-between">
-                <div class="pt-2">
-                  <p>
-                  <div class="card-title text-white">
-                    <h6 style="text-shadow: 1px 1px 3px black;">
-                      <b>
-                        <form action="/post/:_id/fave" method="get">
-                          <i id="favicon<%=i%>" onclick="favPost(<%= i %>)" class="fa fa-star float-left mr-1" aria-hidden="true"></i>
-                        </form>
-                        <span id="postTitle<%=i%>"><%= posts[i].title %></span>
-                      </b>
-                    </h6>
-                    <a id="postCategory" style="text-decoration: none;" class="text-white" href="#">
-                      <span id="postCategory<%=i%>" ><%= posts[i].category %></span>
-                    </a>
-                  </div>
-                  </p>
-                </div>
-              </div>
-
-              <div class="d-flex flex-row justify-content-between">
-                <div>
-                  <div class="">
-                    <p>
-                      <span id="postDate<%=i%>" class="text-light ml-auto"><%= moment(posts[i].date).format('DD MMMM YYYY') %></span>
-                    </p>
-                  </div>
-                </div>
-                <div>
-                  <a class="text-light  float-right" href="#" style="text-decoration: none;">
-                    <span id="postAuthor<%=i%>"><%= posts[i].authorName %></span>
-                  </a>
-                </div>
-              </div>
-              <!-- <div class="text-center m-0 p-0">
-              <a><i class="fa fa-angle-double-down"></i></a>
-            </div> -->
-            </div>
-            <div id="postBody<%=i%>" style="display: none;">
-              <div class="card-block">
-                <div class="d-flex flex-row justify-content-start mx-5 my-3">
-                  <div id="pstBody<%=i%>" class="">
-                      <%- posts[i].body %>
-                  </div>
-                </div>
-                  <%if (posts[i].files.length > 0){%>
-                <hr/>
-                <div class="d-flex flex-row justify-content-start mx-5 my-3">
-                  <label for="attached">Ficheiros anexados:</label>
-                  <div class="" id="attached">
-                    <ul>
-                        <%for(let j = 0; j < posts[i].files.length; j++){%>
-                      <li>
-                          <%= posts[i].files[j]%>
-                      </li>
-                        <%}%>
-                    </ul>
-                  </div>
-                </div>
-                  <%}%>
-              </div>
     <div id="board-section" class="row">
       <div id="card-row" class="col-sm-12 col-md-4 col-lg-4">
-        <!--<div class="row">-->
-            <%if(posts.length > 0){%>
+        <!-- <div class="row"> -->
+          <%if(posts.length > 0){%>
             <% for(var i=posts.length-1; 0<=i; i--){ %>
-          <div id="card-grid" name="card-grid" class="col-sm-12 col-md-12 col-lg-12">
-            <!-- //TODO:PASSAR ISTO PARA DFLEX TÁ SO FEIO COM UMA TABELA LOL -->
-              <% moment.locale('pt_PT')%>
-            <div id="dash-card" class="card mb-4" style=" border-color: #93B8C2; box-shadow: 5px 5px 3px grey;">
-              <div id="carets" onclick="jumbotronRender(<%= i %>);" onmouseup="toggleVisibility(<%= i %>)" class="card-header bg-primary text-white my-0 py-0">
-                <div class="d-flex flex-row justify-content-between">
-                  <div class="pt-2">
-                    <p>
-                    <div class="card-title text-white">
-                      <h6 style="text-shadow: 1px 1px 3px black;">
-                        <b>
-                          <form action="/post/:_id/fave" method="get">
-                            <i id="favicon<%=i%>" onclick="favPost(<%= i %>)" class="fa fa-star float-left mr-1" aria-hidden="true"></i>
-                          </form>
-                          <span id="postTitle<%=i%>"><%= posts[i].title %></span>
-                        </b>
-                      </h6>
-                      <a id="postCategory" style="text-decoration: none;" class="text-white" href="#">
-                        <span id="postCategory<%=i%>" ><%= posts[i].category %></span>
-                      </a>
+              <div id="card-grid" name="card-grid" class="col-sm-12 col-md-12 col-lg-12">
+                <!-- //TODO:PASSAR ISTO PARA DFLEX TÁ SO FEIO COM UMA TABELA LOL -->
+                <% moment.locale('pt_PT')%>
+                <div id="dash-card" class="card mb-4" style=" border-color: #93B8C2; box-shadow: 5px 5px 3px grey;">
+                  <div id="carets" onclick="jumbotronRender(<%= i %>);" onmouseup="toggleVisibility(<%= i %>)" class="card-header bg-primary text-white my-0 py-0">
+                    <div class="d-flex flex-row justify-content-between">
+                      <div class="pt-2">
+                        <p>
+                          <div class="card-title text-white">
+                            <h6 style="text-shadow: 1px 1px 3px black;">
+                              <b>
+                                <form action="/post/:_id/fave" method="get">
+                                  <i id="favicon<%=i%>" onclick="favPost(<%= i %>)" class="fa fa-star float-left mr-1" aria-hidden="true"></i>
+                                </form>
+                                <span id="postTitle<%=i%>"><%= posts[i].title %></span>
+                              </b>
+                            </h6>
+                            <a id="postCategory" style="text-decoration: none;" class="text-white" href="#">
+                              <span id="postCategory<%=i%>" ><%= posts[i].category %></span>
+                            </a>
+                          </div>
+                        </p>
+                      </div>
                     </div>
-                    </p>
-                  </div>
-                </div>
-                <div class="d-flex flex-row justify-content-between">
-                  <div>
-                    <div class="">
-                      <p>
-                        <span id="postDate<%=i%>" class="text-light ml-auto"><%= moment(posts[i].date).format('DD MMMM YYYY') %></span>
-                      </p>
+
+                    <div class="d-flex flex-row justify-content-between">
+                      <div>
+                        <div class="">
+                          <p>
+                            <span id="postDate<%=i%>" class="text-light ml-auto"><%= moment(posts[i].date).format('DD MMMM YYYY') %></span>
+                          </p>
+                        </div>
+                      </div>
+                      <div>
+                        <a class="text-light  float-right" href="#" style="text-decoration: none;">
+                          <span id="postAuthor<%=i%>"><%= posts[i].authorName %></span>
+                        </a>
+                      </div>
                     </div>
-                  </div>
-                  <div>
-                    <a class="text-light  float-right" href="#" style="text-decoration: none;">
-                      <span id="postAuthor<%=i%>"><%= posts[i].authorName %></span>
-                    </a>
-                  </div>
+                    <!-- <div class="text-center m-0 p-0">
+                    <a><i class="fa fa-angle-double-down"></i></a>
+                  </div> -->
                 </div>
-                <!-- <div class="text-center m-0 p-0">
-                <a><i class="fa fa-angle-double-down"></i></a>
-              </div> -->
-              </div>
-              <div id="postBody<%=i%>" style="display: none;">
-                <div class="card-block">
-                  <div class="d-flex flex-row justify-content-start mx-5 my-3">
-                    <div id="pstBody<%=i%>" class="">
+                <div id="postBody<%=i%>" style="display: none;">
+                  <div class="card-block">
+                    <div class="d-flex flex-row justify-content-start mx-5 my-3">
+                      <div id="pstBody<%=i%>" class="">
                         <%- posts[i].body %>
+                      </div>
                     </div>
-                  </div>
                     <%if (posts[i].files.length > 0){%>
-                  <hr/>
-                  <div class="d-flex flex-row justify-content-start mx-5 my-3">
-                    <label for="attached">Ficheiros anexados:</label>
-                    <div class="" id="attached">
-                      <ul>
-                          <%for(let j = 0; j < posts[i].files.length; j++){%>
-                        <li>
-                            <%= posts[i].files[j]%>
-                        </li>
-                          <%}%>
-                      </ul>
-                    </div>
-                  </div>
-                    <%}%>
-                </div>
+                      <hr/>
+                      <div class="d-flex flex-row justify-content-start mx-5 my-3">
+                        <label for="attached">Ficheiros anexados:</label>
+                        <div class="" id="attached">
+                          <ul>
+                            <%for(let j = 0; j < posts[i].files.length; j++){%>
+                              <li>
+                                <%= posts[i].files[j]%>
+                              </li>
+                              <%}%>
+                            </ul>
+                          </div>
+                        </div>
+                        <%}%>
+                      </div>
 
                     </div>
                     <div class="card-footer">
@@ -180,7 +110,7 @@
                     <p>Não foram adicionados nenhums posts :-O</p>
                   </div>
                   <%}%>
-                </div>
+                <!-- </div> -->
               </div>
 
               <div id="jumbotron" class="xol-xs-0 col-sm-0 col-md-8 col-lg-8">
@@ -229,15 +159,15 @@
           };
 
           function changeGrid() {
-              if ($('[name$=card-grid]').hasClass('col-md-12')) {
-                  $('[id$=card-row]').attr('class', 'col-md-12 col-lg-12 card-columns');
-                  $('[name$=card-grid]').attr('class', '');
-                  $('#jumbotron').hide();
-              } else {
-                  $('[id$=card-row]').attr('class', 'col-md-4 col-lg-4');
-                  $('[name$=card-grid]').attr('class', 'col-md-12 col-lg-12');
-                  $('#jumbotron').show();
-              }
+            if ($('[name$=card-grid]').hasClass('col-md-12')) {
+              $('[id$=card-row]').attr('class', 'col-md-12 col-lg-12 card-columns');
+              $('[name$=card-grid]').attr('class', '');
+              $('#jumbotron').hide();
+            } else {
+              $('[id$=card-row]').attr('class', 'col-md-4 col-lg-4');
+              $('[name$=card-grid]').attr('class', 'col-md-12 col-lg-12');
+              $('#jumbotron').show();
+            }
           }
 
           function toggleTable() {
@@ -277,4 +207,4 @@
             '</table>;';
 
           }
-</script>
+        </script>
