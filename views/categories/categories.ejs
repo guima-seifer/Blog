@@ -10,17 +10,19 @@
   </div>
 </header>
 
-<!-- ACTIONS -->
-<section id="action" class="py-4 mb-4 bg-faded">
-  <div class="container">
-    <div class="row">
-
-      <div class="col-md-6">
-        <!-- <a href="posts/add" class="btn btn-primary btn-block" data-toggle="modal" data-target="#addPostModal"><i class="fa fa-plus"></i> Adicionar Postagem</a> -->
-        <a href="/categories/add" class="btn btn-secondary btn-block" data-toggle="modal" data-target="#addCategoryModal"><i class="fa fa-plus"></i> Adicionar Categoria</a>
-      </div>
+<!-- //TODO: Criar uma especie de joystick para selecionar diferentes opções no ecrã (norte, este, oeste e sul do botao); -->
+<div id="button-grp" class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+  <div class="btn-group">
+    <button type="button" class="btn btn-secondary btn-lg mb-5" style="border-radius: 50%;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <i class="fa fa-plus"  data-toggle="tooltip" data-placement="top" title="Ações"></i>
+    </button>
+    <div class="dropdown-menu dropdown-menu-right bg-white">
+      <button data-toggle="modal" data-target="#addPostModal" class="dropdown-item text-dark" type="button">Adicionar Postagem</button>
+      <button class="dropdown-item text-dark" type="button " data-toggle="modal" data-target="#addCategoryModal">Adicionar Categoria</button>
     </div>
-</section>
+  </div>
+  <!-- <a href="posts/add" class="btn btn-primary btn-block" data-toggle="modal" data-target="#addPostModal"><i class="fa fa-plus"></i> Adicionar Postagem</a> -->
+</div>
 
 <%-include('../partials/_msg')%>
 
@@ -29,62 +31,41 @@
     <div class="container">
       <div class="row">
         <div class="col">
-          <div class="card border-primary">
-            <div class="card-header bg-primary text-white">
-              <h4>Categorias Recentes</h4>
-            </div>
-            <div class="container" style="margin: 10px 50px 50px 10px;">
-              <table class="table table-striped" id="tableCategories">
-                <thead class="thead-inverse">
-                <tr>
-                  <th>#</th>
-                  <th>Título</th>
-                  <th>Data</th>
-                  <th class="text-center">Ação</th>
-                </tr>
+            <div class="container table-responsive  p-0 my-2">
+              <table class="table table-hover table-striped table-dark" id="tableCategories">
+                <thead class="">
+                  <tr>
+                    <th>#</th>
+                    <th>Título</th>
+                    <th>Data</th>
+                    <th class="text-center">Ação</th>
+                  </tr>
                 </thead>
-                <tbody>
-                <% moment.locale('pt_PT')%>
-                <% for(let i=0; i < categories.length; i++){%>
-                <tr>
-                  <td scope="row">
-                      <%=i+1%>
-                  </td>
-                  <td>
-                      <%= categories[i].name %>
-                  </td>
-                  <td>
-                      <%= moment(categories[i].date).format('DD MMMM YYYY') %>
-                  </td>
-                  <td class="text-center">
-                    <form action="/categories/delete/<%= categories[i]._id%>?_method=DELETE" method="post">
-                      <input type="hidden" name="_method" value="DELETE">
-                      <!--TODO: <i class="fa fa-times text-danger"></i>  Instead of input button-->
-                      <input type="submit" name="DELETE" class="btn border-secondary text-secondary bg-white" value="Eliminar">
-                    </form>
-                  </td>
-                </tr>
-                <%}%>
+                <tbody class="">
+                  <% moment.locale('pt_PT')%>
+                    <% for(let i=0; i < categories.length; i++){%>
+                      <tr scope="row" class="">
+                        <td scope="col">
+                          <%=i+1%>
+                        </td>
+                        <td>
+                          <%= categories[i].name %>
+                        </td>
+                        <td>
+                          <%= moment(categories[i].date).format('DD MMMM YYYY') %>
+                        </td>
+                        <td class="text-center">
+                          <form action="/categories/delete/<%= categories[i]._id%>?_method=DELETE" method="post">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <!--TODO: <i class="fa fa-times text-danger"></i>  Instead of input button-->
+                            <button type="submit" name="DELETE" class="btn btn-secondary"><i class="fa fa-times"></i></button>
+                          </form>
+                        </td>
+                      </tr>
+                      <%}%>
                 </tbody>
               </table>
             </div>
-            <!--<%if(categories.length > 0){%>-->
-            <!--<%}else{%>-->
-              <!--<div class="text-center mt-3">-->
-                <!--<p>Não foram adicionados nenhums posts :-O</p>-->
-              <!--</div>-->
-              <!--<%}%>-->
-            <!--<nav class="ml-4">-->
-            <!--<ul class="pagination">-->
-            <!--<li class="page-item disabled"><a href="#" class="page-link ">Anterior</a></li>-->
-            <!--<li class="page-item active"><a href="#" class="page-link ">1</a></li>-->
-            <!--<li class="page-item"><a href="#" class="page-link">2</a></li>-->
-            <!--<li class="page-item"><a href="#" class="page-link">3</a></li>-->
-            <!--<li class="page-item"><a href="#" class="page-link">Próximo</a></li>-->
-
-            <!--</ul>-->
-            <!--</nav>-->
-          </div>
         </div>
       </div>
     </div>
@@ -114,8 +95,10 @@
     </div>
 
 
-
     <script src="https://cdn.ckeditor.com/4.8.0/standard/ckeditor.js"></script>
     <script>
       CKEDITOR.replace('textarea');
     </script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

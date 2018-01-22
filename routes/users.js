@@ -8,8 +8,8 @@ const {
   ensureAutheticated,
 } = require('../helpers/auth');
 let User = require('../models/User');
+let Post = require('../models/Post');
 const moment = require('moment');
-
 
 router.use(express.static('public'));
 
@@ -18,24 +18,32 @@ router.get('/', ensureAutheticated, (req, res) => {
       name: 1,
       email: 1,
       date: 1,
-      url_name: 1
+      url_name: 1,
     })
     .sort({
-      date: -1
+      date: -1,
     })
-    .exec((err, users) => {
-      if (!err) {
-        var locals = {
-          title: 'Utilizadores | Blog Admin',
-          layout: 'layouts/layout',
-          name: req.user.name,
-          users: users,
-          moment: moment
-        };
-        res.render('./users/users', locals);
-      } else {
-        console.log(err);
-      }
+    .then(users => {
+      Post.find({
+          author: req.user.id,
+        })
+        .exec((err, posts) => {
+          if (!err) {
+            console.log(posts.length);
+            console.log(posts);
+            var locals = {
+              title: 'Utilizadores | Blog Admin',
+              layout: 'layouts/layout',
+              name: req.user.name,
+              users: users,
+              moment: moment,
+              postsSize: posts.length,
+            };
+            res.render('./users/users', locals);
+          } else {
+            console.log(err);
+          }
+        });
     });
 });
 
