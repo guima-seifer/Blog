@@ -1,4 +1,4 @@
-<header id="main-header" class="pt-3 bg-primary text-white">
+<header id="main-header" class="pt-3 text-white" style="background-color: #236475">
   <div class="container">
     <div class="row">
       <div class="col-md-6">
@@ -15,7 +15,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-3 mr-auto">
-        <a href="/users" class="btn btn-secondary btn-block"><i class="fa fa-arrow-left"></i> Voltar</a>
+        <a href="/users" class="btn btn-secondary btn-block"><i class="fa fa-arrow-left"></i></a>
       </div>
     </div>
   </div>
@@ -42,7 +42,7 @@
               </div>
               <div class="form-group">
                 <label for="bio">Bio</label>
-                <div id="bio" style="resize: none;" readonly class="form-control"></div>
+                <textarea id="bio" style="resize: none;" readonly class="form-control"><%- user.bio%></textarea>
               </div>
             </form>
           </div>
@@ -59,9 +59,3 @@
     </div>
   </div>
 </section>
-
-<script>
-    <% var bio = user.bio %>
-    <% bio = bio.replace(/[\t\r\n]+/g, ''); %>
-  document.getElementById("bio").innerHTML = "<%- bio%>";
-</script>
