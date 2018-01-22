@@ -27,30 +27,30 @@
 
 <%-include('../partials/_msg')%>
 
-  <!-- POST EDIT -->
-  <section id="edit-post-section" class="mb-5">
-    <div class="container">
-      <div class="row">
-        <div class="col">
-          <div class="card border-primary">
-            <div class="card-header bg-primary text-white">
-              <h4>Editar Postagem</h4>
-            </div>
-            <div class="card-block">
-              <form action="/posts/details/<%=post._id%>?_method=PUT" method="post" class="mx-3 my-3">
-                <input type="hidden" name="_method" value="PUT">
-                <div class="form-group">
-                  <label for="title" class="firm-control-label" value="<%= post.title %>"></label>
-                  <input name="title" type="text" class="form-control" value="<%= post.title %>">
-                </div>
-                <div class="form-group">
-                  <label for="category" class="form-control-label">Category</label>
-                  <select name="category" class="form-control" value=<%=post.category%>>
-                    <option value="<%=post.category%>"><%=post.category%></option>
-                      <%for(let i = 0; i < categories.length; i++){%>
-                      <option value="<%= categories[i].name%>"><%= categories[i].name%></option>
-                      <%}%>
-                    </select>
+<!-- POST EDIT -->
+<section id="edit-post-section" class="mb-5">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="card border-primary">
+          <div class="card-header bg-primary text-white">
+            <h4>Editar Postagem</h4>
+          </div>
+          <div class="card-block">
+            <form action="/posts/details/<%=post._id%>?_method=PUT" method="post" class="mx-3 my-3">
+              <input type="hidden" name="_method" value="PUT">
+              <div class="form-group">
+                <label for="title" class="firm-control-label" value="<%= post.title %>"></label>
+                <input name="title" type="text" class="form-control" value="<%= post.title %>">
+              </div>
+              <div class="form-group">
+                <label for="category" class="form-control-label">Category</label>
+                <select name="category" class="form-control" value=<%=post.category%>>
+                  <option value="<%=post.category%>"><%=post.category%></option>
+                  <%for(let i = 0; i < categories.length; i++){%>
+                    <option value="<%= categories[i].name%>"><%= categories[i].name%></option>
+                    <%}%>
+                  </select>
                 </div>
                 <div class="form-group bg-faded p-3">
                   <label for="file">Image Upload</label>
@@ -59,42 +59,70 @@
                 </div>
 
                 <div class="form-check">
-                  <input class="form-check-input"   <%if(post.allowComments === 'on') {%> checked <%}%> type="checkbox" name="checkComments" id="checkComments">
-                  <label class="form-check-label" for="defaultCheck1">
-                    Permitir comentários
-                  </label>
-                </div>
-                <div class="form-group">
-                  <label for="body"></label>
+                  <input class="form-check-input" <%if(post.allowComments==='on' ) {%> checked
+                    <%}%> type="checkbox" name="checkComments" id="checkComments">
+                    <label class="form-check-label" for="defaultCheck1">
+                      Permitir comentários
+                    </label>
+                  </div>
+                  <div class="form-group">
+                    <label for="body"></label>
 
-                  <textarea name="textarea" class="form-control"><%= post.body %></textarea>
-                </div>
-                <input type="submit" name="PUT" class="btn btn-success btn-block" value="Gravar"></input>
-              </form>
+                    <textarea name="textarea" class="form-control"><%= post.body %></textarea>
+                  </div>
+                  <input type="submit" name="PUT" class="btn btn-success btn-block" value="Gravar"></input>
+                </form>
+              </div>
+
             </div>
-
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <% if(post.allowComments === 'on') {%>
-    <section>
-      <div class="container">
-        <div class="card">
-          <div class="card-header bg-primary text-white">
-            <span class="card-title">Comentários</span>
-          </div>
-          <div class="card-block">
           </div>
         </div>
       </div>
     </section>
 
-    <%}%>
+    <% if(post.allowComments === 'on') {%>
+      <% moment.locale('pt_PT')%>
+      <section>
+        <div class="container">
+          <div class="card">
+            <div class="card-header bg-primary text-white">
+              <span class="card-title">Comentários</span>
+            </div>
+            <div class="card-block bg-faded p-3">
+              <% if(user) {%>
+                <form method="POST" action="/posts/comment/<%= post._id%>">
+                  <div class="form-group">
+                    <label for="commentBody">Adicionar Comentário</label>
+                    <textarea class="form-control" name="commentBody" id="commentBody" rows="2"></textarea>
+                  </div>
+                  <input type="submit" class="btn btn-primary mt-3" value="Submeter">
+                </form>
+                <% if(post.comments.length > 0){%>
+                  <%for(let i = 0; i < post.comments.length; i++){%>
+                    <div class="card-block">
+                      <br>
+                      <small><%= moment(post.comments[i].commentDate).format('DD MMMM YYYY h:mm:ss a') %></small>
 
-      <script src="https://cdn.ckeditor.com/4.8.0/standard/ckeditor.js"></script>
-      <script>
-        CKEDITOR.replace('textarea');
-      </script>
+                      <p>
+                        <%= post.comments[i].commentBody%>
+                      </p>
+                      <p class="text-muted">
+                        <%= post.comments[i].commentUser.name%>
+                      </p>
+                    </div>
+                    <%}%>
+                    <%}%>
+                    <%} else {%>
+                      <p><a href="/users/login">Inicie sessão</a> para poder comentar.</p>
+                      <%}%>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <%}%>
+
+              <script src="https://cdn.ckeditor.com/4.8.0/standard/ckeditor.js"></script>
+              <script>
+              CKEDITOR.replace('textarea');
+              </script>

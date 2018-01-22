@@ -14,22 +14,29 @@ const moment = require('moment');
 router.use(express.static('public'));
 
 router.get('/', ensureAutheticated, (req, res) => {
-  User.find({},{name:1, email:1, date:1, url_name: 1})
-      .sort({date: -1})
-      .exec((err,users) => {
-        if(!err){
-            var locals = {
-                title: 'Utilizadores | Blog Admin',
-                layout: 'layouts/layout',
-                name: req.user.name,
-                users : users,
-                moment : moment
-            };
-            res.render('./users/users', locals);
-        } else {
-          console.log(err);
-        }
-      });
+  User.find({}, {
+      name: 1,
+      email: 1,
+      date: 1,
+      url_name: 1
+    })
+    .sort({
+      date: -1
+    })
+    .exec((err, users) => {
+      if (!err) {
+        var locals = {
+          title: 'Utilizadores | Blog Admin',
+          layout: 'layouts/layout',
+          name: req.user.name,
+          users: users,
+          moment: moment
+        };
+        res.render('./users/users', locals);
+      } else {
+        console.log(err);
+      }
+    });
 });
 
 router.get('/login', (req, res) => {
@@ -108,7 +115,7 @@ router.post('/register', (req, res) => {
           name: req.body.name,
           email: req.body.email,
           password: req.body.password,
-          url_name : slug(req.body.name)
+          url_name: slug(req.body.name)
         });
         bcrypt.genSalt(10, (err, salt) => {
           bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -136,61 +143,65 @@ router.get('/google', passport.authenticate('google', {
 
 // the callback after google has authenticated the user
 router.get('/google/callback', passport.authenticate('google', {
-    successRedirect: '/index',
-    failureRedirect: '/users/login',
+  successRedirect: '/index',
+  failureRedirect: '/users/login',
 }));
 
 //Informação de um utilizador, sem ser na Área Pessoal
-router.get('/:name',(req,res) => {
-    User.findOne({url_name : req.params.name})
-        .exec((err,userDoc) => {
-            if(!err){
-                var locals = {
-                    title: 'Perfil | Blog Admin',
-                    layout: 'layouts/layout',
-                    name : req.user.name,
-                    user : userDoc
-                };
-                res.render('./users/profile',locals)
-            } else {
-                console.log(err);
-            }
-        });
+router.get('/:name', (req, res) => {
+  User.findOne({
+      url_name: req.params.name
+    })
+    .exec((err, userDoc) => {
+      if (!err) {
+        var locals = {
+          title: 'Perfil | Blog Admin',
+          layout: 'layouts/layout',
+          name: req.user.name,
+          user: userDoc
+        };
+        res.render('./users/profile', locals)
+      } else {
+        console.log(err);
+      }
+    });
 });
 
 //Atualizar um user
-router.post('/update/:id',(req,res) => {
-    User.findOneAndUpdate({_id : req.params.id}, req.body, (err,doc) => {
-        if(!err){
-            res.redirect('/');
-        } else {
-            console.log(err);
-        }
-    })
+router.post('/update/:id', (req, res) => {
+  User.findOneAndUpdate({
+    _id: req.params.id
+  }, req.body, (err, doc) => {
+    if (!err) {
+      res.redirect('/');
+    } else {
+      console.log(err);
+    }
+  })
 });
 
 let slug = function(str) {
-    str = str.replace(/^\s+|\s+$/g, '');
-    str = str.toLowerCase();
+  str = str.replace(/^\s+|\s+$/g, '');
+  str = str.toLowerCase();
 
-    let from = "ÁÄÂÀÃÅČÇĆĎÉĚËÈÊẼĔȆÍÌÎÏŇÑÓÖÒÔÕØŘŔŠŤÚŮÜÙÛÝŸŽáäâàãåčçćďéěëèêẽĕȇíìîïňñóöòôõøðřŕšťúůüùûýÿžþÞĐđßÆa·/_,:;";
-    let to   = "AAAAAACCCDEEEEEEEEIIIINNOOOOOORRSTUUUUUYYZaaaaaacccdeeeeeeeeiiiinnooooooorrstuuuuuyyzbBDdBAa------";
-    for (let i = 0, l = from.length ; i<l ; i++) {
-        str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
-    }
+  let from = "ÁÄÂÀÃÅČÇĆĎÉĚËÈÊẼĔȆÍÌÎÏŇÑÓÖÒÔÕØŘŔŠŤÚŮÜÙÛÝŸŽáäâàãåčçćďéěëèêẽĕȇíìîïňñóöòôõøðřŕšťúůüùûýÿžþÞĐđßÆa·/_,:;";
+  let to = "AAAAAACCCDEEEEEEEEIIIINNOOOOOORRSTUUUUUYYZaaaaaacccdeeeeeeeeiiiinnooooooorrstuuuuuyyzbBDdBAa------";
+  for (let i = 0, l = from.length; i < l; i++) {
+    str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
+  }
 
-    str = str.replace(/[^a-z0-9 -]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-');
+  str = str.replace(/[^a-z0-9 -]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-');
 
-    return str;
+  return str;
 };
 
 String.prototype.deentitize = function() {
-    let ret = this.replace(/&gt;/g, '>');
-    ret = ret.replace(/&lt;/g, '<');
-    ret = ret.replace(/&quot;/g, '"');
-    ret = ret.replace(/&apos;/g, "'");
-    ret = ret.replace(/&amp;/g, '&');
-    return ret;
+  let ret = this.replace(/&gt;/g, '>');
+  ret = ret.replace(/&lt;/g, '<');
+  ret = ret.replace(/&quot;/g, '"');
+  ret = ret.replace(/&apos;/g, "'");
+  ret = ret.replace(/&amp;/g, '&');
+  return ret;
 };
 
 module.exports = router;

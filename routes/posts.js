@@ -19,12 +19,12 @@ router.use(express.static('public'));
 
 router.get('/', ensureAutheticated, (req, res) => { //falta sacar os ficheiros de cada 1
   Post.find({
-      'files': {
+      "'files'": {
         $gt: ' ',
       },
     }, {
       _id: 0,
-      "files": 1,
+      "'files'": 1,
     })
     .exec((err, docs) => {
 
@@ -71,7 +71,6 @@ router.get('/add', ensureAutheticated, (req, res) => {
         res.render('./posts/addpost', {
           title: 'Adicionar Postagem | Blog Admin',
           layout: 'layouts/layout',
-          state: 'autenticado',
           errors: [],
           name: req.user.name,
           postTitle: [],
@@ -85,40 +84,12 @@ router.get('/add', ensureAutheticated, (req, res) => {
 });
 
 /* TODO: Create conditions for a certain user to be able to edit another user post */
-router.get('/edit/:idPost', ensureAutheticated, (req, res) => {
-  Post.findOne({
-      _id: req.params.idPost,
-    })
-    .then(post => {
-      if (post.author != req.user.id) {
-        req.flash('error_msg', 'Oops, não estás autorizado');
-        res.redirect('/posts');
-      } else {
-        Category.find({}, {
-            name: 1,
-            _id: 0,
-          })
-          .sort({
-            name: 1,
-          }).exec((err, categories) => {
-            res.render('./posts/details', {
-              title: 'Detalhes de ' + post.title + '| Blog Admin',
-              layout: 'layouts/layout',
-              name: req.user.name,
-              state: 'autenticado',
-              post: post,
-              categories: categories,
-            });
-          });
-      }
-    });
-});
-
-/* TODO: Create conditions for a certain user to be able to edit another user post */
 router.get('/:idPost', ensureAutheticated, (req, res) => {
   Post.findOne({
       _id: req.params.idPost,
     })
+    .populate('user')
+    .populate('comments.commentUser')
     .then(post => {
       if (post.author != req.user.id) {
         req.flash('error_msg', 'Oops, não estás autorizado');
@@ -136,7 +107,8 @@ router.get('/:idPost', ensureAutheticated, (req, res) => {
                 title: post.title + '| Blog Admin',
                 layout: 'layouts/layout',
                 name: req.user.name,
-                state: 'autenticado',
+                user: req.user,
+                moment: moment,
                 categories: categories,
                 post: post,
               });
@@ -293,6 +265,30 @@ router.put('/details/:idPost', ensureAutheticated, (req, res) => {
         req.flash('success_msg', 'Postagem editada com sucesso');
         res.redirect('/posts');
       });
+    });
+});
+
+//Add comment
+router.post('/comment/:idPost', ensureAutheticated, (req, res, err) => {
+  Post.findOne({
+      _id: req.params.idPost,
+    })
+    .then(post => {
+      const newComment = {
+        commentBody: req.body.commentBody,
+        commentUser: req.user.id,
+      };
+      console.log(newComment);
+
+      //push to comments array
+      //falta por o unshift
+      post.comments.unshift(newComment); //add to the begining of the array
+      post.save()
+        .then(post => {
+          res.redirect(`/posts/${post.id}`);
+        });
+      req.flash('error_msg', 'Oops, não estás autorizado');
+      res.redirect('/posts');
     });
 });
 

@@ -20,6 +20,8 @@ const PostSchema = new Schema({
     type: Date,
     default: Date.now(),
   },
+
+  // ISTO TEM QUE SUMIR
   author: {
     type: String,
     required: true,
@@ -29,30 +31,36 @@ const PostSchema = new Schema({
     required: true,
   },
 
-  // user: {
-  //   type: Schema.Types.ObjectId,
-  //   ref: 'User',
-  // },
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+  },
+
   status: {
     type: String,
+    default: 'public',
   },
   allowComments: {
     type: String,
   },
-  comments: {
+
+  comments: [{
     commentBody: {
       type: String,
     },
     commentDate: {
       type: Date,
-      default: Date.now(),
+      default: Date.now,
     },
     commentUser: {
       type: Schema.Types.ObjectId,
       ref: 'User',
     },
-  },
-  files : [{type : String }]
+  }, ],
+
+  files: [{
+    type: String,
+  }, ],
 });
 
 //export model, compila o Schema para o modelo que atribui o nome de partitura - nome do modelo
