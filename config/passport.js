@@ -4,7 +4,6 @@ const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const configAuth = require('./auth');
-
 //load user model
 const User = mongoose.model('User');
 
@@ -58,7 +57,6 @@ module.exports = function(passport) {
             return done(err);
 
           if (user) {
-
             // if a user is found, log them in
             return done(null, user);
           } else {
@@ -69,7 +67,6 @@ module.exports = function(passport) {
             newUser.token = token;
             newUser.name = profile.displayName;
             newUser.email = profile.emails[0].value; // pull the first email
-
             // save the user
             newUser.save(function (err) {
               if (err)

@@ -47,84 +47,86 @@
                 <label for="category" class="form-control-label">Category</label>
                 <select name="category" class="form-control" value=<%=post.category%>>
                   <option value="<%=post.category%>"><%=post.category%></option>
-                  <%for(let i = 0; i < categories.length; i++){%>
-                    <option value="<%= categories[i].name%>"><%= categories[i].name%></option>
+                    <%for(let i = 0; i < categories.length; i++){%>
+                  <option value="<%= categories[i].name%>"><%= categories[i].name%></option>
                     <%}%>
-                  </select>
-                </div>
-                <div class="form-group bg-faded p-3">
-                  <label for="file">Image Upload</label>
-                  <input type="file" name="" value="" class="form-control-file" id="file">
-                  <small id="fileHelp" class="form-text text-muted">Tamanho máx 3MB</small>
-                </div>
-
-                <div class="form-check">
-                  <input class="form-check-input" <%if(post.allowComments==='on' ) {%> checked
-                    <%}%> type="checkbox" name="checkComments" id="checkComments">
-                    <label class="form-check-label" for="defaultCheck1">
-                      Permitir comentários
-                    </label>
-                  </div>
-                  <div class="form-group">
-                    <label for="body"></label>
-
-                    <textarea name="textarea" class="form-control"><%= post.body %></textarea>
-                  </div>
-                  <input type="submit" name="PUT" class="btn btn-success btn-block" value="Gravar"></input>
-                </form>
+                </select>
+              </div>
+              <div class="form-group bg-faded p-3">
+                <label for="file">Image Upload</label>
+                <input type="file" name="" value="" class="form-control-file" id="file">
+                <small id="fileHelp" class="form-text text-muted">Tamanho máx 3MB</small>
               </div>
 
-            </div>
+              <div class="form-check">
+                <input class="form-check-input" <%if(post.allowComments==='on' ) {%> checked
+                        <%}%> type="checkbox" name="checkComments" id="checkComments">
+                <label class="form-check-label" for="defaultCheck1">
+                  Permitir comentários
+                </label>
+              </div>
+              <div class="form-group">
+                <label for="body"></label>
+
+                <textarea name="textarea" class="form-control"><%= post.body %></textarea>
+              </div>
+              <input type="submit" name="PUT" class="btn btn-success btn-block" value="Gravar"></input>
+            </form>
           </div>
+
         </div>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 
-    <% if(post.allowComments === 'on') {%>
-      <% moment.locale('pt_PT')%>
-      <section>
-        <div class="container">
-          <div class="card">
-            <div class="card-header bg-primary text-white">
-              <span class="card-title">Comentários</span>
-            </div>
-            <div class="card-block bg-faded p-3">
-              <% if(user) {%>
-                <form method="POST" action="/posts/comment/<%= post._id%>">
-                  <div class="form-group">
-                    <label for="commentBody">Adicionar Comentário</label>
-                    <textarea class="form-control" name="commentBody" id="commentBody" rows="2"></textarea>
-                  </div>
-                  <input type="submit" class="btn btn-primary mt-3" value="Submeter">
-                </form>
-                <% if(post.comments.length > 0){%>
-                  <%for(let i = 0; i < post.comments.length; i++){%>
-                    <%if(post.comments[i].commentUser !== undefined){%>
-                    <div class="card-block">
-                      <br>
-                      <small><%= moment(post.comments[i].commentDate).format('DD MMMM YYYY h:mm:ss a') %></small>
-
-                      <p>
-                        <%= post.comments[i].commentBody%>
-                      </p>
-                      <p class="text-muted">
-                        <a href="/users/<%post.comments[i].commentUser.url_name%>"><%= post.comments[i].commentUser.name%></a>
-                      </p>
-                    </div>
-                    <%}%>
-                    <%}%>
-                    <%}%>
-                    <%} else {%>
-                      <p><a href="/users/login">Inicie sessão</a> para poder comentar.</p>
-                      <%}%>
-                    </div>
-                  </div>
-                </div>
-              </section>
-
+<% if(post.allowComments === 'on') {%>
+<% moment.locale('pt_PT')%>
+<section>
+  <div class="container">
+    <div class="card">
+      <div class="card-header bg-primary text-white">
+        <span class="card-title">Comentários</span>
+      </div>
+      <div class="card-block bg-faded p-3">
+          <% if(user) {%>
+        <form method="POST" action="/posts/comment/<%= post._id%>">
+          <div class="form-group">
+            <label for="commentBody">Adicionar Comentário</label>
+            <textarea class="form-control" name="commentBody" id="commentBody" rows="2"></textarea>
+          </div>
+          <input type="submit" class="btn btn-primary mt-3" value="Submeter">
+        </form>
+          <% if(post.comments.length > 0){%>
+          <%for(let i = 0; i < post.comments.length; i++){%>
+          <%if(post.comments[i].commentUser !== undefined){%>
+        <div class="card-block my-3">
+          <p class="text-muted">
+              <%if(user.avatar === undefined || user.avatar === ''){%>
+            <a href="/users/<%=post.comments[i].commentUser.url_name%>"><i class="fa fa-user"></i>@<%=post.comments[i].commentUser.name%></a>
+              <%} else {%>
+            <a href="/users/<%=post.comments[i].commentUser.url_name%>"><img style="width: 35px; height: 35px" class="rounded-circle mr-2 mb-1" src="/img/<%= post.comments[i].commentUser.avatar%>"> @<%=post.comments[i].commentUser.name%></a>
               <%}%>
+          </p>
+          <p>
+              <%= post.comments[i].commentBody%>
+          </p>
+          <small><%= moment(post.comments[i].commentDate).format('DD MMMM YYYY h:mm:ss a') %></small>
+        </div>
+        <hr>
+          <%}%>
+          <%}%>
+          <%}%>
+          <%} else {%>
+        <p><a href="/users/login">Inicie sessão</a> para poder comentar.</p>
+          <%}%>
+      </div>
+    </div>
+  </div>
+</section>
+<%}%>
 
-              <script src="https://cdn.ckeditor.com/4.8.0/standard/ckeditor.js"></script>
-              <script>
-              CKEDITOR.replace('textarea');
-              </script>
+<script src="https://cdn.ckeditor.com/4.8.0/standard/ckeditor.js"></script>
+<script>
+    CKEDITOR.replace('textarea');
+</script>
