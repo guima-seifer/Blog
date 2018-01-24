@@ -61,7 +61,11 @@
 </section>
 
 <script>
+    <% if(user.bio !== undefined && user.bio !== ''){%>
     <% var bio = user.bio %>
     <% bio = bio.replace(/[\t\r\n]+/g, ''); %>
-  document.getElementById("bio").innerHTML = "<%- bio%>";
+    document.getElementById("bio").innerHTML = "<%- bio%>";
+    <%} else {%>
+    document.getElementById("bio").innerHTML = "<p>Sem biografia disponível.";
+    <%}%>
 </script>
