@@ -8,10 +8,9 @@ const PostSchema = new Schema({
     type: String,
     required: true,
   },
-  category: {
-    type: String,
-    required: true,
-  },
+  category: [{
+    type: String
+  }],
   body: {
     type: String,
     required: true,
@@ -21,11 +20,6 @@ const PostSchema = new Schema({
     default: Date.now(),
   },
 
-  // ISTO TEM QUE SUMIR
-  author: {
-    type: String,
-    required: true,
-  },
   authorName: {
     type: String,
     required: true,
@@ -65,7 +59,7 @@ const PostSchema = new Schema({
     commentBody : {type: String}
   }],
 
-  url_name : {type: String},
+  url_title : {type: String},
 
   files: [{
     type: String,

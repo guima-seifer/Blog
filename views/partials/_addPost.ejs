@@ -22,13 +22,17 @@
 
                 <li class="pillbox-input-wrap btn-group">
                   <a class="pillbox-more">and <span class="pillbox-more-count"></span> more...</a>
-                  <input type="text" name="category" id="category" class="form-control dropdown-toggle pillbox-add-item" placeholder="Categorias...">
+                  <input type="text" class="form-control dropdown-toggle pillbox-add-item" placeholder="Categorias">
 
                   <button type="button" class="dropdown-toggle sr-only">
             			<span class="caret"></span>
             			<span class="sr-only">Toggle Dropdown</span>
             		</button>
-                  <ul class="suggest dropdown-menu" role="menu" data-toggle="dropdown" data-flip="auto"></ul>
+                  <ul class="suggest dropdown-menu" role="menu" data-toggle="dropdown" data-flip="auto" style="visibility: visible;" aria-expanded="false">
+                    <%for(let j=0; j< categories.length; j++){%>
+                      <li data-value="<%= categories[j].name.toLowerCase()%>"><%= categories[j].name%></li>
+                    <%}%>
+                  </ul>
                 </li>
               </ul>
             </div>
@@ -58,7 +62,7 @@
 
         <div class="modal-footer">
           <button class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-          <button class="btn btn-primary" value="">Adicionar Postagem</button>
+          <button class="btn btn-primary" id="addPostagem" value="">Adicionar Postagem</button>
         </div>
         </form>
 
@@ -68,7 +72,14 @@
 
 <!-- jQuery -->
 <!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="/js/dropdown-autoflip.js"></script>
+<script src="/js/pillbox.js"></script>
 
 <script type="text/javascript">
   $('#myPillbox').pillbox();
 </script>
+
+
+

@@ -150,15 +150,16 @@ router.post('/add', ensureAutheticated, (req, res) => {
   form.multiples = true;
 
   form.parse(req, (err, fields, files) => {
-    // console.log(fields);
     let errors = [];
+    let categories = [];
+
     if (!fields.title) {
       errors.push({
         text: 'Insira o título à postagem',
       });
     }
 
-    if (!fields.category) {
+    if (!fields.pill0) {
       errors.push({
         text: 'Associe uma categoria à sua postagem',
       });
@@ -175,23 +176,42 @@ router.post('/add', ensureAutheticated, (req, res) => {
       res.redirect('/posts');
     } else {
       //nenhum ficheiro anexado
+        let keys = Object.keys(fields);
+        for(let i = 0; i < keys.length; i++){
+            if(keys[i].indexOf('pill') !== -1){
+                categories.push(fields[keys[i]]);
+            }
+        }
       if (files.filetoupload.length === undefined && files.filetoupload.name === '') {
         const User = {};
         new Post();
         const newPost = {
           title: fields.title,
-          category: fields.category,
+          category: categories,
           body: fields.textarea,
-          author: req.user.id,
           authorName: req.user.name,
           user: req.user._id,
+          url_title : slug(fields.title)
         };
-        new Post(newPost)
-          .save()
-          .then(post => {
-            req.flash('success_msg', 'Postagem adicionada com sucesso');
-            res.redirect('/posts');
-          });
+          Post.findOne({url_title : newPost.url_title})
+              .exec((err,document) => {
+                  if(document === null){
+                      new Post(newPost)
+                          .save()
+                          .then(post => {
+                              req.flash('success_msg', 'Postagem adicionada com sucesso');
+                              res.redirect('/posts');
+                          });
+                  } else {
+                      newPost.url_title = newPost.url_title+'-2';
+                      new Post(newPost)
+                          .save()
+                          .then(post => {
+                              req.flash('success_msg', 'Postagem adicionada com sucesso');
+                              res.redirect('/posts');
+                          });
+                  }
+              })
 
         //um ficheiro para ser anexado
       } else if (files.filetoupload.length === undefined && files.filetoupload.name !== '') {
@@ -201,6 +221,13 @@ router.post('/add', ensureAutheticated, (req, res) => {
           filename: files.filetoupload.name,
         });
 
+          let keys = Object.keys(fields);
+          for(let i = 0; i < keys.length; i++){
+              if(keys[i].indexOf('pill') !== -1){
+                  categories.push(fields[keys[i]]);
+              }
+          }
+
         fs.createReadStream(files.filetoupload.path).pipe(writestream).on('close', function() {
           const User = {};
           new Post();
@@ -208,18 +235,32 @@ router.post('/add', ensureAutheticated, (req, res) => {
           file.push(files.filetoupload.name);
           const newPost = {
             title: fields.title,
-            category: fields.category,
+            category: categories,
             body: fields.textarea,
-            author: req.user.id,
             authorName: req.user.name,
             files: file,
+            user : req.user._id,
+            url_title : slug(fields.title)
           };
-          new Post(newPost)
-            .save()
-            .then(post => {
-              req.flash('success_msg', 'Postagem adicionada com sucesso');
-              res.redirect('/posts');
-            });
+            Post.findOne({url_title : newPost.url_title})
+                .exec((err,document) => {
+                    if(document === null){
+                        new Post(newPost)
+                            .save()
+                            .then(post => {
+                                req.flash('success_msg', 'Postagem adicionada com sucesso');
+                                res.redirect('/posts');
+                            });
+                    } else {
+                        newPost.url_title = newPost.url_title+'-2';
+                        new Post(newPost)
+                            .save()
+                            .then(post => {
+                                req.flash('success_msg', 'Postagem adicionada com sucesso');
+                                res.redirect('/posts');
+                            });
+                    }
+                })
         });
       } else { //múltiplos ficheiros para serem anexados
         grid.mongo = mongoose.mongo;
@@ -234,26 +275,47 @@ router.post('/add', ensureAutheticated, (req, res) => {
           fs.createReadStream(files.filetoupload[j].path).pipe(writestream);
         }
 
+          let keys = Object.keys(fields);
+          for(let i = 0; i < keys.length; i++){
+              if(keys[i].indexOf('pill') !== -1){
+                  categories.push(fields[keys[i]]);
+              }
+          }
+
         const User = {};
         new Post();
         const newPost = {
           title: fields.title,
-          category: fields.category,
+          category: categories,
           body: fields.textarea,
-          author: req.user.id,
+          user: req.user._id,
           authorName: req.user.name,
           files: ficheiros,
+          url_title: slug(fields.title)
         };
-        new Post(newPost)
-          .save()
-          .then(post => {
-            req.flash('success_msg', 'Postagem adicionada com sucesso');
-            res.redirect('/posts');
-          });
+
+        Post.findOne({url_title : newPost.url_title})
+            .exec((err,document) => {
+              if(document === null){
+                  new Post(newPost)
+                      .save()
+                      .then(post => {
+                          req.flash('success_msg', 'Postagem adicionada com sucesso');
+                          res.redirect('/posts');
+                      });
+              } else {
+                  newPost.url_title = newPost.url_title+'-2';
+                  new Post(newPost)
+                      .save()
+                      .then(post => {
+                          req.flash('success_msg', 'Postagem adicionada com sucesso');
+                          res.redirect('/posts');
+                      });
+              }
+            })
       }
     }
   });
-
 });
 
 //delete post process
@@ -277,7 +339,7 @@ router.put('/details/:idPost', ensureAutheticated, (req, res) => {
       post.title = req.body.title;
       post.category = req.body.category;
       post.body = req.body.textarea;
-      post.author = req.user.id;
+      post.user = req.user._id;
       post.allowComments = req.body.checkComments;
       post.save().then(post => {
         req.flash('success_msg', 'Postagem editada com sucesso');

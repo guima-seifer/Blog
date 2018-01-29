@@ -298,15 +298,15 @@
       if (items[0] instanceof Array) {
         items = items[0];
       }
-
       if (items.length) {
         $.each(items, function(i, item) {
           var $item = $(item.el);
           var $neighbor;
-
+          let k = $('.pill').length;
           $item.attr('data-value', item.value);
           $item.find('span:first').html(item.text);
-
+          var elem = '<input type="hidden" name="pill'+k+'" value="'+item.value+'">';
+          $item.find('span:first').append(elem);
           // DOM attributes
           if (item.attr) {
             $.each(item.attr, function(key, value) {
@@ -350,7 +350,6 @@
             value: items[0].value
           });
         }
-
       }
     },
 
