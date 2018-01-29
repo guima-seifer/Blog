@@ -7,7 +7,7 @@
           <!-- //TODO:PASSAR ISTO PARA DFLEX TÁ SO FEIO COM UMA TABELA LOL -->
           <% moment.locale('pt_PT')%>
           <div id="dash-card" class="card mb-4" style=" border-color: #93B8C2; box-shadow: 5px 5px 3px grey;">
-            <div id="carets" onclick="jumbotronRender(<%= i %>);" onmouseup="toggleVisibility(<%= i %>)" class="card-header bg-primary text-white my-0 py-0">
+            <div id="card2-<%=i%>" onclick="jumbotronRender(<%= i %>); toggleHighlight(<%=i%>);" class="card-header bg-primary text-white my-0 py-0">
               <div class="d-flex flex-row justify-content-between">
                 <div class="pt-2">
                   <p>
@@ -15,7 +15,7 @@
                       <h6 style="text-shadow: 1px 1px 3px black;">
                         <b>
                           <form action="/post/:_id/fave" method="get">
-                            <i id="favicon<%=i%>" onclick="favPost(<%= i %>)" class="fa fa-bookmark float-left mr-1" aria-hidden="true"></i>
+                            <i id="favicon2<%=i%>" onclick="favPost(<%= i %>)" class="fa fa-bookmark float-left mr-1" aria-hidden="true"></i>
                           </form>
                           <span id="postTitle<%=i%>"><%= posts[i].title %></span>
                         </b>
