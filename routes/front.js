@@ -77,7 +77,7 @@ router.post('/post/:id', (req,res) => {
             if(!err){
                 post.frontComments.push(newComment);
                 post.save(saved => {
-                    res.redirect('/blog/post/'+post._id);
+                    res.redirect('/post/'+post._id);
                 })
             } else {
                 console.log("Erro: "+err);

@@ -14,9 +14,9 @@
             <% moment.locale('pt_PT')%>
             <%if(posts.length > 0){%>
             <%for(let i = 0; i < posts.length; i++){%>
-            <div class="card mb-4" style="background-color: #D9ECF2">
+            <div class="card mb-4 post" style="background-color: #D9ECF2">
                 <div class="card-body">
-                    <h2 class="card-title"><%=posts[i].title%></h2>
+                    <h2 class="card-title titulo"><%=posts[i].title%></h2>
                     <% if(posts[i].body.length > 300){
                         let smallText = posts[i].body;
                         smallText = smallText.substring(0,300)+'...</p>';
@@ -55,9 +55,8 @@
                 <h5 class="card-header" style="color: white">Procurar</h5>
                 <div class="card-body">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Procurar por...">
+                        <input type="text" id="searchBox" class="form-control" placeholder="Procurar por...">
                         <span class="input-group-btn">
-                  <button class="btn btn-secondary" type="button" style="color: #fff;background-color: #868e96;border-color: #868e96;">Ir!</button>
                 </span>
                     </div>
                 </div>
