@@ -21,6 +21,8 @@ const users = require('./routes/users');
 const category = require('./routes/category');
 const file = require('./routes/file');
 const front = require('./routes/front');
+const profile = require('./routes/profile');
+const settings = require('./routes/settings');
 
 //Passport Config
 require('./config/passport')(passport);
@@ -80,8 +82,8 @@ app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
 app.use('/', front);
 app.use('/index', main);
-app.use('/profile', main);
-app.use('/settings', main);
+app.use('/profile', profile);
+app.use('/settings', settings);
 app.use('/posts', posts);
 app.use('/posts/details', posts);
 app.use('/users', users);

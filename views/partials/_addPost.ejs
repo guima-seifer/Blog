@@ -1,5 +1,4 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.js"></script>
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script src="/js/dropdown-autoflip.js"></script>
 <script src="/js/pillbox.js"></script>
 
@@ -20,17 +19,10 @@
           <div class="form-group">
             <div id="myPillbox" class="pillbox">
               <ul class="clearfix pill-group">
-                <%for(let i = 0; i < categories.length; i++){%>
-                  <li class="btn btn-outline-secondary pill" data-value="foo">
-                    <span><%= categories[i].name%></span>
-                    <span class="fa fa-times">
-              			<span class="sr-only">Remove</span>
-                    </span>
-                  </li>
-                  <%}%>
+
                 <li class="pillbox-input-wrap btn-group">
                   <a class="pillbox-more">and <span class="pillbox-more-count"></span> more...</a>
-                  <input type="text" class="form-control dropdown-toggle pillbox-add-item" placeholder="Categorias">
+                  <input type="text" name="category" id="category" class="form-control dropdown-toggle pillbox-add-item" placeholder="Categorias...">
 
                   <button type="button" class="dropdown-toggle sr-only">
             			<span class="caret"></span>
