@@ -10,19 +10,7 @@ let User = require('../models/User');
 let Category = require('../models/Category');
 let nets = require('nets');
 
-//Routes
-router.get('/', (req, res) => {
-  if (req.user === undefined) {
-    res.render('index', {
-      title: 'Início | Blog Admin',
-      layout: 'layouts/layout',
-    });
-  } else {
-    res.redirect('/index');
-  }
-});
-
-router.get('/index', ensureAutheticated, (req, res) => {
+router.get('/', ensureAutheticated, (req, res) => {
   Post.find({})
     .sort({
       date: 1,
@@ -38,35 +26,35 @@ router.get('/index', ensureAutheticated, (req, res) => {
           name: 1,
         }).exec((err, categories) => {
           if (!err) {
-            if(req.user.avatar !== undefined && req.user.avatar !== ''){
-                nets({
-                    body: '{"avatar": "' + req.user.avatar + '"}',
-                    url: "http://localhost:3334/file/download/",
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                }, function done(err, resp, body) {
-                    if (!err) {
-                        res.render('dashboard', {
-                            title: 'Início | Blog Admin',
-                            layout: 'layouts/layout',
-                            name: req.user.name,
-                            posts: posts,
-                            moment: moment,
-                            categories: categories,
-                        });
-                    }
-                });
-            } else {
-                res.render('dashboard', {
+            if (req.user.avatar !== undefined && req.user.avatar !== '') {
+              nets({
+                body: '{"avatar": "' + req.user.avatar + '"}',
+                url: "http://localhost:3334/file/download/",
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+              }, function done(err, resp, body) {
+                if (!err) {
+                  res.render('dashboard', {
                     title: 'Início | Blog Admin',
                     layout: 'layouts/layout',
                     name: req.user.name,
                     posts: posts,
                     moment: moment,
                     categories: categories,
-                });
+                  });
+                }
+              });
+            } else {
+              res.render('dashboard', {
+                title: 'Início | Blog Admin',
+                layout: 'layouts/layout',
+                name: req.user.name,
+                posts: posts,
+                moment: moment,
+                categories: categories,
+              });
             }
           }
         });

@@ -1,3 +1,5 @@
+/*jshint esversion: 6 */
+
 //Created by rafael on 29/01/2018
 const express = require('express');
 const moment = require('moment');
@@ -58,8 +60,8 @@ router.get('/post/:idPost',(req,res) => {
                     })
             } else {
 
-            }
-        });
+      }
+    });
 });
 
 /** MÉTODOS POST */
@@ -72,17 +74,19 @@ router.post('/post/:id', (req,res) => {
         date : new Date()
     };
 
-    Post.findOne({_id : mongoose.Types.ObjectId(id.toString())})
-        .exec((err,post) =>{
-            if(!err){
-                post.frontComments.push(newComment);
-                post.save(saved => {
-                    res.redirect('/post/'+post._id);
-                })
-            } else {
-                console.log("Erro: "+err);
-            }
+  Post.findOne({
+      _id: mongoose.Types.ObjectId(id.toString())
+    })
+    .exec((err, post) => {
+      if (!err) {
+        post.frontComments.push(newComment);
+        post.save(saved => {
+          res.redirect('/post/' + post._id);
         })
+      } else {
+        console.log("Erro: " + err);
+      }
+    });
 });
 
 module.exports = router;

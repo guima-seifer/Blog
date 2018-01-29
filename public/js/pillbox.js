@@ -44,9 +44,9 @@
     this.$addItem = this.$element.find('.pillbox-add-item');
     this.$addItemWrap = this.$addItem.parent();
     this.$suggest = this.$element.find('.suggest');
-    this.$pillHTML = '<li class="btn btn-default pill">' +
+    this.$pillHTML = '<li class="btn btn-outline-secondary pill">' +
       '	<span></span>' +
-      '	<span class="glyphicon glyphicon-close">' +
+      '	<span class="fa fa-times">' +
       '		<span class="sr-only">Remove</span>' +
       '	</span>' +
       '</li>';
@@ -112,7 +112,7 @@
       if (!$target.hasClass('pill')) {
         $item = $target.parent();
         if (this.$element.attr('data-readonly') === undefined) {
-          if ($target.hasClass('glyphicon-close')) {
+          if ($target.hasClass('fa-times')) {
             if (this.options.onRemove) {
               this.options.onRemove(this.getItemData($item, {
                 el: $item
