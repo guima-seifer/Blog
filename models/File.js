@@ -4,9 +4,15 @@ let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 
 let FileSchema = new Schema({
-    filename : {type: String},
-    length : {type: Number},
-    md5: {type: String}
+  filename: {
+    type: String,
+  },
+  length: {
+    type: Number,
+  },
+  md5: {
+    type: String,
+  },
 });
 
-module.exports = mongoose.model('File',FileSchema,'fs.files');
+module.exports = mongoose.model('File', FileSchema, 'fs.files');

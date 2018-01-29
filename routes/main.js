@@ -105,7 +105,7 @@ router.get('/profile', ensureAutheticated, (req, res) => {
             title: 'Área Pessoal | Blog Admin',
             layout: 'layouts/layout',
             name: req.user.name,
-            user: user
+            user: user,
           };
           res.render('personalProfile', locals);
         }

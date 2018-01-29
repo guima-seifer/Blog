@@ -9,30 +9,30 @@ let Category = require('../models/Category');
 
 router.use(express.static('public'));
 
-router.get('/', (req,res) => {
-    Category.find({})
-        .exec((err,categories) => {
-            if(!err){
-                Post.find({})
-                    .populate('user')
-                    .exec((err,posts) => {
-                        if(!err){
-                            let locals = {
-                                layout: 'layouts/frontLayout',
-                                categories : categories,
-                                posts : posts,
-                                moment : moment,
-                                isIndex : '1'
-                            };
-                            res.render('./front/index', locals);
-                        } else {
-                            console.log("Erro: "+err);
-                        }
-                    })
+router.get('/', (req, res) => {
+  Category.find({})
+    .exec((err, categories) => {
+      if (!err) {
+        Post.find({})
+          .populate('user')
+          .exec((err, posts) => {
+            if (!err) {
+              let locals = {
+                layout: 'layouts/frontLayout',
+                categories: categories,
+                posts: posts,
+                moment: moment,
+                isIndex: '1',
+              };
+              res.render('./front/index', locals);
             } else {
-                console.log("Erro : "+err);
+              console.log("Erro: " + err);
             }
-        })
+          })
+      } else {
+        console.log("Erro : " + err);
+      }
+    })
 });
 
 router.get('/post/:idPost',(req,res) => {
