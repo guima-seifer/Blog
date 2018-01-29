@@ -21,9 +21,9 @@
                         let smallText = posts[i].body;
                         smallText = smallText.substring(0,300)+'...</p>';
                     %>
-                    <%- smallText%>
+                    <p class="postBody"><%- smallText%></p>
                     <%} else {%>
-                    <%- posts[i].body+'</p>' %>
+                    <p class="postBody"><%- posts[i].body+'</p>' %></p>
                     <%}%>
                     <a href="/post/<%= posts[i]._id%>" class="btn btn-primary" style="background-color: #03A5A7">Ler mais &rarr;</a>
                 </div>

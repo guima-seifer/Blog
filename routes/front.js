@@ -69,7 +69,7 @@ router.post('/post/:id', (req,res) => {
         name : req.body.nome,
         email : req.body.mail,
         commentBody : req.body.comentario,
-        date : Date.now()
+        date : new Date()
     };
 
     Post.findOne({_id : mongoose.Types.ObjectId(id.toString())})

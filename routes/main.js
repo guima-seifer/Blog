@@ -11,11 +11,15 @@ let Category = require('../models/Category');
 let nets = require('nets');
 
 //Routes
-router.get('/', ensureAutheticated ,(req, res) => {
+router.get('/', (req, res) => {
+  if (req.user === undefined) {
     res.render('index', {
       title: 'Início | Blog Admin',
       layout: 'layouts/layout',
     });
+  } else {
+    res.redirect('/index');
+  }
 });
 
 router.get('/index', ensureAutheticated, (req, res) => {
