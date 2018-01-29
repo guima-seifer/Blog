@@ -1,0 +1,127 @@
+<!-- Page Content -->
+<div class="container" id="inicio">
+
+    <div class="row">
+
+        <!-- Blog Entries Column -->
+        <div class="col-md-8">
+
+            <h1 class="my-4"><%=post.title%></h1>
+            <!-- Blog Post -->
+
+            <div class="card-footer text-muted">
+                <%moment.locale('pt_PT')%>
+                <p>Postado em <%= moment(post.date).format('MMMM DD, YYYY') %> por <%= post.user.name%></p>
+
+                <a href="" target="_blank" class="fa fa-facebook"
+                   style="text-decoration: none" id="fb_share"></a>
+
+                <a href="" target="_blank" class="fa fa-google"
+                   style="text-decoration: none" id="gp_share"></a>
+
+                <a href="" target="_blank" class="fa fa-linkedin"
+                   style="text-decoration: none" id="lk_share"></a>
+
+                <a href="" target="_blank" class="fa fa-reddit"
+                   style="text-decoration: none" id="rd_share"></a>
+
+                <a href="" target="_blank" class="fa fa-twitter"
+                   style="text-decoration: none" id="tw_share"></a>
+
+                <script>
+                    window.onload = function () {
+                        tw_share.href = 'http://www.twitter.com/share?url=' + encodeURIComponent(location.href);
+                        gp_share.href = 'https://plus.google.com/share?url=' + encodeURIComponent(location.href);
+                        fb_share.href = 'http://www.facebook.com/share.php?u=' + encodeURIComponent(location.href);
+                        lk_share.href = 'https://www.linkedin.com/cws/share?url=' + encodeURIComponent(location.href);
+                        rd_share.href = 'http://www.reddit.com/submit?url' + encodeURIComponent(location.href);
+                    }
+                </script>
+            </div>
+            <div class="card mb-4" style="background-color: #D9ECF2">
+                <div class="card-body">
+                    <p class="card-text"><%- post.body%></p>
+                </div>
+            </div>
+
+            <div class="comentarios">
+                <h3>Respostas</h3>
+                <%if(post.frontComments.length > 0){%>
+                <ul>
+                    <table style="border-collapse: separate; border-spacing: 20px">
+                        <%for(let i=0; i < post.frontComments.length; i++){%>
+                        <tr>
+                            <td><img src="/img/anonimo.jpeg" class="avatar"></td>
+                            <td align="justify">
+                                <p style="margin-bottom: 0%"><b><%=post.frontComments[i].name%> </b><br/><small > <%= moment(post.date).format('DD MMMM, YYYY - HH:mm') %></small>
+                                </p>
+                                <p style="margin-bottom: 0%"><%=post.frontComments[i].commentBody%></p>
+                            </td>
+                        </tr>
+                        <%}%>
+                    </table>
+                </ul>
+                <%} else {%>
+                    <p class="text-muted">Seja o primeiro a deixar um comentário!</p>
+                <%}%>
+            </div>
+            <br>
+
+            <div class="comentarios">
+                <h3>Deixe uma resposta</h3>
+                <br/>
+                <form method="POST" action="/blog/post/<%=post._id%>">
+                    <div class="form-label-group">
+                        <input type="text" id="nome" name="nome" class="form-control" placeholder="Nome" required>
+                        <label for="nome">Nome</label>
+                    </div>
+                    <div class="form-label-group">
+                        <input type="email" id="mail" name="mail" class="form-control" placeholder="Email" required>
+                        <label for="mail">Email</label>
+                    </div>
+                    <label for="comentario">Comentário</label>
+                    <textarea class="nome" id="comentario" name="comentario" style="height:200px" required></textarea>
+                    <input type="submit" class="btn btn-primary" style="background-color: #03A5A7"
+                           value="Publicar comentário">
+                </form>
+            </div>
+
+            <br/>
+
+            <!-- Pagination -->
+            <ul class="pagination justify-content-center mb-4">
+                <li class="page-item">
+                    <a class="page-link" href="/blog">&larr; Voltar</a>
+                </li>
+            </ul>
+
+        </div>
+
+        <!-- Sidebar Widgets Column -->
+        <div class="col-md-4">
+
+            <!-- Search Widget -->
+            <div class="card my-4" style="background-color: #226575" id="procurar">
+                <h5 class="card-header" style="color: white">Procurar</h5>
+                <div class="card-body">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Procurar por...">
+                        <span class="input-group-btn">
+                  <button class="btn btn-secondary" type="button" style="color: #fff;background-color: #868e96;border-color: #868e96;">Ir!</button>
+                </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categories Widget -->
+            <%-include('../partials/_categories')%>
+
+            <!-- Side Widget -->
+            <%-include('../partials/_description')%>
+
+        </div>
+
+    </div>
+    <!-- /.row -->
+
+</div>
