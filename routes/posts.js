@@ -139,7 +139,7 @@ router.get('/:idPost', ensureAutheticated, (req, res) => {
               }
             }
           } else {
-            console.log("Erro: " + err);
+            console.log('Erro: ' + err);
           }
         });
     });
@@ -148,6 +148,7 @@ router.get('/:idPost', ensureAutheticated, (req, res) => {
 router.post('/add', ensureAutheticated, (req, res) => {
   let form = new formidable.IncomingForm();
   form.multiples = true;
+
   form.parse(req, (err, fields, files) => {
     let errors = [];
     let categories = [];
@@ -171,18 +172,8 @@ router.post('/add', ensureAutheticated, (req, res) => {
     }
 
     if (errors.length > 0) {
-      var locals = {
-        title: 'Adicionar Postagem | Blog Admin',
-        layout: 'layouts/layout',
-        errors: errors,
-        postTitle: fields.title,
-        postCategory: fields.category,
-        postBody: fields.textarea,
-        author: req.user.id,
-        authorName: req.user.name,
-        allowComments: fields.checkComments,
-      };
-      res.render('./posts', locals);
+      req.flash('error_msg', errors);
+      res.redirect('/posts');
     } else {
       //nenhum ficheiro anexado
         let keys = Object.keys(fields);

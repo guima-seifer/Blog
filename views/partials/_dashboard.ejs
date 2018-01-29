@@ -2,18 +2,10 @@
 <section id="table-area-section" class="" style="margin-bottom: 7rem;">
   <div class="container">
 
-    <!-- //TODO: Criar uma especie de joystick para selecionar diferentes opções no ecrã (norte, este, oeste e sul do botao); -->
     <div id="button-grp" class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-      <div class="btn-group">
-        <button type="button" class="btn btn-secondary btn-lg mb-5" style="border-radius: 50%;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fa fa-plus"  data-toggle="tooltip" data-placement="top" title="Ações"></i>
+      <button type="button" class="btn btn-secondary btn-lg mb-5" style="border-radius: 50%;" data-toggle="modal" data-target="#addPostModal" aria-haspopup="true" aria-expanded="false">
+          <i class="fa fa-plus"  data-toggle="tooltip" data-placement="top" title="Adicionar Postagem"></i>
         </button>
-        <div class="dropdown-menu dropdown-menu-right bg-white">
-          <button data-toggle="modal" data-target="#addPostModal" class="dropdown-item text-dark" type="button">Adicionar Postagem</button>
-          <button class="dropdown-item text-dark" type="button " data-toggle="modal" data-target="#addCategoryModal">Adicionar Categoria</button>
-        </div>
-      </div>
-      <!-- <a href="posts/add" class="btn btn-primary btn-block" data-toggle="modal" data-target="#addPostModal"><i class="fa fa-plus"></i> Adicionar Postagem</a> -->
     </div>
 
 
@@ -32,8 +24,9 @@
 
 <script type="text/javascript">
   function favPost(id) {
-    console.log(id);
-    var favicon = $('#favicon' + id);
+    var favicon = $('#favicon1' + id);
+    favicon.css('color', '#FFFF00');
+    var favicon = $('#favicon2' + id);
     favicon.css('color', '#FFFF00');
   };
 
@@ -46,15 +39,24 @@
     }
   };
 
-  function jumbotronRender(aux, title) {
-    var postBody = $('#pstBody' + aux).html();
-    var postTitle = $('#postTitle' + aux).html();
-    var postCategory = $('#postCategory' + aux).html();
-    var postDate = $('#postDate' + aux).html();
-    var postAuthor = $('#postAuthor' + aux).html();
+  function toggleHighlight(id) {
+    var highlightedCards = $('div.card-header.bg-secondary')
+      .attr('class', 'card-header bg-primary text-white my-0 py-0');
+    var highlightedCard = $('#card2-' + id)
+      .attr('class', 'card-header bg-secondary text-white my-0 py-0');
+    var highlightedCard = $('#card1-' + id)
+      .attr('class', 'card-header bg-secondary text-white my-0 py-0');
+
+  }
+
+  function jumbotronRender(id) {
+    var postBody = $('#pstBody' + id).html();
+    var postTitle = $('#postTitle' + id).html();
+    var postCategory = $('#postCategory' + id).html();
+    var postDate = $('#postDate' + id).html();
+    var postAuthor = $('#postAuthor' + id).html();
     postAuthor = postAuthor.replace('text-light', '');
-    console.dir(postAuthor);
-    let postComments = $('#postComments' + aux).html();
+    let postComments = $('#postComments' + id).html();
     document.getElementById('jumboBody').innerHTML = postBody;
     document.getElementById('jumboTitle').innerHTML = postTitle;
     document.getElementById('jumboInfo').innerHTML = '<div class="d-block">' +

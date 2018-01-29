@@ -1,8 +1,9 @@
-
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.js"></script>
+<script src="/js/dropdown-autoflip.js"></script>
+<script src="/js/pillbox.js"></script>
 
 <!-- ADD POST MODAL  -->
-<div class="container fuelux">
-<div class="modal fade" id="addPostModal">
+<div class="modal fade fuelux" id="addPostModal">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header bg-primary text-white">
@@ -18,6 +19,7 @@
           <div class="form-group">
             <div id="myPillbox" class="pillbox">
               <ul class="clearfix pill-group">
+
                 <li class="pillbox-input-wrap btn-group">
                   <a class="pillbox-more">and <span class="pillbox-more-count"></span> more...</a>
                   <input type="text" class="form-control dropdown-toggle pillbox-add-item" placeholder="Categorias">
@@ -67,7 +69,6 @@
     </div>
   </div>
 </div>
-</div>
 
 <!-- jQuery -->
 <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -80,12 +81,5 @@
   $('#myPillbox').pillbox();
 </script>
 
-<script type="text/javascript">
-  $("#addPostagem").on('click',function () {
-      $(".pillbox").find(".pill").each(function () {
-          console.dir($(this)[0].dataset.value);
-      })
-  })
-</script>
 
 

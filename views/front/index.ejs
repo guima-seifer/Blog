@@ -1,12 +1,12 @@
 <!-- Page Content -->
-<div class="container mt-5" id="inicio">
+<div class="container" id="inicio" style="margin-top: 5rem;">
 
     <div class="row">
 
         <!-- Blog Entries Column -->
         <div class="col-md-8">
 
-            <h1 class="my-4">
+            <h1 class="display-3 mb-3">
                 <small>Um blog para todos!</small>
             </h1>
 
@@ -52,7 +52,7 @@
         </div>
 
         <!-- Sidebar Widgets Column -->
-        <div class="col-md-4">
+        <div class="col-md-4" style="margin-top: 5rem">
 
             <!-- Search Widget -->
             <div class="card my-4" style="background-color: #226575" id="procurar">
@@ -68,6 +68,9 @@
 
             <!-- Categories Widget -->
             <%-include('../partials/_categories')%>
+
+            <!-- Search from date Widget -->
+            <%-include('../partials/_searchDate')%>
 
             <!-- Side Widget -->
             <div class="card my-4" style="background-color: #226575" id="desc">
