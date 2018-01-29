@@ -150,7 +150,7 @@ router.post('/add', ensureAutheticated, (req, res) => {
   form.multiples = true;
 
   form.parse(req, (err, fields, files) => {
-    console.log(fields);
+    // console.log(fields);
     let errors = [];
     if (!fields.title) {
       errors.push({
