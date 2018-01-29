@@ -6,7 +6,7 @@ $(function () {
     $('#tableCategories').DataTable();
   });
 
-  $("#searchBox").on('keypress', function () {
+  $("#searchBox").on('keydown', function () {
     let searchText = $(this).val();
     searchText = searchText.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
     console.log(searchText);
