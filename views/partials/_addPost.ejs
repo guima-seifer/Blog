@@ -1,10 +1,15 @@
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="/js/dropdown-autoflip.js"></script>
+<script src="/js/pillbox.js"></script>
+
 <!-- ADD POST MODAL  -->
-<div class="modal fade" id="addPostModal">
+<div class="modal fade fuelux" id="addPostModal">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header bg-primary text-white">
         <h5 class="modal-title" id="addPostModalLabel">Adicionar Postagem</h5>
-        <button class="close" data-dismiss="modal"><span>&times;</span></button>
+        <button class="close" data-dismiss="modal"><span class="fa fa-times"></span></button>
       </div>
       <div class="modal-body">
         <form method="POST" action="/posts/add" class="mx-3 my-3" enctype="multipart/form-data">
@@ -13,37 +18,30 @@
             <label for="title">Título</label>
           </div>
           <div class="form-group">
-<div class="fuelux">
-            <div class="pillbox" data-initialize="pillbox" id="myPillbox">
+            <div id="myPillbox" class="pillbox">
               <ul class="clearfix pill-group">
-                <li class="btn btn-default pill" data-value="foo">
-                  <span>Item Title</span>
-                  <span class="glyphicon glyphicon-close">
-                    <span class="sr-only">Remove</span>
-                  </span>
-                </li>
-                ....
+                <%for(let i = 0; i < categories.length; i++){%>
+                  <li class="btn btn-outline-secondary pill" data-value="foo">
+                    <span><%= categories[i].name%></span>
+                    <span class="fa fa-times">
+              			<span class="sr-only">Remove</span>
+                    </span>
+                  </li>
+                  <%}%>
                 <li class="pillbox-input-wrap btn-group">
                   <a class="pillbox-more">and <span class="pillbox-more-count"></span> more...</a>
-                  <input type="text" class="form-control dropdown-toggle pillbox-add-item" placeholder="add item">
+                  <input type="text" class="form-control dropdown-toggle pillbox-add-item" placeholder="Categorias">
+
                   <button type="button" class="dropdown-toggle sr-only">
-                    <span class="caret"></span>
-                    <span class="sr-only">Toggle Dropdown</span>
-                  </button>
+            			<span class="caret"></span>
+            			<span class="sr-only">Toggle Dropdown</span>
+            		</button>
                   <ul class="suggest dropdown-menu" role="menu" data-toggle="dropdown" data-flip="auto"></ul>
                 </li>
               </ul>
             </div>
           </div>
-</div>
-          <div class="form-group">
-            <label for="category" class="form-label">Categoria</label>
-            <select id="category" name="category" class="form-control" placeholder="Categoria">
-                        <%for(let i = 0; i < categories.length; i++){%>
-                          <option value="<%= categories[i].name%>"><%= categories[i].name%></option>
-                          <%}%>
-                        </select>
-          </div>
+
           <div class="form-group bg-faded p-3">
             <label for="file" class="form-control-label">Anexar ficheiros</label>
             <input type="file" name="filetoupload" value="" class="form-control-file" id="file" multiple>
@@ -76,10 +74,9 @@
   </div>
 </div>
 
-<script type="text/javascript">
-$('#myPillbox').pillbox();
-</script>
 <!-- jQuery -->
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="//www.fuelcdn.com/fuelux/3.13.0/js/fuelux.min.js"></script>
+
+<script type="text/javascript">
+  $('#myPillbox').pillbox();
+</script>
