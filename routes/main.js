@@ -6,7 +6,6 @@ var Post = require('../models/Post');
 const {
   ensureAutheticated,
 } = require('../helpers/auth');
-let User = require('../models/User');
 let Category = require('../models/Category');
 let nets = require('nets');
 
@@ -59,57 +58,6 @@ router.get('/', ensureAutheticated, (req, res) => {
           }
         });
     });
-});
-
-router.get('/profile', ensureAutheticated, (req, res) => {
-  User.findOne({
-      _id: req.user._id,
-    })
-    .exec((err, user) => {
-      if (!err) {
-        if (user.avatar !== undefined && user.avatar !== '') {
-          nets({
-            body: '{"avatar": "' + user.avatar + '"}',
-            url: "http://localhost:3334/file/download/",
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }, function done(err, resp, body) {
-            if (!err) {
-              var locals = {
-                title: 'Área Pessoal | Blog Admin',
-                layout: 'layouts/layout',
-                name: req.user.name,
-                user: user,
-              };
-              res.render('personalProfile', locals);
-            } else {
-              console.log(err);
-            }
-          });
-        } else {
-          var locals = {
-            title: 'Área Pessoal | Blog Admin',
-            layout: 'layouts/layout',
-            name: req.user.name,
-            user: user,
-          };
-          res.render('personalProfile', locals);
-        }
-      } else {
-        console.log(err);
-      }
-    });
-});
-
-router.get('/settings', ensureAutheticated, (req, res) => {
-  var locals = {
-    title: 'Configurações | Blog Admin',
-    layout: 'layouts/layout',
-    name: req.user.name,
-  };
-  res.render('settings', locals);
 });
 
 module.exports = router;
