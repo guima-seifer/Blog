@@ -76,14 +76,16 @@ router.post('/post/:id', (req, res) => {
     date: Date.now()
   };
 
-  Post.findOne({
-      _id: mongoose.Types.ObjectId(id.toString())
-    })
-    .exec((err, post) => {
-      if (!err) {
-        post.frontComments.push(newComment);
-        post.save(saved => {
-          res.redirect('/blog/post/' + post._id);
+    Post.findOne({_id : mongoose.Types.ObjectId(id.toString())})
+        .exec((err,post) =>{
+            if(!err){
+                post.frontComments.push(newComment);
+                post.save(saved => {
+                    res.redirect('/post/'+post._id);
+                })
+            } else {
+                console.log("Erro: "+err);
+            }
         })
       } else {
         console.log("Erro: " + err);
