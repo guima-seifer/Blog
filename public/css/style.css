@@ -110,3 +110,98 @@ body h1, body h2, body h3 {
 #favicon:hover {
   color: #FFFF00;
 }
+
+.nome {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+}
+
+.mail {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+}
+
+.comentarios {
+  border-radius: 5px;
+  background-color: #D9ECF2;
+  padding: 20px;
+}
+
+.fa {
+  padding: 5px;
+  font-size: 20px;
+  width: 30px;
+  text-align: center;
+  margin: 0 auto;
+  border-radius: 50%;
+}
+
+.fa:hover {
+  opacity: 0.8;
+}
+
+.fa-facebook {
+  background: #3B5998;
+  color: white;
+}
+
+.fa-facebook:hover{
+  background: #3B5998;
+  color: white;
+}
+
+.fa-twitter {
+  background: #55ACEE;
+  color: white;
+}
+
+.fa-twitter:hover{
+  background: #55ACEE;
+  color: white;
+}
+
+.fa-google {
+  background: #dd4b39;
+  color: white;
+}
+
+.fa-google:hover {
+  background: #dd4b39;
+  color: white;
+}
+
+.fa-linkedin {
+  background: #007bb5;
+  color: white;
+}
+
+.fa-linkedin:hover {
+  background: #007bb5;
+  color: white;
+}
+
+.fa-reddit {
+  background: #ff5700;
+  color: white;
+}
+
+.fa-reddit:hover {
+  background: #ff5700;
+  color: white;
+}
+
+.avatar {
+  border-radius: 10%;
+}

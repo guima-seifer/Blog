@@ -58,6 +58,13 @@ const PostSchema = new Schema({
     },
   }, ],
 
+  frontComments : [{
+    name : {type: String},
+    email : {type: String},
+    date : {type : Date, default : Date.now},
+    commentBody : {type: String}
+  }],
+
   files: [{
     type: String,
   }, ],

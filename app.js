@@ -20,7 +20,7 @@ const main = require('./routes/main');
 const users = require('./routes/users');
 const category = require('./routes/category');
 const file = require('./routes/file');
-
+const front = require('./routes/front');
 //Passport Config
 require('./config/passport')(passport);
 
@@ -77,7 +77,7 @@ app.use(cors());
 app.use(expressLayouts);
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
-app.use('/', main);
+app.use('/index', main);
 app.use('/posts', posts);
 app.use('/posts/details', posts);
 app.use('/users', users);
@@ -85,7 +85,7 @@ app.use('/users/login', users);
 app.use('/auth', users);
 app.use('/categories', category);
 app.use('/file',file);
-
+app.use('/',front);
 // uncomment after placing your favicon in /public
 //TODO: favicon
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));

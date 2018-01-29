@@ -1,0 +1,83 @@
+<!-- Page Content -->
+<div class="container" id="inicio">
+
+    <div class="row">
+
+        <!-- Blog Entries Column -->
+        <div class="col-md-8">
+
+            <h1 class="my-4">Hap
+                <small>Um blog para todos!</small>
+            </h1>
+
+            <!-- Blog Post -->
+            <% moment.locale('pt_PT')%>
+            <%if(posts.length > 0){%>
+            <%for(let i = 0; i < posts.length; i++){%>
+            <div class="card mb-4" style="background-color: #D9ECF2">
+                <div class="card-body">
+                    <h2 class="card-title"><%=posts[i].title%></h2>
+                    <% if(posts[i].body.length > 300){
+                        let smallText = posts[i].body;
+                        smallText = smallText.substring(0,300)+'...</p>';
+                    %>
+                    <%- smallText%>
+                    <%} else {%>
+                    <%- posts[i].body+'</p>' %>
+                    <%}%>
+                    <a href="/blog/post/<%= posts[i]._id%>" class="btn btn-primary" style="background-color: #03A5A7">Ler mais &rarr;</a>
+                </div>
+                <div class="card-footer text-muted">
+                    Postado em <%= moment(posts[i].date).format('MMMM DD, YYYY') %> por <%= posts[i].user.name%>
+                </div>
+            </div>
+            <%} } else {%>
+                Não existem postagens no blog.
+            <%}%>
+
+            <!-- Pagination -->
+            <ul class="pagination justify-content-center mb-4">
+                <li class="page-item">
+                    <a class="page-link" href="#">&larr; Anterior</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#">Seguinte &rarr;</a>
+                </li>
+            </ul>
+
+        </div>
+
+        <!-- Sidebar Widgets Column -->
+        <div class="col-md-4">
+
+            <!-- Search Widget -->
+            <div class="card my-4" style="background-color: #226575" id="procurar">
+                <h5 class="card-header" style="color: white">Procurar</h5>
+                <div class="card-body">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Procurar por...">
+                        <span class="input-group-btn">
+                  <button class="btn btn-secondary" type="button" style="color: #fff;background-color: #868e96;border-color: #868e96;">Ir!</button>
+                </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categories Widget -->
+            <%-include('../partials/_categories')%>
+
+            <!-- Side Widget -->
+            <div class="card my-4" style="background-color: #226575" id="desc">
+                <h5 class="card-header" style="color: white">Descrição</h5>
+                <div class="card-body" style="color: lightgray">
+                    You can put anything you want inside of these side widgets. They are easy to use, and feature the
+                    new Bootstrap 4 card containers!
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <!-- /.row -->
+
+</div>
