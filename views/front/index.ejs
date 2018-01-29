@@ -25,7 +25,11 @@
                     <%} else {%>
                     <p class="postBody"><%- posts[i].body+'</p>' %></p>
                     <%}%>
+                    <%if(posts[i].url_title !== undefined){%>
+                    <a href="/post/<%= posts[i].url_title%>" class="btn btn-primary" style="background-color: #03A5A7">Ler mais &rarr;</a>
+                    <%} else {%>
                     <a href="/post/<%= posts[i]._id%>" class="btn btn-primary" style="background-color: #03A5A7">Ler mais &rarr;</a>
+                    <%}%>
                 </div>
                 <div class="card-footer text-muted">
                     Postado em <%= moment(posts[i].date).format('MMMM DD, YYYY') %> por <%= posts[i].user.name%>
