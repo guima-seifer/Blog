@@ -1,0 +1,65 @@
+<script src="/js/jquery.min.js"></script>
+<script src="/js/datedropper.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<div class="card my-4" style="background-color: #226575" id="categorias">
+    <h5 class="card-header" style="color: white">Procurar por data</h5>
+    <div class="card-body">
+
+        <div class="row">
+            <div class="col-md-6">
+                <label style="color: white" for="from">De</label>
+                <input type="text" style="width: 105px" data-lang="pt" data-lock="to" id="from"/>
+            </div>
+            <div class="col-md-6">
+                <label style="color: white" for="to">Até</label>
+                <input type="text" style="width: 105px" data-lang="pt" data-lock="to" id="to"/>
+            </div>
+        </div>
+
+        <script>
+            $('#from').dateDropper();
+        </script>
+
+        <script>
+            $('#to').dateDropper();
+        </script>
+
+        <button class="btn btn-info btn-rounded mt-3 offset-4" value="confirmar" onclick="getDate()" id="date">Confirmar </button>
+
+        <script>
+            function getDate(){
+                var Valuefrom = $("#from").val().toString();
+                var Valueto = $("#to").val().toString();
+                var vfrom = Valuefrom.split("/");
+                var vto = Valueto.split("/");
+                if(parseInt(vfrom[2]) > parseInt(vto[2])) {
+                    swal("Datas devem ser coerentes!");
+                }
+                else if (parseInt(vfrom[2])==parseInt(vto[2])){
+                    if(parseInt(vfrom[0]) > parseInt(vto[0])){
+                        swal("Datas devem ser coerentes!");
+                    }
+                    else if(parseInt(vfrom[0])==parseInt(vto[0])) {
+                        if(parseInt(vfrom[1])>parseInt(vto[1])){
+                            swal("Datas devem ser coerentes!");
+                        }
+                        else{
+                            swal("Sucesso!");
+                        }
+                    }
+                    else{
+                        swal("Sucesso!");
+                    }
+                }else {
+                    swal("Sucesso!");
+                }
+
+
+                console.log(vfrom[2]);
+                console.log(vto[2]);
+            }
+        </script>
+    </div>
+</div>
+
