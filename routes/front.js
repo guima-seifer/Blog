@@ -37,44 +37,42 @@ router.get('/', (req, res) => {
     })
 });
 
-router.get('/post/:idPost', (req, res) => {
-  let id = req.params.idPost;
-  Category.find({})
-    .exec((err, categories) => {
-      if (!err) {
-        Post.findOne({
-            _id: mongoose.Types.ObjectId(id.toString())
-          })
-          .populate('user')
-          .exec((err, post) => {
-            if (!err) {
-              let locals = {
-                layout: 'layouts/frontLayout',
-                categories: categories,
-                post: post,
-                moment: moment,
-                isIndex: '2'
-              };
-              res.render('./front/post', locals);
+router.get('/post/:idPost',(req,res) => {
+    let id = req.params.idPost;
+    Category.find({})
+        .exec((err,categories) => {
+            if(!err){
+                Post.findOne({_id : mongoose.Types.ObjectId(id.toString())})
+                    .populate('user')
+                    .exec((err,post) => {
+                        if(!err){
+                            let locals = {
+                                layout: 'layouts/frontLayout',
+                                categories : categories,
+                                post : post,
+                                moment : moment,
+                                isIndex : '2'
+                            };
+                            res.render('./front/post', locals);
+                        } else {
+                            console.log("Erro: "+err);
+                        }
+                    })
             } else {
-              console.log("Erro: " + err);
-            }
-          })
-      } else {
 
       }
     });
 });
 
 /** MÉTODOS POST */
-router.post('/post/:id', (req, res) => {
-  let id = req.params.id;
-  let newComment = {
-    name: req.body.nome,
-    email: req.body.mail,
-    commentBody: req.body.comentario,
-    date: Date.now()
-  };
+router.post('/post/:id', (req,res) => {
+    let id = req.params.id;
+    let newComment = {
+        name : req.body.nome,
+        email : req.body.mail,
+        commentBody : req.body.comentario,
+        date : new Date()
+    };
 
   Post.findOne({
       _id: mongoose.Types.ObjectId(id.toString())
