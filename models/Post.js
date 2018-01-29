@@ -65,6 +65,8 @@ const PostSchema = new Schema({
     commentBody : {type: String}
   }],
 
+  url_name : {type: String},
+
   files: [{
     type: String,
   }, ],

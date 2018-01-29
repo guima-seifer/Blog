@@ -6,8 +6,16 @@ $(function () {
     $('#tableCategories').DataTable();
   });
 
-  $("#searchBox").on('keypress', function () {
+  $("#searchBox").on('keydown', function () {
     let searchText = $(this).val();
-    $(".post").find(".titulo")
+    searchText = searchText.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+    console.log(searchText);
+    $(".post").find(".titulo").each(function () {
+        if($(this)[0].innerText.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").indexOf(searchText) === -1){
+          $(this).parent().parent().css("display","none");
+        } else {
+            $(this).parent().parent().css("display","block");
+        }
+    })
   })
 });
