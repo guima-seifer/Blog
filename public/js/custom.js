@@ -5,4 +5,9 @@ $(function () {
     $('#tableUsers').DataTable();
     $('#tableCategories').DataTable();
   });
+  
+  $("#searchBox").on('keypress', function () {
+    let searchText = $(this).val();
+    $(".post").find(".titulo")
+  })
 });

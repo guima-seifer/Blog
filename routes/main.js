@@ -10,7 +10,19 @@ let User = require('../models/User');
 let Category = require('../models/Category');
 let nets = require('nets');
 
-router.get('/', ensureAutheticated, (req, res) => {
+//Routes
+router.get('/', (req, res) => {
+  if (req.user === undefined) {
+    res.render('index', {
+      title: 'Início | Blog Admin',
+      layout: 'layouts/layout',
+    });
+  } else {
+    res.redirect('/index');
+  }
+});
+
+router.get('/index', ensureAutheticated, (req, res) => {
   Post.find({})
     .sort({
       date: 1,
