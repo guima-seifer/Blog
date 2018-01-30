@@ -53,21 +53,6 @@
                   <%- posts[i].body %>
                 </div>
               </div>
-              <%if (posts[i].files.length > 0){%>
-                <hr/>
-                <div class="d-flex flex-row justify-content-start mx-5 my-3">
-                  <label for="attached">Ficheiros anexados:</label>
-                  <div class="" id="attached">
-                    <ul>
-                      <%for(let j = 0; j < posts[i].files.length; j++){%>
-                        <li>
-                          <%= posts[i].files[j]%>
-                        </li>
-                        <%}%>
-                      </ul>
-                    </div>
-                  </div>
-                  <%}%>
                 </div>
 
               </div>
@@ -88,6 +73,25 @@
                   </div>
                 </div>
               </div>
+              <%if (posts[i].files.length > 0){%>
+              <div style="display: none;" id="postFiles<%=i%>">
+                <hr/>
+                <div class="d-flex flex-row justify-content-start mx-5 my-3">
+                  <label for="attached">Ficheiros anexados:</label>
+                  <div class="" id="attached">
+                    <ul>
+                        <%for(let j = 0; j < posts[i].files.length; j++){%>
+                      <li>
+                        <form method="POST" action="/file/attached/<%= posts[i].files[j]%>">
+                          <a onclick="$(this).parent().submit()" style="cursor: pointer; color: #03A6A6"><%= posts[i].files[j]%></a>
+                        </form>
+                      </li>
+                        <%}%>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <%}%>
               <div style="display: none;" id="postComments<%=i%>">
                 <% if(posts[i].comments.length > 0){%>
                   <%for(let k = 0; k < posts[i].comments.length; k++){%>
@@ -122,6 +126,8 @@
                     <p id="jumboInfo"></p>
                     <hr class="my-4 mx-0 px-0">
                     <p id="jumboBody" class="">Selecione um item para poder visualizar</p>
+                    <hr class="my-4 bg-light">
+                    <p id="jumboFiles"></p>
                     <hr class="my-4 bg-light">
                     <!-- Para os comentários -->
                     <p id="jumboFooter" class="">Comentários:</p>

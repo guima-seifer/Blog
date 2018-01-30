@@ -58,6 +58,10 @@
     var postAuthor = $('#postAuthor' + id).html();
     postAuthor = postAuthor.replace('text-light', '');
     let postComments = $('#postComments' + id).html();
+    let postFiles = $('#postFiles'+id).html();
+    if(postFiles !== null){
+        $('#jumboFiles').html(postFiles);
+    }
     document.getElementById('jumboBody').innerHTML = postBody;
     document.getElementById('jumboTitle').innerHTML = postTitle;
     document.getElementById('jumboInfo').innerHTML = '<div class="d-block">' +
