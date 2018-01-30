@@ -14,6 +14,7 @@ const UserSchema = new Schema({
   idGoogle: { type: String },
   url_name: { type: String },
   preferFormat : {type : String, default: '2columns'},
+  registos : {type: String},
   favPosts : [{type : Schema.Types.ObjectId, ref : 'Post'}]
 });
 

@@ -57,17 +57,25 @@ router.get('/login', (req, res) => {
 });
 
 router.get('/register', (req, res) => {
-  var locals = {
-    title: 'Registar conta | Blog Admin',
-    layout: 'layouts/layout',
-    state: 'null',
-    errors: [],
-    name: [],
-    email: [],
-    password: [],
-    password2: [],
-  };
-  res.render('./users/register', locals);
+    User.findOne({registos : 'no'})
+        .exec((err,doc) => {
+            if(doc === null){ //registos válidos
+                var locals = {
+                    title: 'Registar conta | Blog Admin',
+                    layout: 'layouts/layout',
+                    state: 'null',
+                    errors: [],
+                    name: [],
+                    email: [],
+                    password: [],
+                    password2: [],
+                };
+                res.render('./users/register', locals);
+            } else {
+                req.flash('error_msg', 'O utilizador '+doc.name+' não permite novos registos.');
+                res.redirect('/users/login');
+            }
+        });
 });
 
 //Logout user
