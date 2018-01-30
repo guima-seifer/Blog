@@ -37,12 +37,12 @@
                 <legend>Permitir Registos</legend>
                 <div class="form-check">
                   <label for="" class="form-check-label">
-                    <input type="radio" name="registos" class="form-check-input" value="yes"  checked> Sim
+                    <input type="radio" name="registos" class="form-check-input" value="yes" <%if(registos === 'yes'){%> checked <%} else if(registos === undefined){%> checked <%}%>> Sim
                   </label>
                 </div>
                 <div class="form-check">
                   <label for="" class="form-check-label">
-                    <input type="radio" name="registos" class="form-check-input" value="no" > Não
+                    <input type="radio" name="registos" class="form-check-input" value="no" <%if(registos === 'no'){%> checked <%}%> > Não
                   </label>
                 </div>
               </fieldset>

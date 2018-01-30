@@ -14,14 +14,16 @@ router.get('/', ensureAutheticated, (req, res) => {
     title: 'Configurações | Blog Admin',
     layout: 'layouts/layout',
     name: req.user.name,
-    format : req.user.preferFormat
+    format : req.user.preferFormat,
+    registos : req.user.registos
   };
   res.render('settings', locals);
 });
 
 router.post('/save', ensureAutheticated, (req,res) => {
   User.findByIdAndUpdate(req.user._id,{
-    preferFormat : req.body.format
+    preferFormat : req.body.format,
+    registos : req.body.registos
   })
       .exec((err,doc) => {
         if(!err){

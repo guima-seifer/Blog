@@ -1,4 +1,13 @@
 <!-- Page Content -->
+<style>
+    .page {
+        display: none;
+    }
+    .page-active {
+        display: block;
+    }
+</style>
+
 <div class="container" id="inicio" style="margin-top: 5rem;">
 
     <div class="row">
@@ -13,42 +22,47 @@
             <!-- Blog Post -->
             <% moment.locale('pt_PT')%>
             <%if(posts.length > 0){%>
+            <%let j = 1;%>
             <%for(let i = 0; i < posts.length; i++){%>
-            <div class="card mb-4 post" style="background-color: #D9ECF2">
-                <div class="card-body">
-                    <h2 class="card-title titulo"><%=posts[i].title%></h2>
-                    <% if(posts[i].body.length > 300){
-                        let smallText = posts[i].body;
-                        smallText = smallText.substring(0,300)+'...</p>';
-                    %>
-                    <p class="postBody"><%- smallText%></p>
-                    <%} else {%>
-                    <p class="postBody"><%- posts[i].body+'</p>' %></p>
-                    <%}%>
-                    <%if(posts[i].url_title !== undefined){%>
-                    <a href="/post/<%= posts[i].url_title%>" class="btn btn-primary" style="background-color: #03A5A7">Ler mais &rarr;</a>
-                    <%} else {%>
-                    <a href="/post/<%= posts[i]._id%>" class="btn btn-primary" style="background-color: #03A5A7">Ler mais &rarr;</a>
-                    <%}%>
+            <%let k = 0;%>
+            <div class="page" id="page<%=j%>">
+            <% while(k<2 && i < posts.length){%>
+                <div class="card mb-4 post" style="background-color: #D9ECF2">
+                    <div class="card-body">
+                        <h2 class="card-title titulo"><%=posts[i].title%></h2>
+                        <% if(posts[i].body.length > 300){
+                            let smallText = posts[i].body;
+                            smallText = smallText.substring(0,300)+'...</p>';
+                        %>
+                        <p class="postBody"><%- smallText%></p>
+                        <%} else {%>
+                        <p class="postBody"><%- posts[i].body+'</p>' %></p>
+                        <%}%>
+                        <%if(posts[i].url_title !== undefined){%>
+                        <a href="/post/<%= posts[i].url_title%>" class="btn btn-primary" style="background-color: #03A5A7">Ler mais &rarr;</a>
+                        <%} else {%>
+                        <a href="/post/<%= posts[i]._id%>" class="btn btn-primary" style="background-color: #03A5A7">Ler mais &rarr;</a>
+                        <%}%>
+                    </div>
+                    <div class="card-footer text-muted">
+                        Postado em <%= moment(posts[i].date).format('MMMM DD, YYYY') %> por <%= posts[i].user.name%>
+                        <input type="hidden" class="dataPost" value="<%= moment(posts[i].date).format('MM/DD/YYYY')%>">
+                    </div>
                 </div>
-                <div class="card-footer text-muted">
-                    Postado em <%= moment(posts[i].date).format('MMMM DD, YYYY') %> por <%= posts[i].user.name%>
-                    <input type="hidden" class="dataPost" value="<%= moment(posts[i].date).format('MM/DD/YYYY')%>">
-                </div>
+                <%k++; i++%>
+            <%}%>
+            <%i--;%>
             </div>
-            <%} } else {%>
+            <%j++%>
+
+            <%}%>
+            <ul id="pagination-demo" class="pagination justify-content-center mb-4"></ul>
+            <%} else {%>
                 Não existem postagens no blog.
             <%}%>
 
             <!-- Pagination -->
-            <ul class="pagination justify-content-center mb-4">
-                <li class="page-item">
-                    <a class="page-link" href="#">&larr; Anterior</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="#">Seguinte &rarr;</a>
-                </li>
-            </ul>
+
 
         </div>
 
