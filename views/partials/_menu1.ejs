@@ -60,8 +60,10 @@
                   <div class="" id="attached">
                     <ul>
                       <%for(let j = 0; j < posts[i].files.length; j++){%>
-                        <li>
-                          <%= posts[i].files[j]%>
+                          <li>
+                          <form method="POST" action="/file/attached/<%= posts[i].files[j]%>">
+                            <a onclick="$(this).parent().submit()" style="cursor: pointer; color: #03A6A6"><%= posts[i].files[j]%></a>
+                          </form>
                         </li>
                         <%}%>
                       </ul>

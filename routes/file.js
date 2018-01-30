@@ -32,6 +32,33 @@ router.post('/upload',function (req,res) {
     });
 });
 
+router.post('/attached/:nameFile', (req,res) => {
+    let name = req.params.nameFile;
+    File.findOne({filename : name})
+        .exec((err,fich) => {
+            if (!err && fich !== null) {
+                grid.mongo = mongoose.mongo;
+                let gfs = grid(conn.db);
+                let fs_write_stream = fs.createWriteStream(__dirname + '/../public/files/' + fich.filename);
+                let readstream = gfs.createReadStream({
+                    filename: name
+                });
+
+                readstream.pipe(fs_write_stream);
+                fs_write_stream.on('close', function () {
+                    setTimeout(() => {
+                        fs.unlink(__dirname + '/../public/files/' + fich.filename, function (err,resultUnlink) {
+                            if(err){
+                                console.log("Erro no unlink: "+err);
+                            }
+                        });
+                    }, 5500);
+                    res.download(__dirname + '/../public/files/' + fich.filename);
+                });
+            }
+        });
+});
+
 router.post('/download/',(req,res,next) => {
     if(req.body.avatar !== undefined && req.body.avatar !== ''){
         File.findOne({filename : req.body.avatar})
