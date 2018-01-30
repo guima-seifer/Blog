@@ -4,6 +4,7 @@ const moment = require('moment');
 const path = require('path');
 let router = express.Router();
 let Post = require('../models/Post');
+let User = require('../models/User');
 let Category = require('../models/Category');
 const {
   ensureAutheticated,
@@ -31,7 +32,7 @@ router.get('/', ensureAutheticated, (req, res) => { //falta sacar os ficheiros d
 
     });
   Post.find({
-      author: req.user.id,
+      user: req.user._id,
     })
     .populate('user')
     .sort({
@@ -53,6 +54,8 @@ router.get('/', ensureAutheticated, (req, res) => { //falta sacar os ficheiros d
               name: req.user.name,
               moment: moment,
               categories: categories,
+              format : req.user.preferFormat,
+              favPosts : req.user.favPosts
             });
           }
         });
@@ -92,14 +95,6 @@ router.get('/:idPost', ensureAutheticated, (req, res) => {
     .populate('user')
     .populate('comments.commentUser')
     .then(post => {
-      Category.find({}, {
-          name: 1,
-          _id: 0,
-        })
-        .sort({
-          name: 1,
-        }).exec((err, categories) => {
-          if (!err) {
             if (post.user._id.toString() !== req.user._id.toString()) {
               if (post.allowComments === 'on') {
                 res.render('./posts/postview', {
@@ -108,7 +103,7 @@ router.get('/:idPost', ensureAutheticated, (req, res) => {
                   name: req.user.name,
                   user: req.user,
                   moment: moment,
-                  categories: categories,
+                  categories: post.category,
                   post: post,
                 });
               } else {
@@ -123,7 +118,7 @@ router.get('/:idPost', ensureAutheticated, (req, res) => {
                   name: req.user.name,
                   user: req.user,
                   moment: moment,
-                  categories: categories,
+                  categories: post.category,
                   post: post,
                 });
               } else {
@@ -133,26 +128,20 @@ router.get('/:idPost', ensureAutheticated, (req, res) => {
                   name: req.user.name,
                   user: req.user,
                   moment: moment,
-                  categories: categories,
+                  categories: post.category,
                   post: post,
                 });
               }
             }
-          } else {
-            console.log('Erro: ' + err);
-          }
-        });
-    });
+          });
 });
 
 router.post('/add', ensureAutheticated, (req, res) => {
   let form = new formidable.IncomingForm();
   form.multiples = true;
-
   form.parse(req, (err, fields, files) => {
     let errors = [];
     let categories = [];
-
     if (!fields.title) {
       errors.push({
         text: 'Insira o título à postagem',
@@ -191,8 +180,16 @@ router.post('/add', ensureAutheticated, (req, res) => {
           body: fields.textarea,
           authorName: req.user.name,
           user: req.user._id,
-          url_title : slug(fields.title)
+          url_title : slug(fields.title),
         };
+
+          if(fields.checkComments === 'on'){
+              newPost.allowComments = 'on';
+          }
+          if(fields.status === undefined){
+              newPost.status = 'private';
+          }
+
           Post.findOne({url_title : newPost.url_title})
               .exec((err,document) => {
                   if(document === null){
@@ -242,6 +239,13 @@ router.post('/add', ensureAutheticated, (req, res) => {
             user : req.user._id,
             url_title : slug(fields.title)
           };
+            if(fields.checkComments === 'on'){
+                newPost.allowComments = 'on';
+            }
+            if(fields.status === undefined){
+                newPost.status = 'private';
+            }
+
             Post.findOne({url_title : newPost.url_title})
                 .exec((err,document) => {
                     if(document === null){
@@ -294,6 +298,13 @@ router.post('/add', ensureAutheticated, (req, res) => {
           url_title: slug(fields.title)
         };
 
+          if(fields.checkComments === 'on'){
+              newPost.allowComments = 'on';
+          }
+          if(fields.status === undefined){
+              newPost.status = 'private';
+          }
+
         Post.findOne({url_title : newPost.url_title})
             .exec((err,document) => {
               if(document === null){
@@ -336,8 +347,24 @@ router.put('/details/:idPost', ensureAutheticated, (req, res) => {
     })
     .then(post => {
       //new values
+        let keys = Object.keys(req.body);
+        let categories = [];
+        for(let i = 0; i < keys.length; i++){
+            if(keys[i].indexOf('pill') !== -1){
+                categories.push(req.body[keys[i]]);
+            }
+        }
+
+        if(req.body.checkComments === 'on'){
+            post.allowComments = 'on'
+        }
+        if(req.body.status === undefined){
+            post.status = 'private';
+        } else {
+            post.status = 'public';
+        }
       post.title = req.body.title;
-      post.category = req.body.category;
+      post.category = categories;
       post.body = req.body.textarea;
       post.user = req.user._id;
       post.allowComments = req.body.checkComments;
@@ -346,6 +373,27 @@ router.put('/details/:idPost', ensureAutheticated, (req, res) => {
         res.redirect('/posts');
       });
     });
+});
+
+router.post('/:idPost/fave', ensureAutheticated,  (req,res) => {
+    let idPost = req.params.idPost;
+    User.findOne({_id : req.user._id, favPosts: mongoose.Types.ObjectId(idPost.toString())})
+        .exec((err,docUser) => {
+            if(docUser === null){ //não é favorito ainda
+                User.findOne({_id : req.user._id})
+                    .exec((err,user) => {
+                        user.favPosts.push(mongoose.Types.ObjectId(idPost));
+                        user.save(saved => {
+                            res.redirect('back');
+                        });
+                    })
+            } else { // já estava nos favoritos
+                docUser.favPosts.pull(mongoose.Types.ObjectId(idPost));
+                docUser.save(saved => {
+                    res.redirect('back');
+                });
+            }
+        });
 });
 
 //Add comment
@@ -358,7 +406,6 @@ router.post('/comment/:idPost', ensureAutheticated, (req, res, err) => {
         commentBody: req.body.commentBody,
         commentUser: req.user.id,
       };
-      console.log(newComment);
 
       //push to comments array
       //falta por o unshift

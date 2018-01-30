@@ -27,6 +27,10 @@
 
 <%-include('../partials/_msg')%>
 
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.js"></script>
+<script src="/js/dropdown-autoflip.js"></script>
+<script src="/js/pillbox.js"></script>
+
 <!-- POST EDIT -->
 <section id="edit-post-section" class="mb-5">
   <div class="container">
@@ -44,13 +48,30 @@
                 <input name="title" type="text" class="form-control" value="<%= post.title %>">
               </div>
               <div class="form-group">
-                <label for="category" class="form-control-label">Category</label>
-                <select name="category" class="form-control" value=<%=post.category%>>
-                  <option value="<%=post.category%>"><%=post.category%></option>
-                    <%for(let i = 0; i < categories.length; i++){%>
-                  <option value="<%= categories[i].name%>"><%= categories[i].name%></option>
+                <div id="myPillbox" class="pillbox">
+                  <ul class="clearfix pill-group">
+                    <%for(let m = 0; m < post.category.length; m++){%>
+                      <li class="btn btn-outline-secondary pill" data-value="<%=post.category[m]%>">
+                        <span>
+                            <%=post.category[m]%>
+                            <input type="hidden" name="pill<%=m%>" value="<%=post.category[m]%>">
+                        </span>
+                        <span class="fa fa-times">
+                          <span class="sr-only">Remove</span>
+                        </span>
+                      </li>
                     <%}%>
-                </select>
+                    <li class="pillbox-input-wrap btn-group">
+                      <a class="pillbox-more">and <span class="pillbox-more-count"></span> more...</a>
+                      <input type="text" class="form-control dropdown-toggle pillbox-add-item" placeholder="Categorias">
+
+                      <button type="button" class="dropdown-toggle sr-only">
+                        <span class="caret"></span>
+                        <span class="sr-only">Toggle Dropdown</span>
+                      </button>
+                    </li>
+                  </ul>
+                </div>
               </div>
               <div class="form-group bg-faded p-3">
                 <label for="file">Image Upload</label>
@@ -63,6 +84,13 @@
                         <%}%> type="checkbox" name="checkComments" id="checkComments">
                 <label class="form-check-label" for="defaultCheck1">
                   Permitir comentários
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" <%if(post.status === 'public' ) {%> checked
+                        <%}%> name="status" id="checkStatus">
+                <label class="form-check-label" for="checkStatus">
+                  Post público
                 </label>
               </div>
               <div class="form-group">
@@ -127,6 +155,14 @@
 <%}%>
 
 <script src="https://cdn.ckeditor.com/4.8.0/standard/ckeditor.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="/js/dropdown-autoflip.js"></script>
+<script src="/js/pillbox.js"></script>
+
+<script type="text/javascript">
+    $('#myPillbox').pillbox();
+</script>
 <script>
     CKEDITOR.replace('textarea');
 </script>

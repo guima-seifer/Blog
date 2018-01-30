@@ -18,4 +18,8 @@ $(function () {
         }
     })
   });
+
+    $("#saveSettings").on('click', function () {
+        $("#settingsForm").submit();
+    });
 });
