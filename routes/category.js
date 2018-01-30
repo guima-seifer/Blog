@@ -4,6 +4,7 @@
 const express = require('express');
 const moment = require('moment');
 let router = express.Router();
+let _und = require('underscore');
 let Category = require('../models/Category');
 let Post = require('../models/Post');
 const {
@@ -38,6 +39,44 @@ router.get('/', ensureAutheticated, (req, res) => {
                     res.render('./categories/categories', locals);
                 }
             });
+        });
+});
+
+router.get('/:categoria', (req,res) => {
+    let categoria = req.params.categoria;
+    Post.find({category : categoria})
+        .populate('user')
+        .sort({date:-1})
+        .then(posts => {
+            let categories = [];
+            let newCategories = [];
+            for(let i = 0; i < posts.length; i++){
+                categories.push(posts[i].category)
+            }
+
+            for(let i = 0; i < categories.length; i++){
+                if(categories[i].length !== 1){
+                    for(let j=0; j < categories[i].length; j++){
+                        newCategories.push(categories[i][j]);
+                    }
+                } else {
+                    newCategories.push(categories[i]);
+                }
+            }
+
+            let aux = _und.union(newCategories);
+            aux = _und.uniq(newCategories);
+            aux = _und.flatten(aux);
+            aux = _und.uniq(aux);
+
+            let locals = {
+                layout: 'layouts/frontLayout',
+                categories: aux,
+                posts: posts,
+                moment: moment,
+                isIndex: '1',
+            };
+            res.render('./front/index', locals);
         });
 });
 

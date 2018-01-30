@@ -50,6 +50,12 @@
                           Permitir comentários
                         </label>
           </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" checked name="status" id="checkStatus">
+            <label class="form-check-label" for="checkStatus">
+              Post público
+            </label>
+          </div>
 
           <div class="form-label-group">
             <textarea id="textarea" name="textarea" class="form-control" rows="3" required autofocus></textarea>
@@ -76,10 +82,14 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script src="/js/dropdown-autoflip.js"></script>
 <script src="/js/pillbox.js"></script>
+<script src="https://cdn.ckeditor.com/4.8.0/standard/ckeditor.js"></script>
 
 <script type="text/javascript">
   $('#myPillbox').pillbox();
 </script>
 
+<script>
+    CKEDITOR.replace('textarea');
+</script>
 
 

@@ -14,8 +14,20 @@ router.get('/', ensureAutheticated, (req, res) => {
     title: 'Configurações | Blog Admin',
     layout: 'layouts/layout',
     name: req.user.name,
+    format : req.user.preferFormat
   };
   res.render('settings', locals);
+});
+
+router.post('/save', ensureAutheticated, (req,res) => {
+  User.findByIdAndUpdate(req.user._id,{
+    preferFormat : req.body.format
+  })
+      .exec((err,doc) => {
+        if(!err){
+            res.redirect('/settings');
+        }
+      });
 });
 
 module.exports = router;

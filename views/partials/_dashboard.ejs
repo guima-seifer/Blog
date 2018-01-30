@@ -9,15 +9,15 @@
     </div>
 
 
-    <div id="grid1" style="display: none;">
+    <div id="grid1" <%if(format === '4columns'){%> style="display: block;" <%} else {%> style="display: none;"<%}%>>
       <%-include('../partials/_menu1')%>
     </div>
 
-    <div id="grid2" style="display: block;">
+    <div id="grid2" <%if(format === '2columns'){%> style="display: block;" <%} else if(format === undefined){%> style="display: block;" <%} else {%>style="display: none;"<%}%>>
       <%-include('../partials/_menu2')%>
     </div>
 
-    <div id="grid3" style="display: none;">
+    <div id="grid3" <%if(format === 'table'){%> style="display: block;" <%} else {%> style="display: none;"<%}%>>
       <%-include('../partials/_menu3')%>
     </div>
 </section>
@@ -28,6 +28,7 @@
     favicon.css('color', '#FFFF00');
     var favicon = $('#favicon2' + id);
     favicon.css('color', '#FFFF00');
+    $('#formFave-'+id).submit();
   };
 
   function toggleVisibility(id) {

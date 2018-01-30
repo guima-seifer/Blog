@@ -13,6 +13,8 @@ const UserSchema = new Schema({
   token: { type: String },
   idGoogle: { type: String },
   url_name: { type: String },
+  preferFormat : {type : String, default: '2columns'},
+  favPosts : [{type : Schema.Types.ObjectId, ref : 'Post'}]
 });
 
 //export model, compila o Schema para o modelo que atribui o nome de partitura - nome do modelo

@@ -16,7 +16,7 @@
     <div class="row">
       <div class="btn-group" role="group" aria-label="Basic example">
         <button class="btn btn-secondary btn-lg pr-5 pl-5"><i class="fa fa-arrow-left"></i></button>
-        <button class="btn btn-success btn-lg pr-5 pl-5"><i class="fa fa-floppy-o"></i></button>
+        <button class="btn btn-success btn-lg pr-5 pl-5" id="saveSettings"><i class="fa fa-floppy-o"></i></button>
       </div>
     </div>
   </div>
@@ -32,17 +32,17 @@
             <h4 class="card-title text-white">Editar Definições</h4>
           </div>
           <div class="card-body">
-            <form action="">
+            <form action="/settings/save" method="POST" id="settingsForm">
               <fieldset class="form-group">
                 <legend>Permitir Registos</legend>
                 <div class="form-check">
                   <label for="" class="form-check-label">
-                    <input type="radio" class="form-check-input" value="yes"  checked> Sim
+                    <input type="radio" name="registos" class="form-check-input" value="yes"  checked> Sim
                   </label>
                 </div>
                 <div class="form-check">
                   <label for="" class="form-check-label">
-                    <input type="radio" class="form-check-input" value="no" > Não
+                    <input type="radio" name="registos" class="form-check-input" value="no" > Não
                   </label>
                 </div>
               </fieldset>
@@ -51,17 +51,17 @@
                 <legend>Formato da Grelha de Postagens</legend>
                 <div class="form-check">
                   <label for="" class="form-check-label">
-                    <input type="radio" class="form-check-input" value="posts"  checked> 4 Colunas
+                    <input type="radio" name="format" class="form-check-input" value="2columns" <%if(format === '2columns'){%> checked <%} else if(format === undefined){%> checked <%} else {%> <%}%>> 2 Colunas
                   </label>
                 </div>
                 <div class="form-check">
                   <label for="" class="form-check-label">
-                    <input type="radio" class="form-check-input" value="posts"> 2 Colunas
+                    <input type="radio" name="format" class="form-check-input" value="4columns" <%if(format === '4columns'){%> checked <%} else {%> <%}%>> 4 Colunas
                   </label>
                 </div>
                 <div class="form-check">
                   <label for="" class="form-check-label">
-                    <input type="radio" class="form-check-input" value="page" > Tabela
+                    <input type="radio" name="format" class="form-check-input" value="table" <%if(format === 'table'){%> checked <%} else {%> <%}%> > Tabela
                   </label>
                 </div>
               </fieldset>

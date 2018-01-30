@@ -19,9 +19,6 @@
 
         <script>
             $('#from').dateDropper();
-        </script>
-
-        <script>
             $('#to').dateDropper();
         </script>
 
@@ -29,35 +26,45 @@
 
         <script>
             function getDate(){
-                var Valuefrom = $("#from").val().toString();
-                var Valueto = $("#to").val().toString();
-                var vfrom = Valuefrom.split("/");
-                var vto = Valueto.split("/");
-                if(parseInt(vfrom[2]) > parseInt(vto[2])) {
+                var valueFrom = $("#from").val().toString();
+                var valueTo = $("#to").val().toString();
+                var vFrom = valueFrom.split("/");
+                var vTo = valueTo.split("/");
+                var dateFrom = new Date(valueFrom);
+                var dateTo = new Date(valueTo);
+                if(parseInt(vFrom[2]) > parseInt(vTo[2])) {
                     swal("Datas devem ser coerentes!");
                 }
-                else if (parseInt(vfrom[2])==parseInt(vto[2])){
-                    if(parseInt(vfrom[0]) > parseInt(vto[0])){
+                else if (parseInt(vFrom[2])==parseInt(vTo[2])){
+                    if(parseInt(vFrom[0]) > parseInt(vTo[0])){
                         swal("Datas devem ser coerentes!");
                     }
-                    else if(parseInt(vfrom[0])==parseInt(vto[0])) {
-                        if(parseInt(vfrom[1])>parseInt(vto[1])){
+                    else if(parseInt(vFrom[0])==parseInt(vTo[0])) {
+                        if(parseInt(vFrom[1])>parseInt(vTo[1])){
                             swal("Datas devem ser coerentes!");
                         }
                         else{
-                            swal("Sucesso!");
+                            $(".card-footer").find('.dataPost').each(function () {
+                                if(!(new Date($(this).val()) > dateFrom && new Date($(this).val()) < dateTo)){
+                                    $(this).parent().parent().css('display','none');
+                                }
+                            });
                         }
                     }
                     else{
-                        swal("Sucesso!");
+                        $(".card-footer").find('.dataPost').each(function () {
+                            if(!(new Date($(this).val()) > dateFrom && new Date($(this).val()) < dateTo)){
+                                $(this).parent().parent().css('display','none');
+                            }
+                        });
                     }
                 }else {
-                    swal("Sucesso!");
+                    $(".card-footer").find('.dataPost').each(function () {
+                        if(!(new Date($(this).val()) > dateFrom && new Date($(this).val()) < dateTo)){
+                            $(this).parent().parent().css('display','none');
+                        }
+                    });
                 }
-
-
-                console.log(vfrom[2]);
-                console.log(vto[2]);
             }
         </script>
     </div>

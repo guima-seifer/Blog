@@ -42,6 +42,8 @@ router.get('/', ensureAutheticated, (req, res) => {
                     posts: posts,
                     moment: moment,
                     categories: categories,
+                    format : req.user.preferFormat,
+                    favPosts : req.user.favPosts
                   });
                 }
               });
@@ -53,6 +55,7 @@ router.get('/', ensureAutheticated, (req, res) => {
                 posts: posts,
                 moment: moment,
                 categories: categories,
+                format : req.user.preferFormat
               });
             }
           }
