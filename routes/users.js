@@ -25,20 +25,16 @@ router.get('/', ensureAutheticated, (req, res) => {
       date: -1,
     })
     .then(users => {
-      Post.find({
-          author: req.user.id,
-        })
+      Post.find({},{user:1})
         .exec((err, posts) => {
           if (!err) {
-            console.log(posts.length);
-            console.log(posts);
             var locals = {
               title: 'Utilizadores | Blog Admin',
               layout: 'layouts/layout',
               name: req.user.name,
               users: users,
               moment: moment,
-              postsSize: posts.length,
+              posts : posts
             };
             res.render('./users/users', locals);
           } else {

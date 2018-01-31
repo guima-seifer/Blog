@@ -15,7 +15,7 @@
                       <h6 style="text-shadow: 1px 1px 3px black;">
                         <b>
                           <form action="/posts/<%=posts[i]._id%>/fave" method="POST">
-                            <i id="favicon1<%=i%>" onclick="favPost(<%= i %>)" style="<%if(favPosts.indexOf(posts[i]._id) === -1){%>color: #fff; <%} else {%> color: #FFFF00 <%}%>" class="fa fa-bookmark float-left mr-1" aria-hidden="true"></i>
+                            <i id="favicon1<%=i%>" onclick="favPost(<%= i %>)" <%if(favPosts.length !== 0){%> style="<%if(favPosts.indexOf(posts[i]._id) === -1){%> color: #fff; <%} else {%> color: #FFFF00 <%}%>"<%}%> class="fa fa-bookmark float-left mr-1" aria-hidden="true"></i>
                           </form>
                           <span id="postTitle<%=i%>"><%= posts[i].title %></span>
                         </b>
@@ -49,7 +49,7 @@
           <div id="postBody<%=i%>" style="display: none;">
             <div class="card-body">
               <div class="d-flex flex-row justify-content-start">
-                <div id="pstBody<%=i%>" class="">
+                <div id="pstBody<%=i%>" class="" style="width: 100%">
                   <%- posts[i].body %>
                 </div>
               </div>
