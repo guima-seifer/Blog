@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!DOCTYPE pr SYSTEM "PR.dtd">
+
+<pr>
+    <meta>
+        <keyname> EngWeb::PROJETO</keyname>
+        <title> Relatório do Projeto Final</title>
+        <bdate> Dezembro de 2017</bdate>
+        <edate> Outubro de 2017</edate>
+        <supervisor>
+            <name> José Carlos Ramalho</name>
+        </supervisor>
+    </meta>
+
+    <workteam>
+        <member id="a1">
+            <name>Fernando Guimarães</name>
+            <email>fernando.b.v.guimaraes@gmail.com</email>
+            <id>70012</id>
+        </member>
+        <member id="a2">
+            <name>Hélder Veloso</name>
+            <email>rafaelcostaveloso@gmail.com</email>
+            <id>70017</id>
+        </member>
+        <member id="a3">
+            <name>Luś Ferreira</name>
+            <email>luis.fillipe99f@gmail.com</email>
+            <id>70016</id>
+        </member>
+    </workteam>
+
+
+    <abstract>
+
+      <p>Landing Page</p>
+
+      <p>Acedendo ao frontend da nossa aplicação web, através do domínio por nós
+ usado, ou seja, http://www.astudentroom.com/, deparamo-nos com a página inicial
+ onde se pode verificar todos as publicações que foram inseridas pelos utilizadores
+através da aplicação de backend. Estas estão organizadas pela data da publicação que
+é referida na parte inferior de cada post juntamente com o respetivo autor.
+É apresentado uma pequena parcela do conteúdo de cada uma das publicações,
+assim como o título destas, com o intuito de estimular o interesse dos leitores.</p>
+      <p>De forma a organizar o blog de uma forma mais eficiente, foi implementado uma
+paginação que serve para dividir o conteúdo em dez publicações por página. Da mesma forma,
+foi criada uma secção lateral com três funcionalidades de procura diferentes, ou seja, através de pesquisa
+ escrita onde será feita correspondência entre o que foi inserido pelo utilizador e todos os títulos das
+publicações publicas presentes na base de dados, através das categorias aos quais estão associadas todas
+ as publicações que consiste na seleção da categoria que se pretende visualizar sendo desta forma apresentado
+todos os posts aos quais haja correspondência, e por fim através de um intervalo de datas que consiste na seleção
+de duas datas por parte do utilizador sendo apresentados todas as publicações que estão compreendidas entre estas.</p>
+      <p>Quando um utilizador pretende visualizar a totalidade de uma publicação, é encaminhado para a página
+ individual do mesmo. Nesta nova página, é apresentada todo o conteúdo do post e cinco botões que permitem a
+partilha deste em cinco redes sociais diferentes, ou seja, o Facebook, o Google Plus, o Linkedin, o Reddit e o Twitter.
+ Tal como na página principal, nesta também existe uma secção lateral onde são apresentadas as categorias que estão associadas a esta publicação.
+  No final da página é oferecida a possibilidade ao utilizador de escrever um comentário sendo este apresentado de imediato na secção de respostas
+com a data e hora deste, o nome do autor e o conteúdo do comentário. </p>
+
+<p><b>Server-Side</b></p>
+<p>Ecosistema do servidor http desenvolvido com Node.js, a framework express, MongoDB e moongose
+para manuseamento amigável dos objetos da base de dados.
+Com isto, facilmente se implementou o <i>routing</i> da página web e todas a funcionalidades
+CRUD entendidas.
+
+tratamentos de conteúdo JSON
+express messages, flash
+passportJS, localstrategy,
+
+</p>
+<p><b>Client-Side</b></p>
+<p>
+  bootstrap ui
+  EJS template engine
+</p>
+
+
+      <p>Para a realização com sucesso deste projeto, é necessário colocar a aplicação desenvolvida a
+ 'correr' na cloud. De entre as várias alternativas disponíveis, a escolha recaiu sobre o Google Cloud Platform,
+ uma vez que permite criar instâncias virtuais gratuitamente (o plano gratuito tem a duração de 1 ano).</p>
+      <p>Como a aplicação foi desenvolvida em nodeJS, é criada uma instância virtual que já está pré-configurada
+ para correr um servidor em nodeJS, neste caso a instância virtual da bitnami.
+LINK -> https://console.cloud.google.com/launcher/details/bitnami-launchpad/nodejs</p>
+
+      <p>Após a criação da máquina virtual, podemos inicialmente instalar o mongoDB, acedendo à instância virtual através de SSH, podemos começar a instalar o mongoDB com a seguinte sequência de comandos:</p>
+
+      <p>1)  <code> ~ $ sudo apt-get update &amp;&amp; apt-get upgrade -y</code></p>
+      <p>2)  <code> ~ $ sudo apt-get install mongodb</code></p>
+
+      <p>Após a instalação do mongoDB ser concluída, é utilizado um comando que faz com que o processo do daemon do mongo corra para sempre na instância virtual, pois caso contrário, terminada a conexão SSH com a instância virtual, a conexão com a base de dados seria perdida. Dessa forma são inseridos os seguintes comandos:</p>
+
+      <p>1) <code>~ $ sudo mkdir /data</code></p>
+      <p>2) <code>~ $ sudo mkdir /data/db</code></p>
+      <p>3) <code>~ $ sudo mongod --fork --logpath /var/log/mongod.log</code></p>
+
+      <p>Estando agora o mongoDB a correr na instância virtual, é necessário então efetuar a configuração da instância virtual para que corra a nossa aplicação nodeJS.</p>
+      <p>É necessário efetuar toda a instalação na pasta /opt/bitnami/apps, pelo que foram efetuados os seguintes comandos de forma a efetuar a configuração com sucesso:</p>
+
+      <p>1) <code>~ $ wget https://transfer.sh/tGAkq/Blog.zip</code></p>
+      <p>2) <code>~ $ sudo unzip Blog.zip -d /opt/bitnami/apps/Blog</code></p>
+      <p>3) <code>~ $ sudo mkdir /opt/bitnami/apps/Blog/conf</code></p>
+      <p>4) <code>~ $ sudo mkdir /opt/bitnami/apps/Blog/htdocs</code></p>
+      <p>5) <code>~ $ sudo touch /opt/bitnami/apps/Blog/conf/httpd-prefix.conf</code></p>
+      <p>6) <code>~ $ sudo nano /opt/bitnami/apps/Blog/conf/httpd-prefix.conf</code></p>
+
+      <p>Após este comando deverá ser introduzido o seguinte:</p>
+        <p>'<code>Include "/opt/bitnami/apps/Blog/conf/httpd-app.conf"</code>'</p>
+
+      <p>7) <code>~ $ sudo touch /opt/bitnami/apps/Blog/conf/httpd-app.conf</code></p>
+      <p>8) <code>~ $ sudo nano /opt/bitnami/apps/Blog/conf/httpd-app.conf</code></p>
+
+      <p>Devem ser introduzidas estas linhas, onde XXXX corresponde à porta onde o servidor nodeJS deverá estar à escuta.</p>
+
+        <p>'<code>ProxyPass / http://127.0.0.1:XXXX/</code></p>
+      <p><code>ProxyPassReverse / http://127.0.0.1:XXXX/</code>'</p>
+
+      <p>9) <code>~ $ sudo nano /opt/bitnami/apache2/conf/bitnami/bitnami-apps-prefix.conf</code></p>
+
+      <p>Deverá ser incluída a seguinte linha:</p>
+      <p>'<code>Include "/opt/bitnami/apps/Blog/conf/httpd-prefix.conf"</code>'</p>
+
+        <p>10) <code>~ $ sudo /opt/bitnami/ctlscript.sh restart apache</code></p>
+
+      <p>De forma a ativar o CORS, o ficheiro de configuração do apache deve ser atualizado, com a adição das seguintes linhas, onde DOMINIO é o dominio associado à aplicação:</p>
+
+        <p>'<code>&lt;IfModule headers_module>
+            Header set Access-Control-Allow-Origin "DOMINIO"
+            &lt;/IfModule></code>'</p>
+
+      <p>Por fim, deverá ser executado um novo:</p>
+      <p>11) <code>~ $ sudo /opt/bitnami/ctlscript.sh restart apache</code></p>
+
+    </abstract>
+
+       <deliverables>
+           <deliverable url="./PR.dtd">Document Type Definition do Relatório do Projeto (DTD)</deliverable>
+           <deliverable url="./relatorio.xml">Relatório do Projeto Final (XML)</deliverable>
+           <deliverable url="./relatorio.html">Relatório do Projeto Final (HTML)</deliverable>
+           <deliverable url="https://github.com/guima-seifer/Blog">Repositório proposto</deliverable>
+       </deliverables>
+</pr>
