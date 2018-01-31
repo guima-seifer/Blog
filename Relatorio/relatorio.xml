@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!DOCTYPE pr SYSTEM "PR.dtd">
+
+<pr>
+    <meta>
+        <keyname>EngWeb::PROJETO</keyname>
+        <title>Relatório do Projeto Final</title>
+        <bdate>Dezembro de 2017</bdate>
+        <edate>Outubro de 2017</edate>
+        <supervisor>
+            <name>José Carlos Ramalho</name>
+        </supervisor>
+    </meta>
+
+    <workteam>
+        <member id="a1">
+            <name>Fernando Guimarães</name>
+            <email>fernando.b.v.guimaraes@gmail.com</email>
+            <id>70012</id>
+        </member>
+        <member id="a2">
+            <name>Hélder Veloso</name>
+            <email>rafaelcostaveloso@gmail.com</email>
+            <id>70017</id>
+        </member>
+        <member id="a3">
+            <name>Luś Ferreira</name>
+            <email>luis.fillipe99f@gmail.com</email>
+            <id>70016</id>
+        </member>
+    </workteam>
+
+
+    <abstract>
+
+      <p>Para a realização com sucesso deste projeto, é necessário colocar a aplicação desenvolvida a 'correr' na cloud. De entre as várias alternativas disponíveis, a escolha recaiu sobre o Google Cloud Platform, uma vez que permite criar instâncias virtuais gratuitamente (o plano gratuito tem a duração de 1 ano).
+      <p>Como a aplicação foi desenvolvida em nodeJS, é criada uma instância virtual que já está pré-configurada para correr um servidor em nodeJS, neste caso a instância virtual da bitnami. LINK -> https://console.cloud.google.com/launcher/details/bitnami-launchpad/nodejs
+
+      <p>Após a criação da máquina virtual, podemos inicialmente instalar o mongoDB, acedendo à instância virtual através de SSH, podemos começar a instalar o mongoDB com a seguinte sequência de comandos:
+
+      1) <code>sudo apt-get update && apt-get upgrade -y</code>
+      2) <code>sudo apt-get install mongodb</code></p>
+
+      <p>Após a instalação do mongoDB ser concluída, é utilizado um comando que faz com que o processo do daemon do mongo corra para sempre na instância virtual, pois caso contrário, terminada a conexão SSH com a instância virtual, a conexão com a base de dados seria perdida. Dessa forma são inseridos os seguintes comandos:
+
+      1) ~<code> $ sudo mkdir /data</code>
+      2) ~<code> $ sudo mkdir /data/db</code>
+      3) ~<code> $ sudo mongod --fork --logpath /var/log/mongod.log</code></p>
+
+      <p>Estando agora o mongoDB a correr na instância virtual, é necessário então efetuar a configuração da instância virtual para que corra a nossa aplicação nodeJS.</p>
+      <p>É necessário efetuar toda a instalação na pasta /opt/bitnami/apps, pelo que foram efetuados os seguintes comandos de forma a efetuar a configuração com sucesso:
+
+      1) ~ <code>$ wget https://transfer.sh/tGAkq/Blog.zip</code>
+      2) ~ <code>$ sudo unzip Blog.zip -d /opt/bitnami/apps/Blog</code>
+      3) ~ <code>$ sudo mkdir /opt/bitnami/apps/Blog/conf</code>
+      4) ~ <code>$ sudo mkdir /opt/bitnami/apps/Blog/htdocs</code>
+      5) ~ <code>$ sudo touch /opt/bitnami/apps/Blog/conf/httpd-prefix.conf</code>
+      6) ~ <code>$ sudo nano /opt/bitnami/apps/Blog/conf/httpd-prefix.conf</code></p>
+
+      <p>Após este comando deverá ser introduzido o seguinte:
+      'Include <code>"/opt/bitnami/apps/Blog/conf/httpd-app.conf"'</code>
+
+      7) ~ <code>$ sudo touch /opt/bitnami/apps/Blog/conf/httpd-app.conf</code>
+      8) ~ <code>$ sudo nano /opt/bitnami/apps/Blog/conf/httpd-app.conf</code></p>
+
+      <p>Devem ser introduzidas estas linhas, onde XXXX corresponde à porta onde o servidor nodeJS deverá estar à escuta.
+
+      <code>'ProxyPass / http://127.0.0.1:XXXX/</code>
+      <code>ProxyPassReverse / http://127.0.0.1:XXXX/'</code></p>
+
+      9) ~<code> $ sudo nano /opt/bitnami/apache2/conf/bitnami/bitnami-apps-prefix.conf</code>
+
+      <p>Deverá ser incluída a seguinte linha:
+      <code>'Include "/opt/bitnami/apps/Blog/conf/httpd-prefix.conf"'</code></p>
+
+      10) ~<code> $ sudo /opt/bitnami/ctlscript.sh restart apache</code>
+
+      <p>De forma a ativar o CORS, o ficheiro de configuração do apache deve ser atualizado, com a adição das seguintes linhas, onde DOMINIO é o dominio associado à aplicação:
+
+      <code>'<IfModule headers_module>
+            Header set Access-Control-Allow-Origin "DOMINIO"
+      </IfModule>'</code></p>
+
+      <p>Por fim, deverá ser executado um novo:
+      11) ~<code> $ sudo /opt/bitnami/ctlscript.sh restart apache</code></p>
+
+    </abstract>
+
+       <deliverables>
+           <deliverable url="./PR.dtd">Document Type Definition do Relatório do Projeto (DTD)</deliverable>
+           <deliverable url="./relatorio.xml">Relatório do Projeto Final (XML)</deliverable>
+           <deliverable url="./relatorio.html">Relatório do Projeto Final (HTML)</deliverable>
+           <deliverable url="https://github.com/guima-seifer/Blog">Repositório proposto</deliverable>
+       </deliverables>
+</pr>
