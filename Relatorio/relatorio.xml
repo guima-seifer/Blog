@@ -35,7 +35,7 @@
 
     <abstract>
 
-      <p>Frontend</p>
+      <p>Landing Page</p>
 
       <p>Acedendo ao frontend da nossa aplicação web, através do domínio por nós
  usado, ou seja, http://www.astudentroom.com/, deparamo-nos com a página inicial
@@ -59,6 +59,22 @@ partilha deste em cinco redes sociais diferentes, ou seja, o Facebook, o Google 
   No final da página é oferecida a possibilidade ao utilizador de escrever um comentário sendo este apresentado de imediato na secção de respostas
 com a data e hora deste, o nome do autor e o conteúdo do comentário. </p>
 
+<p><b>Server-Side</b></p>
+<p>Ecosistema do servidor http desenvolvido com Node.js, a framework express, MongoDB e moongose
+para manuseamento amigável dos objetos da base de dados.
+Com isto, facilmente se implementou o <i>routing</i> da página web e todas a funcionalidades
+CRUD entendidas.
+
+tratamentos de conteúdo JSON
+express messages, flash
+passportJS, localstrategy,
+
+</p>
+<p><b>Client-Side</b></p>
+<p>
+  bootstrap ui
+  EJS template engine
+</p>
 
 
       <p>Para a realização com sucesso deste projeto, é necessário colocar a aplicação desenvolvida a
