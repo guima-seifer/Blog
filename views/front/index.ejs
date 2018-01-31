@@ -70,9 +70,9 @@
         <div class="col-md-4" style="margin-top: 5rem">
 
             <!-- Search Widget -->
-            <div class="card my-4" style="background-color: #226575" id="procurar">
-                <h5 class="card-header" style="color: white">Procurar</h5>
-                <div class="card-body">
+            <div class="card my-4" id="procurar">
+                <h5 class="card-header bg-dark" style="color: white">Procurar</h5>
+                <div class="card-body bg-faded">
                     <div class="input-group">
                         <input type="text" id="searchBox" class="form-control" placeholder="Procurar por...">
                         <span class="input-group-btn">
@@ -82,15 +82,15 @@
             </div>
 
             <!-- Categories Widget -->
-            <div class="card my-4" style="background-color: #226575" id="categorias">
-                <h5 class="card-header" style="color: white">Categorias</h5>
-                <div class="card-body">
+            <div class="card my-4" id="categorias">
+                <h5 class="card-header bg-dark" style="color: white">Categorias</h5>
+                <div class="card-body bg-faded">
                     <div class="row">
                         <%for(let i=0; i < categories.length; i++){%>
                         <div class="col-lg-6">
-                            <ul class="list-unstyled mb-0">
-                                <li>
-                                    <a style="color: lightgray" href="/categories/<%=categories[i]%>"><%= categories[i]%></a>
+                            <ul class="list-unstyled mb-0" >
+                                <li >
+                                    <a style="color: #12170f" href="/categories/<%=categories[i]%>"><%= categories[i]%></a>
                                 </li>
                             </ul>
                         </div>
@@ -103,9 +103,9 @@
             <%-include('../partials/_searchDate')%>
 
             <!-- Side Widget -->
-            <div class="card my-4" style="background-color: #226575" id="desc">
-                <h5 class="card-header" style="color: white">Descrição</h5>
-                <div class="card-body" style="color: lightgray">
+            <div class="card my-4" id="desc">
+                <h5 class="card-header bg-dark" style="color: white">Descrição</h5>
+                <div class="card-body bg-faded">
                     You can put anything you want inside of these side widgets. They are easy to use, and feature the
                     new Bootstrap 4 card containers!
                 </div>

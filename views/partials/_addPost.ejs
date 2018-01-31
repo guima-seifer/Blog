@@ -89,7 +89,19 @@
 </script>
 
 <script>
-    CKEDITOR.replace('textarea');
+    CKEDITOR.replace('textarea', {
+        on: {
+            instanceReady: function () {
+                this.dataProcessor.htmlFilter.addRules({
+                    elements: {
+                        img: function (el) {
+                            el.attributes.style += ";max-width:100%;"
+                        }
+                    }
+                });
+            }
+        }
+    });
 </script>
 
 

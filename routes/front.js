@@ -55,7 +55,6 @@ router.get('/', (req, res) => {
 
 router.get('/post/:idPost',(req,res) => {
     let id = req.params.idPost;
-    if(id)
     Post.findOne({url_title : id})
         .populate('user')
         .exec((err,post) => {
@@ -91,7 +90,7 @@ router.post('/post/:id', (req,res) => {
       if (!err) {
         post.frontComments.push(newComment);
         post.save(saved => {
-          res.redirect('/post/' + post._id);
+          res.redirect('/post/' + post.url_title);
         })
       } else {
         console.log("Erro: " + err);

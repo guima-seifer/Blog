@@ -36,7 +36,15 @@
                 <td><a href="/users/<%= users[i].url_name %>"><%= users[i].name%></a></td>
                 <td><%= users[i].email%></td>
                 <td><%= moment(users[i].date).format('DD MMMM YYYY') %></td>
-                <td class="text-center"><%= postsSize%></td>
+                <% let numPosts = 0;
+                  for(let k = 0; k < posts.length; k++){
+                      console.log(posts[k].user);
+                      console.log(users[i]._id);
+                    if(posts[k].user.toString() === users[i]._id.toString()){
+                      numPosts++;
+                    }
+                }%>
+                <td class="text-center"><%= numPosts%></td>
               </tr>
               <%}%>
               </tbody>
