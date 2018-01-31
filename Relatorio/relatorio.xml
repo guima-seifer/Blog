@@ -35,8 +35,38 @@
 
     <abstract>
 
-      <p>Para a realização com sucesso deste projeto, é necessário colocar a aplicação desenvolvida a 'correr' na cloud. De entre as várias alternativas disponíveis, a escolha recaiu sobre o Google Cloud Platform, uma vez que permite criar instâncias virtuais gratuitamente (o plano gratuito tem a duração de 1 ano).
-      <p>Como a aplicação foi desenvolvida em nodeJS, é criada uma instância virtual que já está pré-configurada para correr um servidor em nodeJS, neste caso a instância virtual da bitnami. LINK -> https://console.cloud.google.com/launcher/details/bitnami-launchpad/nodejs
+      <p>Frontend</p>
+
+      <p>Acedendo ao frontend da nossa aplicação web, através do domínio por nós
+ usado, ou seja, http://www.astudentroom.com/, deparamo-nos com a página inicial
+ onde se pode verificar todos as publicações que foram inseridas pelos utilizadores
+através da aplicação de backend. Estas estão organizadas pela data da publicação que
+é referida na parte inferior de cada post juntamente com o respetivo autor.
+É apresentado uma pequena parcela do conteúdo de cada uma das publicações,
+assim como o título destas, com o intuito de estimular o interesse dos leitores.</p>
+      <p>De forma a organizar o blog de uma forma mais eficiente, foi implementado uma
+paginação que serve para dividir o conteúdo em dez publicações por página. Da mesma forma,
+foi criada uma secção lateral com três funcionalidades de procura diferentes, ou seja, através de pesquisa
+ escrita onde será feita correspondência entre o que foi inserido pelo utilizador e todos os títulos das
+publicações publicas presentes na base de dados, através das categorias aos quais estão associadas todas
+ as publicações que consiste na seleção da categoria que se pretende visualizar sendo desta forma apresentado
+todos os posts aos quais haja correspondência, e por fim através de um intervalo de datas que consiste na seleção
+de duas datas por parte do utilizador sendo apresentados todas as publicações que estão compreendidas entre estas.</p>
+      <p>Quando um utilizador pretende visualizar a totalidade de uma publicação, é encaminhado para a página
+ individual do mesmo. Nesta nova página, é apresentada todo o conteúdo do post e cinco botões que permitem a
+partilha deste em cinco redes sociais diferentes, ou seja, o Facebook, o Google Plus, o Linkedin, o Reddit e o Twitter.
+ Tal como na página principal, nesta também existe uma secção lateral onde são apresentadas as categorias que estão associadas a esta publicação.
+  No final da página é oferecida a possibilidade ao utilizador de escrever um comentário sendo este apresentado de imediato na secção de respostas
+com a data e hora deste, o nome do autor e o conteúdo do comentário. </p>
+
+
+
+      <p>Para a realização com sucesso deste projeto, é necessário colocar a aplicação desenvolvida a
+ 'correr' na cloud. De entre as várias alternativas disponíveis, a escolha recaiu sobre o Google Cloud Platform,
+ uma vez que permite criar instâncias virtuais gratuitamente (o plano gratuito tem a duração de 1 ano).</p>
+      <p>Como a aplicação foi desenvolvida em nodeJS, é criada uma instância virtual que já está pré-configurada
+ para correr um servidor em nodeJS, neste caso a instância virtual da bitnami.
+LINK -> https://console.cloud.google.com/launcher/details/bitnami-launchpad/nodejs</p>
 
       <p>Após a criação da máquina virtual, podemos inicialmente instalar o mongoDB, acedendo à instância virtual através de SSH, podemos começar a instalar o mongoDB com a seguinte sequência de comandos:
 
