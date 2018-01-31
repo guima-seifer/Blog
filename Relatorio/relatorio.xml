@@ -5,12 +5,12 @@
 
 <pr>
     <meta>
-        <keyname>EngWeb::PROJETO</keyname>
-        <title>Relatório do Projeto Final</title>
-        <bdate>Dezembro de 2017</bdate>
-        <edate>Outubro de 2017</edate>
+        <keyname> EngWeb::PROJETO</keyname>
+        <title> Relatório do Projeto Final</title>
+        <bdate> Dezembro de 2017</bdate>
+        <edate> Outubro de 2017</edate>
         <supervisor>
-            <name>José Carlos Ramalho</name>
+            <name> José Carlos Ramalho</name>
         </supervisor>
     </meta>
 
@@ -84,53 +84,53 @@ passportJS, localstrategy,
  para correr um servidor em nodeJS, neste caso a instância virtual da bitnami.
 LINK -> https://console.cloud.google.com/launcher/details/bitnami-launchpad/nodejs</p>
 
-      <p>Após a criação da máquina virtual, podemos inicialmente instalar o mongoDB, acedendo à instância virtual através de SSH, podemos começar a instalar o mongoDB com a seguinte sequência de comandos:
+      <p>Após a criação da máquina virtual, podemos inicialmente instalar o mongoDB, acedendo à instância virtual através de SSH, podemos começar a instalar o mongoDB com a seguinte sequência de comandos:</p>
+    
+      <p>1)  <code> ~ $ sudo apt-get update &amp;&amp; apt-get upgrade -y</code></p>
+      <p>2)  <code> ~ $ sudo apt-get install mongodb</code></p>
 
-      1) <code>sudo apt-get update && apt-get upgrade -y</code>
-      2) <code>sudo apt-get install mongodb</code></p>
+      <p>Após a instalação do mongoDB ser concluída, é utilizado um comando que faz com que o processo do daemon do mongo corra para sempre na instância virtual, pois caso contrário, terminada a conexão SSH com a instância virtual, a conexão com a base de dados seria perdida. Dessa forma são inseridos os seguintes comandos:</p>
 
-      <p>Após a instalação do mongoDB ser concluída, é utilizado um comando que faz com que o processo do daemon do mongo corra para sempre na instância virtual, pois caso contrário, terminada a conexão SSH com a instância virtual, a conexão com a base de dados seria perdida. Dessa forma são inseridos os seguintes comandos:
-
-      1) ~<code> $ sudo mkdir /data</code>
-      2) ~<code> $ sudo mkdir /data/db</code>
-      3) ~<code> $ sudo mongod --fork --logpath /var/log/mongod.log</code></p>
+      <p>1) <code>~ $ sudo mkdir /data</code></p>
+      <p>2) <code>~ $ sudo mkdir /data/db</code></p>
+      <p>3) <code>~ $ sudo mongod --fork --logpath /var/log/mongod.log</code></p>
 
       <p>Estando agora o mongoDB a correr na instância virtual, é necessário então efetuar a configuração da instância virtual para que corra a nossa aplicação nodeJS.</p>
-      <p>É necessário efetuar toda a instalação na pasta /opt/bitnami/apps, pelo que foram efetuados os seguintes comandos de forma a efetuar a configuração com sucesso:
+      <p>É necessário efetuar toda a instalação na pasta /opt/bitnami/apps, pelo que foram efetuados os seguintes comandos de forma a efetuar a configuração com sucesso:</p>
 
-      1) ~ <code>$ wget https://transfer.sh/tGAkq/Blog.zip</code>
-      2) ~ <code>$ sudo unzip Blog.zip -d /opt/bitnami/apps/Blog</code>
-      3) ~ <code>$ sudo mkdir /opt/bitnami/apps/Blog/conf</code>
-      4) ~ <code>$ sudo mkdir /opt/bitnami/apps/Blog/htdocs</code>
-      5) ~ <code>$ sudo touch /opt/bitnami/apps/Blog/conf/httpd-prefix.conf</code>
-      6) ~ <code>$ sudo nano /opt/bitnami/apps/Blog/conf/httpd-prefix.conf</code></p>
+      <p>1) <code>~ $ wget https://transfer.sh/tGAkq/Blog.zip</code></p>
+      <p>2) <code>~ $ sudo unzip Blog.zip -d /opt/bitnami/apps/Blog</code></p>
+      <p>3) <code>~ $ sudo mkdir /opt/bitnami/apps/Blog/conf</code></p>
+      <p>4) <code>~ $ sudo mkdir /opt/bitnami/apps/Blog/htdocs</code></p>
+      <p>5) <code>~ $ sudo touch /opt/bitnami/apps/Blog/conf/httpd-prefix.conf</code></p>
+      <p>6) <code>~ $ sudo nano /opt/bitnami/apps/Blog/conf/httpd-prefix.conf</code></p>
 
-      <p>Após este comando deverá ser introduzido o seguinte:
-      'Include <code>"/opt/bitnami/apps/Blog/conf/httpd-app.conf"'</code>
+      <p>Após este comando deverá ser introduzido o seguinte:</p>
+        <p>'<code>Include "/opt/bitnami/apps/Blog/conf/httpd-app.conf"</code>'</p>
 
-      7) ~ <code>$ sudo touch /opt/bitnami/apps/Blog/conf/httpd-app.conf</code>
-      8) ~ <code>$ sudo nano /opt/bitnami/apps/Blog/conf/httpd-app.conf</code></p>
+      <p>7) <code>~ $ sudo touch /opt/bitnami/apps/Blog/conf/httpd-app.conf</code></p>
+      <p>8) <code>~ $ sudo nano /opt/bitnami/apps/Blog/conf/httpd-app.conf</code></p>
 
-      <p>Devem ser introduzidas estas linhas, onde XXXX corresponde à porta onde o servidor nodeJS deverá estar à escuta.
+      <p>Devem ser introduzidas estas linhas, onde XXXX corresponde à porta onde o servidor nodeJS deverá estar à escuta.</p>
 
-      <code>'ProxyPass / http://127.0.0.1:XXXX/</code>
-      <code>ProxyPassReverse / http://127.0.0.1:XXXX/'</code></p>
+        <p>'<code>ProxyPass / http://127.0.0.1:XXXX/</code></p>
+      <p><code>ProxyPassReverse / http://127.0.0.1:XXXX/</code>'</p>
 
-      9) ~<code> $ sudo nano /opt/bitnami/apache2/conf/bitnami/bitnami-apps-prefix.conf</code>
+      <p>9) <code>~ $ sudo nano /opt/bitnami/apache2/conf/bitnami/bitnami-apps-prefix.conf</code></p>
 
-      <p>Deverá ser incluída a seguinte linha:
-      <code>'Include "/opt/bitnami/apps/Blog/conf/httpd-prefix.conf"'</code></p>
+      <p>Deverá ser incluída a seguinte linha:</p>
+      <p>'<code>Include "/opt/bitnami/apps/Blog/conf/httpd-prefix.conf"</code>'</p>
 
-      10) ~<code> $ sudo /opt/bitnami/ctlscript.sh restart apache</code>
+        <p>10) <code>~ $ sudo /opt/bitnami/ctlscript.sh restart apache</code></p>
 
-      <p>De forma a ativar o CORS, o ficheiro de configuração do apache deve ser atualizado, com a adição das seguintes linhas, onde DOMINIO é o dominio associado à aplicação:
+      <p>De forma a ativar o CORS, o ficheiro de configuração do apache deve ser atualizado, com a adição das seguintes linhas, onde DOMINIO é o dominio associado à aplicação:</p>
 
-      <code>'<IfModule headers_module>
+        <p>'<code>&lt;IfModule headers_module>
             Header set Access-Control-Allow-Origin "DOMINIO"
-      </IfModule>'</code></p>
+            &lt;/IfModule></code>'</p>
 
-      <p>Por fim, deverá ser executado um novo:
-      11) ~<code> $ sudo /opt/bitnami/ctlscript.sh restart apache</code></p>
+      <p>Por fim, deverá ser executado um novo:</p>
+      <p>11) <code>~ $ sudo /opt/bitnami/ctlscript.sh restart apache</code></p>
 
     </abstract>
 
