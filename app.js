@@ -94,7 +94,7 @@ app.use('/file', file);
 
 // uncomment after placing your favicon in /public
 //TODO: favicon
-// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 const port = process.env.PORT || 3334; //heroku port
 
