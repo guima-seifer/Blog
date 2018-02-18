@@ -4,7 +4,6 @@
     <%if(posts.length > 0){%>
       <% for(var i=posts.length-1; 0<=i; i--){ %>
         <div id="card-grid" name="card-grid" class="">
-          <!-- //TODO:PASSAR ISTO PARA DFLEX TÁ SO FEIO COM UMA TABELA LOL -->
           <% moment.locale('pt_PT')%>
           <div id="dash-card" class="card mb-4" style=" border-color: #93B8C2; box-shadow: 5px 5px 3px grey;">
             <div id="card1-<%=i%>" onclick="toggleVisibility(<%= i %>);  toggleHighlight(<%=i%>);" class="card-header bg-primary text-white my-0 py-0">

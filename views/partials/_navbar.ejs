@@ -23,7 +23,7 @@
           <li class="nav-item dropdown mr-3">
             <!-- TODO: Ao clicar nas notificações é feito um pedido para gerar as X novas notificações que tem (comentários/ edits etc) na dashboard -->
             <%if(user.avatar === undefined || user.avatar === ''){%>
-            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Olá <%=user.name%> <span class="badge badge-light"> 11 </span></a>
+            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Olá <%=user.name%></a>
             <%} else {%>
             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><img style="width: 35px; height: 35px" class="rounded-circle mr-2 mb-1" src="/img/<%= user.avatar%>"> Olá <%=user.name%> <span class="badge badge-light"> 11 </span></a>
             <%}%>

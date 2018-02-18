@@ -87,7 +87,6 @@ router.get('/add', ensureAutheticated, (req, res) => {
 
 });
 
-/* TODO: Create conditions for a certain user to be able to edit another user post */
 router.get('/:idPost', ensureAutheticated, (req, res) => {
   Post.findOne({
       _id: req.params.idPost,

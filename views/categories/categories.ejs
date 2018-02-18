@@ -10,7 +10,7 @@
   </div>
 </header>
 
-<!-- //TODO: Criar uma especie de joystick para selecionar diferentes opções no ecrã (norte, este, oeste e sul do botao); -->
+
 <div id="button-grp" class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
   <div class="btn-group">
     <button type="button" class="btn btn-secondary btn-lg mb-5" style="border-radius: 50%;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -57,7 +57,6 @@
                         <td class="text-center">
                           <form action="/categories/delete/<%= categories[i]._id%>?_method=DELETE" method="post">
                             <input type="hidden" name="_method" value="DELETE">
-                            <!--TODO: <i class="fa fa-times text-danger"></i>  Instead of input button-->
                             <button type="submit" name="DELETE" class="btn btn-secondary"><i class="fa fa-times"></i></button>
                           </form>
                         </td>
