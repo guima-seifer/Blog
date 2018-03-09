@@ -34,7 +34,7 @@ router.get('/', ensureAutheticated, (req, res) => {
               name: req.user.name,
               users: users,
               moment: moment,
-              posts : posts
+              posts: posts,
             };
             res.render('./users/users', locals);
           } else {

@@ -14,8 +14,8 @@ router.get('/', ensureAutheticated, (req, res) => {
     title: 'Configurações | Blog Admin',
     layout: 'layouts/layout',
     name: req.user.name,
-    format : req.user.preferFormat,
-    registos : req.user.registos
+    format: req.user.preferFormat,
+    registos: req.user.registos,
   };
   res.render('settings', locals);
 });
