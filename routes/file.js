@@ -12,14 +12,12 @@ let File = require('../models/File');
 router.post('/upload',function (req,res) {
     let form = new formidable.IncomingForm();
     form.keepExtensions = true;
-
     form.parse(req, function (err, fields, files) {
         grid.mongo = mongoose.mongo;
         let gfs = grid(conn.db);
         let writestream = gfs.createWriteStream({
             filename: files.avatar.name
         });
-
         fs.createReadStream(files.avatar.path).pipe(writestream).on('close', function () {
             User.findOneAndUpdate({_id : req.user._id}, {avatar : files.avatar.name}, (err,doc) => {
                 if(!err){

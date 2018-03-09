@@ -62,7 +62,35 @@ router.get('/', ensureAutheticated, (req, res) => { //falta sacar os ficheiros d
     });
 });
 
+<<<<<<< HEAD
 /* TODO: Create conditions for a certain user to be able to edit another user post */
+=======
+// Add Post Form
+router.get('/add', ensureAutheticated, (req, res) => {
+  Category.find({}, {
+      name: 1,
+      _id: 0,
+    })
+    .sort({
+      name: 1,
+    }).exec((err, categories) => {
+      if (!err) {
+        res.render('./posts/addpost', {
+          title: 'Adicionar Postagem | Blog Admin',
+          layout: 'layouts/layout',
+          errors: [],
+          name: req.user.name,
+          postTitle: [],
+          postCategory: [],
+          postBody: [],
+          categories: categories,
+        });
+      }
+    });
+
+});
+
+>>>>>>> d404e42929317e61111af60e9ec82d56906cb060
 router.get('/:idPost', ensureAutheticated, (req, res) => {
   Post.findOne({
       _id: req.params.idPost,
